@@ -17,8 +17,8 @@ import { ViewTransitions } from 'astro:transitions';
 				background: white;
 			}
 
-			.full-box { width: 100%; display: block; position: relative; overflow: hidden; }
-			.full-box .bg { width: 100%; height: 100%; object-fit: cover; display: block; }
+			.full-box, .second-box { width: 100%; display: block; position: relative; overflow: hidden; }
+			.full-box .bg, .second-box .bg { width: 100%; height: 100%; object-fit: cover; display: block; }
 			.gordillo-box { position: absolute; left: 4%; top: 18%; background: rgba(255,255,255,0.9); padding: 1.25rem 1.5rem; border-radius: 8px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); max-width: 46%; }
 			.gordillo-box h3 { font-family: "Overload Burn", sans-serif; margin: 0 0 0.25rem 0; font-size: 2.2rem; }
 			.gordillo-box p { margin: 0; }
@@ -55,11 +55,14 @@ import { ViewTransitions } from 'astro:transitions';
 		</div>
 		<main>
 			<section class="full-box" id="fullBox">
-				<img class="bg" src="/about page banner.png" alt="Full banner" />
+				<img class="bg" id="firstBg" src="/about page banner.png" alt="Full banner" />
 				<div class="gordillo-box" id="gordilloBox">
 					<h3>Gordillo</h3>
 					<p>Short descriptive text placed under the left side of the G.</p>
 				</div>
+			</section>
+			<section class="second-box" id="secondBox">
+				<img class="bg" id="secondBg" src="/portfolio banner.png" alt="Second banner" />
 			</section>
 		</main>
 
@@ -73,6 +76,22 @@ import { ViewTransitions } from 'astro:transitions';
 					const heroBottom = hero.getBoundingClientRect().bottom;
 					const remaining = Math.max(window.innerHeight - heroBottom, window.innerHeight * 0.4);
 					box.style.height = remaining + 'px';
+					// ensure second box uses same aspect ratio as the first image
+					const firstImg = document.getElementById('firstBg');
+					const secondBox = document.getElementById('secondBox');
+					if (firstImg && secondBox) {
+						function setRatio() {
+							const w = firstImg.naturalWidth || firstImg.width;
+							const h = firstImg.naturalHeight || firstImg.height;
+							if (w && h) {
+								secondBox.style.aspectRatio = w + '/' + h;
+								// let the aspect-ratio determine height; clear any fixed height
+								secondBox.style.height = 'auto';
+							}
+						}
+						if (firstImg.complete) setRatio();
+						else firstImg.addEventListener('load', setRatio, { once: true });
+					}
 				}
 				sizeBox();
 				window.addEventListener('resize', sizeBox);
