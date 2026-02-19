@@ -61,9 +61,7 @@ import { ViewTransitions } from 'astro:transitions';
 					<p id="gordilloText">Short descriptive text placed under the left side of the G.</p>
 				</div>
 			</section>
-			<section class="second-box" id="secondBox">
-				<img class="bg" id="secondBg" src="/portfolio banner.png" alt="Second banner" />
-			</section>
+			<!-- second box removed per request -->
 		</main>
 
 		<script>
@@ -76,33 +74,7 @@ import { ViewTransitions } from 'astro:transitions';
 					const heroBottom = hero.getBoundingClientRect().bottom;
 					const remaining = Math.max(window.innerHeight - heroBottom, window.innerHeight * 0.4);
 					box.style.height = remaining + 'px';
-					// ensure second box uses same aspect ratio as the first image
-					const firstImg = document.getElementById('firstBg');
-					const secondBox = document.getElementById('secondBox');
-					if (firstImg && secondBox) {
-						function setRatio() {
-							const w = firstImg.naturalWidth || firstImg.width;
-							const h = firstImg.naturalHeight || firstImg.height;
-							if (w && h) {
-								secondBox.style.aspectRatio = w + '/' + h;
-								secondBox.style.height = 'auto';
-							}
-						}
-						if (firstImg.complete) setRatio();
-						else firstImg.addEventListener('load', setRatio, { once: true });
-					}
-
-					// If the second section contains text paragraphs, move them under Gordillo
-					const gordilloTextEl = document.getElementById('gordilloText');
-					if (secondBox) {
-						const paras = secondBox.querySelectorAll('p');
-						paras.forEach(p => {
-							if (gordilloTextEl) {
-								gordilloTextEl.insertAdjacentHTML('beforeend', '<br/>' + p.innerHTML);
-							}
-							p.remove();
-						});
-					}
+					// No second box — nothing to move
 				}
 				sizeBox();
 				window.addEventListener('resize', sizeBox);

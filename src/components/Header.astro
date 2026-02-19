@@ -8,28 +8,28 @@ import { SITE_TITLE } from '../consts';
 			<a href="/">
 				<div class="nav-button-wrapper">
 					<video src="/button slow.mp4" class="nav-button home" muted playsinline loop preload="auto" aria-hidden="true"></video>
-					<img src="/button home.png" class="nav-img" alt="Home button" />
+					
 					<span class="nav-button-text">Home</span>
 				</div>
 			</a>
 			<a href="/portfolio">
 				<div class="nav-button-wrapper">
 					<video src="/button slow.mp4" class="nav-button portfolio" muted playsinline loop preload="auto" aria-hidden="true"></video>
-					<img src="/button portfolio.png" class="nav-img" alt="Portfolio button" />
+					
 					<span class="nav-button-text">Portfolio</span>
 				</div>
 			</a>
 			<a href="/about">
 				<div class="nav-button-wrapper">
 					<video src="/button slow.mp4" class="nav-button about" muted playsinline loop preload="auto" aria-hidden="true"></video>
-					<img src="/button about.png" class="nav-img" alt="About button" />
+					
 					<span class="nav-button-text">About</span>
 				</div>
 			</a>
 			<a href="/contact">
 				<div class="nav-button-wrapper">
 					<video src="/button slow.mp4" class="nav-button contact" muted playsinline loop preload="auto" aria-hidden="true"></video>
-					<img src="/button contact.png" class="nav-img" alt="Contact button" />
+					
 					<span class="nav-button-text">Contact</span>
 				</div>
 			</a>
@@ -101,19 +101,18 @@ nav {
 	animation: btnShow 0.5s cubic-bezier(.2,.9,.2,1) forwards;
 }
 
-.nav-button {
-		display: block;
-		width: 100%;
-		height: 100%;
-		max-height: 119px; /* 15% smaller than original 140px */
-		position: absolute;
-		left: 0; top: 0; right: 0; bottom: 0;
-		object-fit: cover;
-		z-index: 0;
-		transform-origin: center;
-		transform: scale(0.85);
+.nav-button { 
+	display: block;
+	width: 100%;
+	height: 100%;
+	max-height: 119px; /* 15% smaller than original 140px */
+	position: absolute;
+	left: 0; top: 0; right: 0; bottom: 0;
+	object-fit: cover;
+	z-index: 1; /* visible below the text */
+	transform-origin: center;
+	transform: scale(0.85);
 }
-.nav-img { position: relative; z-index: 3; width: auto; height: 100%; max-height: 119px; display: block; }
 .nav-button-text { position: relative; z-index: 2; }
 
 .nav-links a:nth-child(1) .nav-button-wrapper { animation-delay: 0s; }
