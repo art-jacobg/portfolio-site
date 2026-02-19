@@ -84,7 +84,19 @@ nav {
   align-items: center;
   justify-content: center;
 }
+
 .nav-button-wrapper { overflow: hidden; }
+.nav-button-wrapper {
+	/* give the wrapper an explicit height so absolute video can size to it */
+	height: 119px;
+	min-width: 140px;
+	padding: 0 6px;
+	box-sizing: border-box;
+	opacity: 0;
+	transform: translateY(6px);
+	animation: btnShow 0.5s cubic-bezier(.2,.9,.2,1) forwards;
+}
+
 .nav-button {
 		display: block;
 		width: 100%;
@@ -98,10 +110,11 @@ nav {
 		transform: scale(0.85);
 }
 .nav-button-text { position: relative; z-index: 2; }
-.nav-button.home { }
-.nav-button.portfolio { }
-.nav-button.about { }
-.nav-button.contact { }
+
+.nav-links a:nth-child(1) .nav-button-wrapper { animation-delay: 0s; }
+.nav-links a:nth-child(2) .nav-button-wrapper { animation-delay: 0.45s; }
+.nav-links a:nth-child(3) .nav-button-wrapper { animation-delay: 0.9s; }
+.nav-links a:nth-child(4) .nav-button-wrapper { animation-delay: 1.35s; }
 
 .nav-button { transform-origin: center; }
 .nav-button { transform: scale(0.85); } /* 15% smaller visually */
@@ -163,19 +176,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	// Hide header when secondBox is in view so the second section appears as one background
-	const secondBox = document.getElementById('secondBox');
-	const headerEl = document.querySelector('header');
-	if (secondBox && headerEl) {
-		const obs = new IntersectionObserver((entries) => {
-			entries.forEach((entry) => {
-				if (entry.isIntersecting && entry.intersectionRatio > 0.45) {
-					headerEl.style.display = 'none';
-				} else {
-					headerEl.style.display = '';
-				}
-			});
-		}, { threshold: [0, 0.45, 1] });
-		obs.observe(secondBox);
-	}
+	// Keep header visible — do not auto-hide so nav remains accessible
 });
 </script>
