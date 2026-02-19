@@ -92,8 +92,8 @@ nav {
 .nav-button-wrapper { overflow: hidden; }
 .nav-button-wrapper {
 	/* give the wrapper an explicit height so absolute video can size to it */
-	height: 119px;
-	min-width: 140px;
+	height: 104px; /* slightly smaller */
+	min-width: 120px;
 	padding: 0 6px;
 	box-sizing: border-box;
 	opacity: 0;
@@ -113,7 +113,7 @@ nav {
 	transform-origin: center;
 	transform: scale(0.85);
 }
-.nav-gif { position: relative; z-index: 2; width: auto; height: 100%; max-height: 119px; display: block; }
+.nav-gif { position: relative; z-index: 2; width: auto; height: 100%; max-height: 100px; display: block; transform: scale(0.9); }
 .nav-button-text { position: relative; z-index: 2; }
 
 .nav-links a:nth-child(1) .nav-button-wrapper { animation-delay: 0s; }

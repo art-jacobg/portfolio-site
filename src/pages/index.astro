@@ -61,9 +61,6 @@ import { ViewTransitions } from 'astro:transitions';
 					<p id="gordilloText">Short descriptive text placed under the left side of the G.</p>
 				</div>
 			</section>
-			<section class="second-box" id="secondBox">
-				<img class="bg" id="secondBg" src="/portfolio banner.png" alt="Second banner" />
-			</section>
 		</main>
 
 		<script>
@@ -79,11 +76,7 @@ import { ViewTransitions } from 'astro:transitions';
 					const heroBottom = heroRect.bottom;
 					const remaining = Math.max(window.innerHeight - heroBottom, window.innerHeight * 0.4);
 					box.style.height = remaining + 'px';
-					// set second box height equal to hero image height
-					const secondBox = document.getElementById('secondBox');
-					if (secondBox) {
-						secondBox.style.height = heroH + 'px';
-					}
+					// no second box — only the fullBox remains
 					// No additional text move required
 				}
 				sizeBox();
