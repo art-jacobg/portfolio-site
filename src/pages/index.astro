@@ -16,6 +16,10 @@ import { ViewTransitions } from 'astro:transitions';
 			body {
 				background: white;
 			}
+
+			.extra-sections { max-width: 1200px; margin: 2.5rem auto; padding: 0 1rem; display: grid; gap: 2.25rem; }
+			.extra-row img { width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+			@media (min-width: 1280px) { .extra-sections { max-width: 1400px; } }
 			.hero-container {
 				margin: 0;
 				padding: 0;
@@ -47,7 +51,19 @@ import { ViewTransitions } from 'astro:transitions';
 		<div class="hero-container">
 			<img class="hero-image" src="/main image.png" alt="Main Banner" />
 		</div>
-		<main></main>
+		<main>
+			<section class="extra-sections">
+				<section class="extra-row">
+					<img src="/about page banner.png" alt="About banner" />
+				</section>
+				<section class="extra-row">
+					<img src="/portfolio banner.png" alt="Portfolio banner" />
+				</section>
+				<section class="extra-row">
+					<img src="/about page banner.png" alt="About banner" />
+				</section>
+			</section>
+		</main>
 		<Footer />
 	</body>
 </html>

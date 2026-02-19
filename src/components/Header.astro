@@ -7,25 +7,25 @@ import { SITE_TITLE } from '../consts';
 		<div class="nav-links">
 			<a href="/">
 				<div class="nav-button-wrapper">
-					<img src="/button home.png" alt="Home" class="nav-button" />
+					<img src="/button slow.gif" alt="Home" class="nav-button home" />
 					<span class="nav-button-text">Home</span>
 				</div>
 			</a>
 			<a href="/portfolio">
 				<div class="nav-button-wrapper">
-					<img src="/button portfolio.png" alt="Portfolio" class="nav-button" />
+					<img src="/button slow.gif" alt="Portfolio" class="nav-button portfolio" />
 					<span class="nav-button-text">Portfolio</span>
 				</div>
 			</a>
 			<a href="/about">
 				<div class="nav-button-wrapper">
-					<img src="/button about.png" alt="About" class="nav-button" />
+					<img src="/button slow.gif" alt="About" class="nav-button about" />
 					<span class="nav-button-text">About</span>
 				</div>
 			</a>
 			<a href="/contact">
 				<div class="nav-button-wrapper">
-					<img src="/button contact.png" alt="Contact" class="nav-button" />
+					<img src="/button slow.gif" alt="Contact" class="nav-button contact" />
 					<span class="nav-button-text">Contact</span>
 				</div>
 			</a>
@@ -89,6 +89,17 @@ nav {
 	width: auto;
 	height: auto;
 	max-height: 140px;
+	opacity: 0;
+	transform: translateY(6px);
+	animation: btnShow 0.5s cubic-bezier(.2,.9,.2,1) forwards;
+}
+.nav-button.home { animation-delay: 0s; }
+.nav-button.portfolio { animation-delay: 0.35s; }
+.nav-button.about { animation-delay: 0.7s; }
+.nav-button.contact { animation-delay: 1.05s; }
+
+@keyframes btnShow {
+  to { opacity: 1; transform: translateY(0); }
 }
 .nav-button-text {
 	position: absolute;
