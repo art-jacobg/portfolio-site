@@ -17,9 +17,11 @@ import { ViewTransitions } from 'astro:transitions';
 				background: white;
 			}
 
-			.extra-sections { max-width: 1200px; margin: 2.5rem auto; padding: 0 1rem; display: grid; gap: 2.25rem; }
-			.extra-row img { width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
-			@media (min-width: 1280px) { .extra-sections { max-width: 1400px; } }
+			.full-box { width: 100%; display: block; position: relative; overflow: hidden; }
+			.full-box .bg { width: 100%; height: 100%; object-fit: cover; display: block; }
+			.gordillo-box { position: absolute; left: 4%; top: 18%; background: rgba(255,255,255,0.9); padding: 1.25rem 1.5rem; border-radius: 8px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); max-width: 46%; }
+			.gordillo-box h3 { font-family: "Overload Burn", sans-serif; margin: 0 0 0.25rem 0; font-size: 2.2rem; }
+			.gordillo-box p { margin: 0; }
 			.hero-container {
 				margin: 0;
 				padding: 0;
@@ -52,18 +54,30 @@ import { ViewTransitions } from 'astro:transitions';
 			<img class="hero-image" src="/main image.png" alt="Main Banner" />
 		</div>
 		<main>
-			<section class="extra-sections">
-				<section class="extra-row">
-					<img src="/about page banner.png" alt="About banner" />
-				</section>
-				<section class="extra-row">
-					<img src="/portfolio banner.png" alt="Portfolio banner" />
-				</section>
-				<section class="extra-row">
-					<img src="/about page banner.png" alt="About banner" />
-				</section>
+			<section class="full-box" id="fullBox">
+				<img class="bg" src="/about page banner.png" alt="Full banner" />
+				<div class="gordillo-box" id="gordilloBox">
+					<h3>Gordillo</h3>
+					<p>Short descriptive text placed under the left side of the G.</p>
+				</div>
 			</section>
 		</main>
+
+		<script>
+			// Make the full box fill the remaining viewport below the hero image
+			document.addEventListener('DOMContentLoaded', () => {
+				const hero = document.querySelector('.hero-image');
+				const box = document.getElementById('fullBox');
+				if (!hero || !box) return;
+				function sizeBox() {
+					const heroBottom = hero.getBoundingClientRect().bottom;
+					const remaining = Math.max(window.innerHeight - heroBottom, window.innerHeight * 0.4);
+					box.style.height = remaining + 'px';
+				}
+				sizeBox();
+				window.addEventListener('resize', sizeBox);
+			});
+		</script>
 		<Footer />
 	</body>
 </html>

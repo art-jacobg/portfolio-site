@@ -7,25 +7,25 @@ import { SITE_TITLE } from '../consts';
 		<div class="nav-links">
 			<a href="/">
 				<div class="nav-button-wrapper">
-					<img src="/button slow.gif" alt="Home" class="nav-button home" />
+					<video src="/button slow.mp4" class="nav-button home" muted playsinline loop preload="auto" aria-hidden="true"></video>
 					<span class="nav-button-text">Home</span>
 				</div>
 			</a>
 			<a href="/portfolio">
 				<div class="nav-button-wrapper">
-					<img src="/button slow.gif" alt="Portfolio" class="nav-button portfolio" />
+					<video src="/button slow.mp4" class="nav-button portfolio" muted playsinline loop preload="auto" aria-hidden="true"></video>
 					<span class="nav-button-text">Portfolio</span>
 				</div>
 			</a>
 			<a href="/about">
 				<div class="nav-button-wrapper">
-					<img src="/button slow.gif" alt="About" class="nav-button about" />
+					<video src="/button slow.mp4" class="nav-button about" muted playsinline loop preload="auto" aria-hidden="true"></video>
 					<span class="nav-button-text">About</span>
 				</div>
 			</a>
 			<a href="/contact">
 				<div class="nav-button-wrapper">
-					<img src="/button slow.gif" alt="Contact" class="nav-button contact" />
+					<video src="/button slow.mp4" class="nav-button contact" muted playsinline loop preload="auto" aria-hidden="true"></video>
 					<span class="nav-button-text">Contact</span>
 				</div>
 			</a>
@@ -88,10 +88,10 @@ nav {
 	display: block;
 	width: auto;
 	height: auto;
-	max-height: 140px;
-	opacity: 0;
-	transform: translateY(6px);
-	animation: btnShow 0.5s cubic-bezier(.2,.9,.2,1) forwards;
+	max-height: 119px; /* 15% smaller than original 140px */
+ 	opacity: 0;
+ 	transform: translateY(6px);
+ 	animation: btnShow 0.5s cubic-bezier(.2,.9,.2,1) forwards;
 }
 .nav-button.home { animation-delay: 0s; }
 .nav-button.portfolio { animation-delay: 0.35s; }
@@ -101,6 +101,9 @@ nav {
 @keyframes btnShow {
   to { opacity: 1; transform: translateY(0); }
 }
+
+.nav-button { transform-origin: center; }
+.nav-button { transform: scale(0.85); } /* 15% smaller visually */
 .nav-button-text {
 	position: absolute;
 	font-weight: 900;
@@ -137,3 +140,26 @@ nav {
 	.nav-links a:last-child .nav-button-text { transform: translateX(-2px); }
 }
 </style>
+
+<script type="module">
+document.addEventListener('DOMContentLoaded', () => {
+	const videos = document.querySelectorAll('video.nav-button');
+	videos.forEach((vid) => {
+		// randomize starting time once metadata is available
+		function startRandom() {
+			try {
+				const dur = vid.duration || 0;
+				if (dur > 0) {
+					vid.currentTime = Math.random() * dur;
+				}
+			} catch (e) {
+				// some browsers block setting currentTime until user interaction; ignore
+			}
+			// attempt to play; muted + playsinline should allow autoplay
+			vid.play().catch(() => {});
+		}
+		if (vid.readyState >= 1) startRandom();
+		else vid.addEventListener('loadedmetadata', startRandom, { once: true });
+	});
+});
+</script>
