@@ -8,28 +8,28 @@ import { SITE_TITLE } from '../consts';
 			<a href="/">
 				<div class="nav-button-wrapper">
 					<video src="/button slow.mp4" class="nav-button home" muted playsinline loop preload="auto" aria-hidden="true"></video>
-					
+					<img src="/button home.gif" class="nav-gif" alt="Home gif" />
 					<span class="nav-button-text">Home</span>
 				</div>
 			</a>
 			<a href="/portfolio">
 				<div class="nav-button-wrapper">
 					<video src="/button slow.mp4" class="nav-button portfolio" muted playsinline loop preload="auto" aria-hidden="true"></video>
-					
+					<img src="/button portfolio.gif" class="nav-gif" alt="Portfolio gif" />
 					<span class="nav-button-text">Portfolio</span>
 				</div>
 			</a>
 			<a href="/about">
 				<div class="nav-button-wrapper">
 					<video src="/button slow.mp4" class="nav-button about" muted playsinline loop preload="auto" aria-hidden="true"></video>
-					
+					<img src="/button about.gif" class="nav-gif" alt="About gif" />
 					<span class="nav-button-text">About</span>
 				</div>
 			</a>
 			<a href="/contact">
 				<div class="nav-button-wrapper">
 					<video src="/button slow.mp4" class="nav-button contact" muted playsinline loop preload="auto" aria-hidden="true"></video>
-					
+					<img src="/button contact.gif" class="nav-gif" alt="Contact gif" />
 					<span class="nav-button-text">Contact</span>
 				</div>
 			</a>
@@ -109,10 +109,11 @@ nav {
 	position: absolute;
 	left: 0; top: 0; right: 0; bottom: 0;
 	object-fit: cover;
-	z-index: 1; /* visible below the text */
+	z-index: 1; /* visible below the text and gif */
 	transform-origin: center;
 	transform: scale(0.85);
 }
+.nav-gif { position: relative; z-index: 2; width: auto; height: 100%; max-height: 119px; display: block; }
 .nav-button-text { position: relative; z-index: 2; }
 
 .nav-links a:nth-child(1) .nav-button-wrapper { animation-delay: 0s; }
