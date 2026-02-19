@@ -35,19 +35,19 @@ import { SITE_TITLE } from '../consts';
 			</a>
 		</div>
 		<div class="social-links">
-			<a href="https://instagram.com" target="_blank" title="Instagram">
+			<a href="https://www.instagram.com/art.jacobg" target="_blank" rel="noopener noreferrer" title="Instagram">
 				<img src="/insta icon.png" alt="Instagram" class="social-icon" />
 			</a>
-			<a href="https://linkedin.com" target="_blank" title="LinkedIn">
+			<a href="https://www.linkedin.com/in/jacob-gordillo-708021292" target="_blank" rel="noopener noreferrer" title="LinkedIn">
 				<img src="/linked in icon.png" alt="LinkedIn" class="social-icon" />
 			</a>
-			<a href="https://tiktok.com" target="_blank" title="TikTok">
+			<a href="https://www.tiktok.com/@art.jacobg" target="_blank" rel="noopener noreferrer" title="TikTok">
 				<img src="/tiktok icon.png" alt="TikTok" class="social-icon" />
 			</a>
-			<a href="https://x.com" target="_blank" title="X">
+			<a href="https://x.com" target="_blank" rel="noopener noreferrer" title="X">
 				<img src="/x icon.png" alt="X" class="social-icon" />
 			</a>
-			<a href="https://youtube.com" target="_blank" title="YouTube">
+			<a href="https://www.youtube.com/@JGordilloart" target="_blank" rel="noopener noreferrer" title="YouTube">
 				<img src="/youtube icon.png" alt="YouTube" class="social-icon" />
 			</a>
 		</div>
@@ -113,7 +113,7 @@ nav {
 	transform-origin: center;
 	transform: scale(0.85);
 }
-.nav-gif { position: relative; z-index: 2; width: auto; height: 100%; max-height: 100px; display: block; transform: scale(0.9); }
+.nav-gif { position: relative; z-index: 2; width: auto; height: 100%; max-height: 100px; display: block; transform: scale(0.9); transition: opacity 0.18s ease; }
 .nav-button-text { position: relative; z-index: 2; }
 
 .nav-links a:nth-child(1) .nav-button-wrapper { animation-delay: 0s; }
@@ -152,13 +152,30 @@ nav {
 	.nav-links a:first-child .nav-button-text { transform: translateX(3px); }
 	.nav-links a:last-child .nav-button-text { transform: translateX(-3px); }
 }
+@media (max-width: 1024px) {
+	.nav-links { gap: 0.25rem; }
+}
 @media (max-width: 720px) {
 	header { padding: 0rem 0.35rem; }
-	.nav-button { max-height: 64px; }
+	.nav-links { gap: 0.2rem; }
+	.nav-links { flex-wrap: wrap; }
+	.nav-button-wrapper { height: 72px; min-width: 88px; padding: 6px; }
+	.nav-button { max-height: 64px; display: none; } /* hide MP4 backgrounds on small screens for performance */
+	.nav-gif { max-height: 64px; transform: scale(0.92); }
 	.nav-button-text { font-size: 0.95rem; }
-	.social-links img { width: 56px; height: 56px; }
+	.nav-links a { padding: 8px; } /* larger touch targets */
+	.social-links img { width: 48px; height: 48px; }
 	.nav-links a:first-child .nav-button-text { transform: translateX(2px); }
 	.nav-links a:last-child .nav-button-text { transform: translateX(-2px); }
+}
+
+@media (max-width: 480px) {
+	/* Very small screens: stack buttons if needed and center text */
+	nav { padding: 0 6px; }
+	.nav-links { justify-content: center; gap: 0.35rem; }
+	.nav-button-wrapper { height: 64px; min-width: 72px; }
+	.nav-gif { max-height: 56px; }
+	.nav-button-text { font-size: 0.85rem; }
 }
 </style>
 
@@ -182,7 +199,44 @@ document.addEventListener('DOMContentLoaded', () => {
 		else vid.addEventListener('loadedmetadata', startRandom, { once: true });
 	});
 
-	// Hide header when secondBox is in view so the second section appears as one background
-	// Keep header visible — do not auto-hide so nav remains accessible
-});
+		// Hide header when secondBox is in view so the second section appears as one background
+		// Keep header visible — do not auto-hide so nav remains accessible
+
+		// On pointer hover/focus, speed up the underlying video and fade the GIF overlay.
+		try {
+			const wrappers = Array.from(document.querySelectorAll('.nav-button-wrapper'));
+			// Ensure GIFs have explicit starting opacity so they don't inherit unexpected styles
+			wrappers.forEach(w => {
+				const g = w.querySelector('.nav-gif');
+				if (g) g.style.opacity = '1';
+			});
+
+			const canHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+			if (canHover) {
+				wrappers.forEach(wrapper => {
+					const vid = wrapper.querySelector('video.nav-button');
+					const gif = wrapper.querySelector('.nav-gif');
+					function speedUp() {
+						try {
+							if (vid && typeof vid.playbackRate !== 'undefined') {
+								vid.playbackRate = 2.0;
+								vid.play().catch(() => {});
+								if (gif) gif.style.opacity = '0.25';
+							}
+						} catch (e) {}
+					}
+					function restore() {
+						try {
+							if (vid && typeof vid.playbackRate !== 'undefined') vid.playbackRate = 1.0;
+							if (gif) gif.style.opacity = '1';
+						} catch (e) {}
+					}
+					wrapper.addEventListener('pointerenter', speedUp);
+					wrapper.addEventListener('pointerleave', restore);
+					wrapper.addEventListener('focusin', speedUp);
+					wrapper.addEventListener('focusout', restore);
+				});
+			}
+		} catch (e) {}
+	});
 </script>

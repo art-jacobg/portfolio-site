@@ -9,7 +9,7 @@ import { ViewTransitions } from 'astro:transitions';
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title="Portfolio | {SITE_TITLE}" description={SITE_DESCRIPTION} />
+		<BaseHead title={`Portfolio | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 		<link rel="preload" href="/portfolio banner.png" as="image" fetchpriority="high" />
 		<ViewTransitions />
 		<style>
