@@ -58,7 +58,7 @@ import { ViewTransitions } from 'astro:transitions';
 				<img class="bg" id="firstBg" src="/about page banner.png" alt="Full banner" />
 				<div class="gordillo-box" id="gordilloBox">
 					<h3>Gordillo</h3>
-					<p>Short descriptive text placed under the left side of the G.</p>
+					<p id="gordilloText">Short descriptive text placed under the left side of the G.</p>
 				</div>
 			</section>
 			<section class="second-box" id="secondBox">
@@ -85,12 +85,23 @@ import { ViewTransitions } from 'astro:transitions';
 							const h = firstImg.naturalHeight || firstImg.height;
 							if (w && h) {
 								secondBox.style.aspectRatio = w + '/' + h;
-								// let the aspect-ratio determine height; clear any fixed height
 								secondBox.style.height = 'auto';
 							}
 						}
 						if (firstImg.complete) setRatio();
 						else firstImg.addEventListener('load', setRatio, { once: true });
+					}
+
+					// If the second section contains text paragraphs, move them under Gordillo
+					const gordilloTextEl = document.getElementById('gordilloText');
+					if (secondBox) {
+						const paras = secondBox.querySelectorAll('p');
+						paras.forEach(p => {
+							if (gordilloTextEl) {
+								gordilloTextEl.insertAdjacentHTML('beforeend', '<br/>' + p.innerHTML);
+							}
+							p.remove();
+						});
 					}
 				}
 				sizeBox();
