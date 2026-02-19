@@ -4,7 +4,7 @@ import { SITE_TITLE } from '../consts';
 
 <header>
 	<nav>
-		<div class="nav-links">
+			<div class="nav-links">
 			<a href="/">
 				<div class="nav-button-wrapper">
 					<video src="/button slow.mp4" class="nav-button home" muted playsinline loop preload="auto" aria-hidden="true"></video>
@@ -84,23 +84,24 @@ nav {
   align-items: center;
   justify-content: center;
 }
+.nav-button-wrapper { overflow: hidden; }
 .nav-button {
-	display: block;
-	width: auto;
-	height: auto;
-	max-height: 119px; /* 15% smaller than original 140px */
- 	opacity: 0;
- 	transform: translateY(6px);
- 	animation: btnShow 0.5s cubic-bezier(.2,.9,.2,1) forwards;
+		display: block;
+		width: 100%;
+		height: 100%;
+		max-height: 119px; /* 15% smaller than original 140px */
+		position: absolute;
+		left: 0; top: 0; right: 0; bottom: 0;
+		object-fit: cover;
+		z-index: 0;
+		transform-origin: center;
+		transform: scale(0.85);
 }
-.nav-button.home { animation-delay: 0s; }
-.nav-button.portfolio { animation-delay: 0.35s; }
-.nav-button.about { animation-delay: 0.7s; }
-.nav-button.contact { animation-delay: 1.05s; }
-
-@keyframes btnShow {
-  to { opacity: 1; transform: translateY(0); }
-}
+.nav-button-text { position: relative; z-index: 2; }
+.nav-button.home { }
+.nav-button.portfolio { }
+.nav-button.about { }
+.nav-button.contact { }
 
 .nav-button { transform-origin: center; }
 .nav-button { transform: scale(0.85); } /* 15% smaller visually */
@@ -143,23 +144,38 @@ nav {
 
 <script type="module">
 document.addEventListener('DOMContentLoaded', () => {
-	const videos = document.querySelectorAll('video.nav-button');
-	videos.forEach((vid) => {
-		// randomize starting time once metadata is available
+	const videos = Array.from(document.querySelectorAll('video.nav-button'));
+	videos.forEach((vid, idx) => {
 		function startRandom() {
 			try {
 				const dur = vid.duration || 0;
 				if (dur > 0) {
-					vid.currentTime = Math.random() * dur;
+					// random start plus index offset so each video is noticeably different
+					const randomStart = Math.random() * dur;
+					const offset = (idx * 0.7) % dur; // 0.7s index offset
+					vid.currentTime = (randomStart + offset) % dur;
 				}
-			} catch (e) {
-				// some browsers block setting currentTime until user interaction; ignore
-			}
-			// attempt to play; muted + playsinline should allow autoplay
+			} catch (e) {}
 			vid.play().catch(() => {});
 		}
 		if (vid.readyState >= 1) startRandom();
 		else vid.addEventListener('loadedmetadata', startRandom, { once: true });
 	});
+
+	// Hide header when secondBox is in view so the second section appears as one background
+	const secondBox = document.getElementById('secondBox');
+	const headerEl = document.querySelector('header');
+	if (secondBox && headerEl) {
+		const obs = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting && entry.intersectionRatio > 0.45) {
+					headerEl.style.display = 'none';
+				} else {
+					headerEl.style.display = '';
+				}
+			});
+		}, { threshold: [0, 0.45, 1] });
+		obs.observe(secondBox);
+	}
 });
 </script>
