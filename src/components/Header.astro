@@ -4,46 +4,50 @@ import { SITE_TITLE } from '../consts';
 
 <header>
 	<nav>
-		<div class="nav-links">
+			<div class="nav-links">
 			<a href="/">
 				<div class="nav-button-wrapper">
-					<img src="/button home.png" alt="Home" class="nav-button" />
+					<video src="/button slow.mp4" class="nav-button home" muted playsinline loop preload="auto" aria-hidden="true"></video>
+					<img src="/button home.gif" class="nav-gif" alt="Home gif" />
 					<span class="nav-button-text">Home</span>
 				</div>
 			</a>
 			<a href="/portfolio">
 				<div class="nav-button-wrapper">
-					<img src="/button portfolio.png" alt="Portfolio" class="nav-button" />
+					<video src="/button slow.mp4" class="nav-button portfolio" muted playsinline loop preload="auto" aria-hidden="true"></video>
+					<img src="/button portfolio.gif" class="nav-gif" alt="Portfolio gif" />
 					<span class="nav-button-text">Portfolio</span>
 				</div>
 			</a>
 			<a href="/about">
 				<div class="nav-button-wrapper">
-					<img src="/button about.png" alt="About" class="nav-button" />
+					<video src="/button slow.mp4" class="nav-button about" muted playsinline loop preload="auto" aria-hidden="true"></video>
+					<img src="/button about.gif" class="nav-gif" alt="About gif" />
 					<span class="nav-button-text">About</span>
 				</div>
 			</a>
 			<a href="/contact">
 				<div class="nav-button-wrapper">
-					<img src="/button contact.png" alt="Contact" class="nav-button" />
+					<video src="/button slow.mp4" class="nav-button contact" muted playsinline loop preload="auto" aria-hidden="true"></video>
+					<img src="/button contact.gif" class="nav-gif" alt="Contact gif" />
 					<span class="nav-button-text">Contact</span>
 				</div>
 			</a>
 		</div>
 		<div class="social-links">
-			<a href="https://instagram.com" target="_blank" title="Instagram">
+			<a href="https://www.instagram.com/art.jacobg" target="_blank" rel="noopener noreferrer" title="Instagram">
 				<img src="/insta icon.png" alt="Instagram" class="social-icon" />
 			</a>
-			<a href="https://linkedin.com" target="_blank" title="LinkedIn">
+			<a href="https://www.linkedin.com/in/jacob-gordillo-708021292" target="_blank" rel="noopener noreferrer" title="LinkedIn">
 				<img src="/linked in icon.png" alt="LinkedIn" class="social-icon" />
 			</a>
-			<a href="https://tiktok.com" target="_blank" title="TikTok">
+			<a href="https://www.tiktok.com/@art.jacobg" target="_blank" rel="noopener noreferrer" title="TikTok">
 				<img src="/tiktok icon.png" alt="TikTok" class="social-icon" />
 			</a>
-			<a href="https://x.com" target="_blank" title="X">
+			<a href="https://x.com" target="_blank" rel="noopener noreferrer" title="X">
 				<img src="/x icon.png" alt="X" class="social-icon" />
 			</a>
-			<a href="https://youtube.com" target="_blank" title="YouTube">
+			<a href="https://www.youtube.com/@JGordilloart" target="_blank" rel="noopener noreferrer" title="YouTube">
 				<img src="/youtube icon.png" alt="YouTube" class="social-icon" />
 			</a>
 		</div>
@@ -84,12 +88,43 @@ nav {
   align-items: center;
   justify-content: center;
 }
-.nav-button {
-	display: block;
-	width: auto;
-	height: auto;
-	max-height: 140px;
+
+.nav-button-wrapper { overflow: hidden; }
+.nav-button-wrapper {
+	/* give the wrapper an explicit height so absolute video can size to it */
+	height: 104px; /* slightly smaller */
+	min-width: 120px;
+	padding: 0 6px;
+	box-sizing: border-box;
+	opacity: 0;
+	transform: translateY(6px);
+	animation: btnShow 0.5s cubic-bezier(.2,.9,.2,1) forwards;
 }
+
+.nav-button { 
+	display: block;
+	width: 100%;
+	height: 100%;
+	max-height: 119px; /* 15% smaller than original 140px */
+	position: absolute;
+	left: 0; top: 0; right: 0; bottom: 0;
+	object-fit: cover;
+	z-index: 1; /* visible below the text and gif */
+	transform-origin: center;
+	transform: scale(0.85);
+}
+.nav-gif { position: relative; z-index: 2; width: auto; height: 100%; max-height: 100px; display: block; transform: scale(0.9); transition: opacity 0.18s ease; }
+.nav-button-text { position: relative; z-index: 2; }
+
+.nav-links a:nth-child(1) .nav-button-wrapper { animation-delay: 0s; }
+.nav-links a:nth-child(2) .nav-button-wrapper { animation-delay: 0.45s; }
+.nav-links a:nth-child(3) .nav-button-wrapper { animation-delay: 0.9s; }
+.nav-links a:nth-child(4) .nav-button-wrapper { animation-delay: 1.35s; }
+
+@keyframes btnShow { to { opacity: 1; transform: translateY(0); } }
+
+.nav-button { transform-origin: center; }
+.nav-button { transform: scale(0.85); } /* 15% smaller visually */
 .nav-button-text {
 	position: absolute;
 	font-weight: 900;
@@ -117,12 +152,91 @@ nav {
 	.nav-links a:first-child .nav-button-text { transform: translateX(3px); }
 	.nav-links a:last-child .nav-button-text { transform: translateX(-3px); }
 }
+@media (max-width: 1024px) {
+	.nav-links { gap: 0.25rem; }
+}
 @media (max-width: 720px) {
 	header { padding: 0rem 0.35rem; }
-	.nav-button { max-height: 64px; }
+	.nav-links { gap: 0.2rem; }
+	.nav-links { flex-wrap: wrap; }
+	.nav-button-wrapper { height: 72px; min-width: 88px; padding: 6px; }
+	.nav-button { max-height: 64px; display: none; } /* hide MP4 backgrounds on small screens for performance */
+	.nav-gif { max-height: 64px; transform: scale(0.92); }
 	.nav-button-text { font-size: 0.95rem; }
-	.social-links img { width: 56px; height: 56px; }
+	.nav-links a { padding: 8px; } /* larger touch targets */
+	.social-links img { width: 48px; height: 48px; }
 	.nav-links a:first-child .nav-button-text { transform: translateX(2px); }
 	.nav-links a:last-child .nav-button-text { transform: translateX(-2px); }
 }
+
+@media (max-width: 480px) {
+	/* Very small screens: stack buttons if needed and center text */
+	nav { padding: 0 6px; }
+	.nav-links { justify-content: center; gap: 0.35rem; }
+	.nav-button-wrapper { height: 64px; min-width: 72px; }
+	.nav-gif { max-height: 56px; }
+	.nav-button-text { font-size: 0.85rem; }
+}
 </style>
+
+<script type="module">
+document.addEventListener('DOMContentLoaded', () => {
+	const videos = Array.from(document.querySelectorAll('video.nav-button'));
+	videos.forEach((vid, idx) => {
+		function startRandom() {
+			try {
+				const dur = vid.duration || 0;
+				if (dur > 0) {
+					// random start plus index offset so each video is noticeably different
+					const randomStart = Math.random() * dur;
+					const offset = (idx * 0.7) % dur; // 0.7s index offset
+					vid.currentTime = (randomStart + offset) % dur;
+				}
+			} catch (e) {}
+			vid.play().catch(() => {});
+		}
+		if (vid.readyState >= 1) startRandom();
+		else vid.addEventListener('loadedmetadata', startRandom, { once: true });
+	});
+
+		// Hide header when secondBox is in view so the second section appears as one background
+		// Keep header visible — do not auto-hide so nav remains accessible
+
+		// On pointer hover/focus, speed up the underlying video and fade the GIF overlay.
+		try {
+			const wrappers = Array.from(document.querySelectorAll('.nav-button-wrapper'));
+			// Ensure GIFs have explicit starting opacity so they don't inherit unexpected styles
+			wrappers.forEach(w => {
+				const g = w.querySelector('.nav-gif');
+				if (g) g.style.opacity = '1';
+			});
+
+			const canHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+			if (canHover) {
+				wrappers.forEach(wrapper => {
+					const vid = wrapper.querySelector('video.nav-button');
+					const gif = wrapper.querySelector('.nav-gif');
+					function speedUp() {
+						try {
+							if (vid && typeof vid.playbackRate !== 'undefined') {
+								vid.playbackRate = 2.0;
+								vid.play().catch(() => {});
+								if (gif) gif.style.opacity = '0.25';
+							}
+						} catch (e) {}
+					}
+					function restore() {
+						try {
+							if (vid && typeof vid.playbackRate !== 'undefined') vid.playbackRate = 1.0;
+							if (gif) gif.style.opacity = '1';
+						} catch (e) {}
+					}
+					wrapper.addEventListener('pointerenter', speedUp);
+					wrapper.addEventListener('pointerleave', restore);
+					wrapper.addEventListener('focusin', speedUp);
+					wrapper.addEventListener('focusout', restore);
+				});
+			}
+		} catch (e) {}
+	});
+</script>

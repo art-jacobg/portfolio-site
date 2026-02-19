@@ -16,6 +16,16 @@ import { ViewTransitions } from 'astro:transitions';
 			body {
 				background: white;
 			}
+
+				.full-box, .second-box { width: 100%; display: block; position: relative; overflow: hidden; }
+				/* make full-box span the entire viewport width (full-bleed) */
+				.full-box { width: 100vw; margin: 0; left: 50%; transform: translateX(-50%); }
+				.full-box .bg, .second-box .bg { width: 100%; height: 100%; object-fit: cover; display: block; }
+			.gordillo-box { position: absolute; left: 4%; top: 18%; background: transparent; padding: 1.25rem 1.5rem; border-radius: 8px; box-shadow: none; max-width: 46%; color: #fff; text-shadow: 0 3px 12px rgba(0,0,0,0.6); }
+			.gordillo-box h3 { font-family: "Overload Burn", sans-serif; margin: 0 0 0.25rem 0; font-size: 2.2rem; color: #fff; }
+			.gordillo-box p { margin: 0; color: #fff; }
+			/* small break between hero and banner without affecting header placement */
+			.full-box { margin-top: 48px; }
 			.hero-container {
 				margin: 0;
 				padding: 0;
@@ -39,6 +49,13 @@ import { ViewTransitions } from 'astro:transitions';
 				main {
 					padding: 2em 1em;
 				}
+				/* make gordillo overlay flow below image on small screens */
+				.gordillo-box { position: relative; left: auto; top: auto; max-width: 92%; margin: 1rem auto 0 auto; padding: 0.8rem 1rem; text-align: center; }
+				.gordillo-box h3 { font-size: 1.6rem; }
+				.gordillo-box p { font-size: 0.95rem; }
+				.full-box { min-height: 30vh; }
+				/* reduce the visual gap on small screens so layout stays compact */
+				.full-box { margin-top: 16px; }
 			}
 		</style>
 	</head>
@@ -47,7 +64,50 @@ import { ViewTransitions } from 'astro:transitions';
 		<div class="hero-container">
 			<img class="hero-image" src="/main image.png" alt="Main Banner" />
 		</div>
-		<main></main>
+			
+			<!-- Full-bleed banner: placed outside main so it matches the hero width -->
+			<section class="full-box" id="fullBox">
+				<img class="bg" id="firstBg" src="/about page banner.png" alt="Full banner" />
+				<div class="gordillo-box" id="gordilloBox">
+					<h3>Jacob Gordillo</h3>
+					<p id="gordilloText">Jacob Gordillo is a graduated designer driven by a passion for both politics and imaginative worldbuilding and storytelling. His work ranges from political media, adversising, merchandise, and visual communication, alongside fantasy art and game design.</p>
+				</div>
+			</section>
+			<main>
+			
+			</main>
+
+		<script>
+			// Match the full-box height to the hero image height on larger screens;
+			// on small screens let it flow naturally and stack the gordillo box.
+			document.addEventListener('DOMContentLoaded', () => {
+				const hero = document.querySelector('.hero-image');
+				const box = document.getElementById('fullBox');
+				const gordillo = document.getElementById('gordilloBox');
+				if (!hero || !box) return;
+				function sizeBox() {
+					const heroHeight = hero.getBoundingClientRect().height || hero.naturalHeight || 0;
+					if (window.innerWidth <= 720 || heroHeight === 0) {
+						box.style.height = 'auto';
+						if (gordillo) {
+							gordillo.style.position = 'relative';
+							gordillo.style.left = 'auto';
+							gordillo.style.top = 'auto';
+						}
+						return;
+					}
+					// set full-box height equal to the hero image height so they match visually
+					box.style.height = heroHeight + 'px';
+					if (gordillo) {
+						gordillo.style.position = 'absolute';
+						gordillo.style.left = '4%';
+						gordillo.style.top = '18%';
+					}
+				}
+				sizeBox();
+				window.addEventListener('resize', sizeBox);
+			});
+		</script>
 		<Footer />
 	</body>
 </html>
