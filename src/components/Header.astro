@@ -7,29 +7,29 @@ import { SITE_TITLE } from '../consts';
 			<div class="nav-links">
 			<a href="/">
 				<div class="nav-button-wrapper">
-					<video src="/button slow.mp4" class="nav-button home" muted playsinline loop preload="auto" aria-hidden="true"></video>
-					<img src="/button home.gif" class="nav-gif" alt="Home gif" />
+					<img src="/button home fast.gif" class="nav-button Home">
+					<img src="/button home.gif" class="nav-gif" alt="home gif" />
 					<span class="nav-button-text">Home</span>
 				</div>
 			</a>
 			<a href="/portfolio">
 				<div class="nav-button-wrapper">
-					<video src="/button slow.mp4" class="nav-button portfolio" muted playsinline loop preload="auto" aria-hidden="true"></video>
+					<img src="/button portfolio fast.gif" class="nav-button Portfolio">
 					<img src="/button portfolio.gif" class="nav-gif" alt="Portfolio gif" />
 					<span class="nav-button-text">Portfolio</span>
 				</div>
 			</a>
 			<a href="/about">
 				<div class="nav-button-wrapper">
-					<video src="/button slow.mp4" class="nav-button about" muted playsinline loop preload="auto" aria-hidden="true"></video>
+					<img src="/button about fast.gif" class="nav-button about">
 					<img src="/button about.gif" class="nav-gif" alt="About gif" />
 					<span class="nav-button-text">About</span>
 				</div>
 			</a>
 			<a href="/contact">
 				<div class="nav-button-wrapper">
-					<video src="/button slow.mp4" class="nav-button contact" muted playsinline loop preload="auto" aria-hidden="true"></video>
-					<img src="/button contact.gif" class="nav-gif" alt="Contact gif" />
+					<img src="/button contact fast.gif" class="nav-button Contact">
+					<img src="/button contact.gif" class="nav-gif" alt="contact gif" />
 					<span class="nav-button-text">Contact</span>
 				</div>
 			</a>
@@ -179,7 +179,7 @@ nav {
 	header { padding: 0rem 0.35rem; }
 	.nav-links { gap: 0.2rem; }
 	.nav-links { flex-wrap: wrap; }
-	.nav-button-wrapper { height: 72px; min-width: 88px; padding: 6px; }
+	.nav-button-wrapper { height: 2px; min-width: 88px; padding: 6px; }
 	.nav-button { max-height: 64px; display: none; } /* hide MP4 backgrounds on small screens for performance */
 	.nav-gif { max-height: 64px; transform: scale(0.92); }
 	.nav-button-text { font-size: 0.95rem; }
@@ -199,64 +199,3 @@ nav {
 }
 </style>
 
-<script type="module">
-document.addEventListener('DOMContentLoaded', () => {
-	const videos = Array.from(document.querySelectorAll('video.nav-button'));
-	videos.forEach((vid, idx) => {
-		function startRandom() {
-			try {
-				const dur = vid.duration || 0;
-				if (dur > 0) {
-					// random start plus index offset so each video is noticeably different
-					const randomStart = Math.random() * dur;
-					const offset = (idx * 0.7) % dur; // 0.7s index offset
-					vid.currentTime = (randomStart + offset) % dur;
-				}
-			} catch (e) {}
-			vid.play().catch(() => {});
-		}
-		if (vid.readyState >= 1) startRandom();
-		else vid.addEventListener('loadedmetadata', startRandom, { once: true });
-	});
-
-		// Hide header when secondBox is in view so the second section appears as one background
-		// Keep header visible — do not auto-hide so nav remains accessible
-
-		// On pointer hover/focus, speed up the underlying video and fade the GIF overlay.
-		try {
-			const wrappers = Array.from(document.querySelectorAll('.nav-button-wrapper'));
-			// Ensure GIFs have explicit starting opacity so they don't inherit unexpected styles
-			wrappers.forEach(w => {
-				const g = w.querySelector('.nav-gif');
-				if (g) g.style.opacity = '1';
-			});
-
-			const canHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-			if (canHover) {
-				wrappers.forEach(wrapper => {
-					const vid = wrapper.querySelector('video.nav-button');
-					const gif = wrapper.querySelector('.nav-gif');
-					function speedUp() {
-						try {
-							if (vid && typeof vid.playbackRate !== 'undefined') {
-								vid.playbackRate = 2.0;
-								vid.play().catch(() => {});
-								if (gif) gif.style.opacity = '0.25';
-							}
-						} catch (e) {}
-					}
-					function restore() {
-						try {
-							if (vid && typeof vid.playbackRate !== 'undefined') vid.playbackRate = 1.0;
-							if (gif) gif.style.opacity = '1';
-						} catch (e) {}
-					}
-					wrapper.addEventListener('pointerenter', speedUp);
-					wrapper.addEventListener('pointerleave', restore);
-					wrapper.addEventListener('focusin', speedUp);
-					wrapper.addEventListener('focusout', restore);
-				});
-			}
-		} catch (e) {}
-	});
-</script>

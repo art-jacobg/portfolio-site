@@ -1,0 +1,222 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { ViewTransitions } from 'astro:transitions';
+
+const tarotCards = Array.from({ length: 22 }, (_, i) => i);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={`Portfolio Tarot | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+    <ViewTransitions />
+
+    <style>
+      body { margin: 0; font-family: 'JAVATEXT', sans-serif; }
+
+      /* Hero */
+      .hero-container {
+        position: relative;
+        width: 100%;
+        min-height: 150vh;
+        overflow: visible; /* allow modal outside */
+      }
+
+      .hero-image {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+        filter: brightness(0.7) contrast(1.1) saturate(1.2) hue-rotate(210deg);
+      }
+
+      .page-title {
+        font-family: "JAVATEXT";
+        font-size: 6.5rem;
+        color: white;
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        z-index: 20;
+        margin: 0;
+      }
+
+      .tarot-description {
+        position: absolute;
+        left: 2.7rem;
+        max-width: 1700px;
+        color: white;
+        font-size: 1.4rem;
+        line-height: 1.5;
+        z-index: 20;
+      }
+
+      .tarot-description:first-of-type { top: 9rem; }
+      .tarot-description:last-of-type { top: 17rem; }
+
+      /* Tarot Grid */
+      .tarot-grid {
+        position: relative;
+        z-index: 10;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        justify-items: center;
+        gap: 3rem;
+        padding-top: 23rem;
+        padding-bottom: 10rem;
+        max-width: 1400px;
+        margin: auto;
+      }
+
+      .tarot-card {
+        width: 300px;
+        height: 500px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .tarot-card:hover { transform: scale(1.07); }
+      .tarot-card:active { transform: scale(0.95); } /* shrink when clicked */
+
+      .tarot-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* do not crop */
+        border-radius: 16px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.45);
+        background: white;
+      }
+
+      /* Modal */
+      .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s ease;
+      }
+
+      .modal.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .modal-card {
+        width: 500px;
+        height: 875px;
+        perspective: 1400px;
+        transform: scale(0.9);
+        transition: transform 0.4s ease;
+      }
+
+      .modal.active .modal-card { transform: scale(1); }
+
+      .modal-inner {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transition: transform 0.7s;
+        transform-style: preserve-3d;
+      }
+
+      .modal-card:hover .modal-inner { transform: rotateY(180deg); }
+
+      .modal-front,
+      .modal-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+      }
+
+      .modal-front img,
+      .modal-back img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 0 80px rgba(0,0,0,0.8);
+        background: white;
+      }
+
+      .modal-back { transform: rotateY(180deg); }
+    </style>
+  </head>
+
+  <body>
+    <Header />
+
+    <div class="hero-container">
+      <img class="hero-image" src="/portfolio banner.png" alt="Portfolio Banner" />
+      <h1 class="page-title">The January 6th Tarot Deck</h1>
+
+      <!-- Descriptions -->
+      <p class="tarot-description">This project is a visual retelling of the story of Donald Trump's assault on the country and our democracy through his and his allies’ actions leading up to January 6th. It was intended to be a cautionary piece in response to Donald Trump’s potential victory in the 2025 presidential election, and the looming fascist presence that accompanied him. Through the events of January 6th, there was no doubt of what was to come, and what is now transpiring.</p>
+      <p class="tarot-description">The physical versions were presented during my senior thesis exhibition, culminating my undergraduate studies in Design and Illustration.</p>
+
+      <!-- Tarot Grid -->
+      <div class="tarot-grid">
+        {tarotCards.map((i) => (
+          <div 
+            class="tarot-card"
+            data-front={`/portfolio/tarot/${i}.png`}
+            data-back={`/portfolio/tarot/${i} back.png`}
+          >
+            <img src={`/portfolio/tarot/${i}.png`} alt={`Tarot card ${i}`} />
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+      <div class="modal-card">
+        <div class="modal-inner">
+          <div class="modal-front">
+            <img id="modalFront" src="" />
+          </div>
+          <div class="modal-back">
+            <img id="modalBack" src="" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const modal = document.getElementById("modal");
+      const modalFront = document.getElementById("modalFront");
+      const modalBack = document.getElementById("modalBack");
+      const cards = document.querySelectorAll(".tarot-card");
+
+      cards.forEach(card => {
+        card.addEventListener("click", () => {
+          modalFront.src = card.getAttribute("data-front");
+          modalBack.src = card.getAttribute("data-back");
+          modal.classList.add("active");
+        });
+      });
+
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          modal.classList.remove("active");
+          setTimeout(() => {
+            modalFront.src = "";
+            modalBack.src = "";
+          }, 300);
+        }
+      });
+    </script>
+
+    <Footer />
+  </body>
+</html>

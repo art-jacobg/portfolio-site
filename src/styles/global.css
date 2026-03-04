@@ -194,4 +194,188 @@ hr {
 
 .gif-wrapper:hover .gif.base {
   opacity: 0;
+}/* Nav button wrapper */
+.nav-button-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  height: 140px;     /* full size */
+  min-width: 160px;  /* full size */
+  box-sizing: border-box;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: btnShow 0.5s cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+@keyframes btnShow {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Button background images */
+.nav-button {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+/* GIF overlay */
+.nav-gif {
+  position: relative;
+  z-index: 2;
+  width: auto;
+  height: 100%;
+  display: block;
+  transition: opacity 0.18s ease;
+}
+
+/* Button text */
+.nav-button-text {
+  position: absolute;
+  z-index: 3;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #fff;
+  text-align: center;
+  pointer-events: none;
+  text-shadow: 0 3px 8px rgba(0,0,0,0.6);
+}
+
+/* Hover effect for GIF overlay */
+.nav-button-wrapper:hover .nav-gif {
+  opacity: 0.25; /* slightly fade GIF on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .nav-button-wrapper { height: 120px; min-width: 140px; }
+  .nav-button-text { font-size: 1.3rem; }
+}
+
+@media (max-width: 720px) {
+  .nav-button-wrapper { height: 100px; min-width: 120px; }
+  .nav-button-text { font-size: 1.1rem; }
+}
+
+@media (max-width: 480px) {
+  .nav-button-wrapper { height: 88px; min-width: 100px; }
+  .nav-button-text { font-size: 1rem; }
+}.nav-button-text {
+  position: absolute;
+  z-index: 3;
+  font-family: "Overload Burn", sans-serif; /* Add your font here */
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #fff;
+  text-align: center;
+  pointer-events: none;
+  text-shadow: 0 3px 8px rgba(0,0,0,0.6);
+}/* Featured tarot card panel */
+.tarot‑feature {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: -200px auto 2rem auto; /* lifts it over the hero */
+  padding: 0 1rem;
+  pointer-events: auto;
+}
+
+.tarot‑feature‑content {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  max-width: 900px;
+  width: 100%;
+}
+
+.tarot‑feature‑preview img {
+  width: 180px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.tarot‑feature‑text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tarot‑feature‑text h2 {
+  font-family: "Overload Burn", sans-serif;
+  font-size: 2.8rem;
+  margin: 0;
+  color: #222;
+}
+
+.tarot‑feature‑text p {
+  font-size: 1.1rem;
+  color: #444;
+  margin: 0.25rem 0;
+}
+
+.btn {
+  display: inline‑block;
+  margin-top: 0.75rem;
+  padding: 0.75rem 1.6rem;
+  background: #2337ff;
+  color: white;
+  font‑weight: bold;
+  text‑align: center;
+  border-radius: 6px;
+  text‑decoration: none;
+  font‑size: 1.1rem;
+  transition: background 0.2s ease;
+}
+
+.btn:hover {
+  background: #000d8a;
+}
+
+/* Make sure it overlaps nicely on smaller screens */
+@media (max-width: 1024px) {
+  .tarot‑feature‑content { flex-direction: column; align-items: center; text-align: center; }
+  .tarot‑feature‑preview img { width: 160px; }
+}
+
+@media (max-width: 720px) {
+  .tarot‑feature { margin-top: -140px; }
+  .tarot‑feature‑text h2 { font-size: 2.2rem; }
+  .btn { font-size: 1rem; padding: 0.65rem 1.4rem; }
+}
+/* Tarot Feature Panel (featured card on top right of hero) */
+.tarot-feature {
+  position: absolute;      /* absolutely position over hero */
+  top: 10%;                /* adjust distance from top of hero */
+  right: 5%;               /* distance from right edge */
+  pointer-events: auto;
+  z-index: 10;             /* above hero image */
+}
+
+.hero-container {
+  position: relative;      /* parent must be relative for absolute positioning */
+}
+
+.tarot-feature-content {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  max-width: 900px;
+  width: auto;
 }
