@@ -3,15 +3,13 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import { ViewTransitions } from 'astro:transitions';
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<link rel="preload" href="/main image.png" as="image" fetchpriority="high" />
-		<ViewTransitions />
+		<link rel="preload" href="/main image.webp" as="image" fetchpriority="high" />
 		<style>
 			body {
 				background: white;
@@ -62,12 +60,12 @@ import { ViewTransitions } from 'astro:transitions';
 	<body>
 		<Header />
 		<div class="hero-container">
-			<img class="hero-image" src="/main image.png" alt="Main Banner" />
+			<img class="hero-image" src="/main image.webp" alt="Main Banner" />
 		</div>
 			
 			<!-- Full-bleed banner: placed outside main so it matches the hero width -->
 			<section class="full-box" id="fullBox">
-				<img class="bg" id="firstBg" src="/about page banner.png" alt="Full banner" />
+				<img class="bg" id="firstBg" src="/about page banner.webp" alt="Full banner" />
 				<div class="gordillo-box" id="gordilloBox">
 					<h3>Jacob Gordillo</h3>
 					<p id="gordilloText">Jacob Gordillo is a graduated designer driven by a passion for both politics and imaginative worldbuilding and storytelling. His work ranges from political media, adversising, merchandise, and visual communication, alongside fantasy art and game design.</p>

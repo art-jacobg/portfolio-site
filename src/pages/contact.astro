@@ -3,15 +3,13 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import { ViewTransitions } from 'astro:transitions';
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead title={`Contact | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
-		<link rel="preload" href="/contact banner.png" as="image" fetchpriority="high" />
-		<ViewTransitions />
+		<link rel="preload" href="/contact banner.webp" as="image" fetchpriority="high" />
 		<style>
 			.hero-container { margin: 0; padding: 0; width: 100%; position: relative; background: white; }
 			.hero-image { width: 100%; height: auto; display: block; margin: 0; padding: 0; }
@@ -23,7 +21,7 @@ import { ViewTransitions } from 'astro:transitions';
 	<body>
 		<Header />
 		<div class="hero-container">
-			<img class="hero-image" src="/contact banner.png" alt="Contact Banner" />
+			<img class="hero-image" src="/contact banner.webp" alt="Contact Banner" />
 			<h1 class="page-title">CONTACT</h1>
 		</div>
 		<main>

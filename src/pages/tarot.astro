@@ -3,7 +3,6 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import { ViewTransitions } from 'astro:transitions';
 
 const tarotCards = Array.from({ length: 22 }, (_, i) => i);
 ---
@@ -12,7 +11,6 @@ const tarotCards = Array.from({ length: 22 }, (_, i) => i);
 <html lang="en">
   <head>
     <BaseHead title={`Portfolio Tarot | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
-    <ViewTransitions />
 
     <style>
       body { margin: 0; font-family: 'JAVATEXT', sans-serif; }
@@ -157,8 +155,7 @@ const tarotCards = Array.from({ length: 22 }, (_, i) => i);
     <Header />
 
     <div class="hero-container">
-      <img class="hero-image" src="/portfolio banner.png" alt="Portfolio Banner" />
-      <h1 class="page-title">The January 6th Tarot Deck</h1>
+      <img class="hero-image" src="/portfolio banner.webp" alt="Portfolio Banner" />
 
       <!-- Descriptions -->
       <p class="tarot-description">This project is a visual retelling of the story of Donald Trump's assault on the country and our democracy through his and his allies’ actions leading up to January 6th. It was intended to be a cautionary piece in response to Donald Trump’s potential victory in the 2025 presidential election, and the looming fascist presence that accompanied him. Through the events of January 6th, there was no doubt of what was to come, and what is now transpiring.</p>
@@ -169,10 +166,10 @@ const tarotCards = Array.from({ length: 22 }, (_, i) => i);
         {tarotCards.map((i) => (
           <div 
             class="tarot-card"
-            data-front={`/portfolio/tarot/${i}.png`}
-            data-back={`/portfolio/tarot/${i} back.png`}
+            data-front={`/portfolio/tarot/${i}.webp`}
+            data-back={`/portfolio/tarot/${i} back.webp`}
           >
-            <img src={`/portfolio/tarot/${i}.png`} alt={`Tarot card ${i}`} />
+            <img src={`/portfolio/tarot/${i}.webp`} alt={`Tarot card ${i}`} />
           </div>
         ))}
       </div>

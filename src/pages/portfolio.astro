@@ -3,15 +3,13 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import { ViewTransitions } from 'astro:transitions';
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <BaseHead title={`Portfolio | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
-    <link rel="preload" href="/portfolio banner.png" as="image" fetchpriority="high" />
-    <ViewTransitions />
+    <link rel="preload" href="/portfolio banner 2.webp" as="image" fetchpriority="high" />
     <style>
       /* Hero Banner */
       .hero-container {
@@ -39,32 +37,92 @@ import { ViewTransitions } from 'astro:transitions';
         z-index: 10;
       }
 
-      /* Featured Tarot Panel - top right of hero */
+      /* Featured Tarot Panel - right side of hero */
       .tarot-feature {
         position: absolute;
-        top: 12%;
-        right: 48.3%;
+        top: 16%;
+        right: 4%;
         pointer-events: auto;
-        z-index: 0;
+        z-index: 5;
         display: flex;
         justify-content: flex-end;
       }
       .tarot-feature-content {
-    padding: 2rem 2.5rem;       /* bigger padding */
-    max-width: 1100px;          /* increase the max width */
-    border-radius: 16px;        /* optional: slightly bigger corners */
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2); /* optional: stronger shadow */
+        padding: 1.5rem 2rem;
+        max-width: 700px;
+        width: min(700px, 92vw);
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        background: rgba(255,255,255,0.96);
+        backdrop-filter: blur(12px);
       }
       .tarot-feature-preview img {
-    width: 240px;   /* increase width from 180px */
-    border-radius: 10px;
-    object-fit: cover;
+        width: 200px;
+        border-radius: 10px;
+        object-fit: cover;
       }
       .tarot-feature-text {
         flex: 1;
         display: flex;
         flex-direction: column;
         gap: .5rem;
+      }
+      .portfolio-overlay {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .portfolio-overlay-box {
+        position: absolute;
+        padding: 2rem 2.5rem;
+        max-width: 640px;
+        width: min(640px, 92vw);
+        border-radius: 18px;
+        background: rgba(255,255,255,0.95);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.16);
+        border: 1px solid rgba(0,0,0,0.08);
+        pointer-events: auto;
+      }
+      .portfolio-box--right {
+        right: 4%;
+      }
+      .portfolio-box--left {
+        left: 4%;
+      }
+      .overlay-box-2 { top: 38%; }
+      .overlay-box-3 { top: 56%; }
+      .overlay-box-4 { top: 74%; }
+      .portfolio-box-title {
+        font-family: "JAVATEXT";
+        font-size: 2.25rem;
+        margin: 0 0 0.75rem;
+        color: #222;
+      }
+      .portfolio-box-text {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: #444;
+        margin: 0 0 1.25rem;
+      }
+      .portfolio-overlay-box a.btn,
+      .tarot-feature-content a.btn {
+        display: inline-block;
+      }
+      @media (max-width: 1024px) {
+        .tarot-feature,
+        .portfolio-overlay-box {
+          position: relative;
+          top: auto;
+          left: auto;
+          right: auto;
+          margin: 0 auto 1.5rem;
+          width: min(92vw, 640px);
+        }
+        .portfolio-overlay {
+          position: relative;
+          inset: auto;
+          padding-top: 0;
+        }
       }
       .tarot-feature-text h2 {
         font-family: "JAVATEXT";
@@ -110,14 +168,14 @@ import { ViewTransitions } from 'astro:transitions';
 
     <!-- Hero Banner -->
     <div class="hero-container">
-      <img class="hero-image" src="/portfolio banner.png" alt="Portfolio Banner" />
+      <img class="hero-image" src="/portfolio banner 2.webp" alt="Portfolio Banner" />
       <h1 class="page-title">PORTFOLIO</h1>
 
       <!-- Featured Tarot Card Panel -->
       <section class="tarot-feature">
         <div class="tarot-feature-content">
           <div class="tarot-feature-preview">
-            <img src="/portfolio/tarot/0.png" alt="January 6th Tarot cards preview" />
+            <img src="/portfolio/tarot/0.webp" alt="January 6th Tarot cards preview" />
           </div>
           <div class="tarot-feature-text">
             <h2>January 6th Tarot Cards</h2>
@@ -126,6 +184,23 @@ import { ViewTransitions } from 'astro:transitions';
           </div>
         </div>
       </section>
+      <div class="portfolio-overlay">
+        <section class="portfolio-overlay-box portfolio-box--left overlay-box-2">
+          <h2 class="portfolio-box-title">Illustrative Works</h2>
+          <p class="portfolio-box-text">A curated selection of illustration projects, character art, editorial pieces, and concept visuals that show creative storytelling through image-making.</p>
+          <a href="/portfolio/illustrative" class="btn">Explore Illustrations</a>
+        </section>
+        <section class="portfolio-overlay-box portfolio-box--right overlay-box-3">
+          <h2 class="portfolio-box-title">Non-Illustrative Works</h2>
+          <p class="portfolio-box-text">Design systems, branding, motion concepts, and layout-driven work that focuses on visual communication beyond illustration.</p>
+          <a href="/portfolio/non-illustrative" class="btn">View Non-Illustrative</a>
+        </section>
+        <section class="portfolio-overlay-box portfolio-box--left overlay-box-4">
+          <h2 class="portfolio-box-title">Upcoming Projects</h2>
+          <p class="portfolio-box-text">Sneak peeks at projects in progress, new creative directions, and upcoming collaborations that are currently being developed.</p>
+          <a href="/portfolio/upcoming" class="btn">See Upcoming</a>
+        </section>
+      </div>
     </div>
 
     <Footer />
