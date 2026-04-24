@@ -5,9 +5,9 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & { overlayText?: boolean };
 
-const { title, description, pubDate, updatedDate, heroImage, heroBackground, pageTitle } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, heroBackground, pageTitle, overlayText } = Astro.props;
 ---
 
 <html lang="en">
@@ -82,11 +82,28 @@ const { title, description, pubDate, updatedDate, heroImage, heroBackground, pag
 		<Header />
 		<main>
 			<article>
-				<div class="hero-image" style={heroBackground && heroImage ? `background-image: url('${heroImage}'); height: 50vh;` : ''}>
+				<div class="hero-image" style={heroBackground && heroImage ? `background-image: url('${heroImage}'); ${overlayText ? 'min-height: 50vh;' : 'height: 50vh;'}` : ''}>
 					{!heroBackground && heroImage && <img width={1020} height={510} src={heroImage} alt="" />}
 					{heroBackground && pageTitle && <h1 class="hero-title">{pageTitle}</h1>}
+					{overlayText && <div class={`prose ${heroBackground ? 'hero-bg' : ''}`}>
+						<div class="title">
+							<div class="date">
+								<FormattedDate date={pubDate} />
+								{
+									updatedDate && (
+										<div class="last-updated-on">
+											Last updated on <FormattedDate date={updatedDate} />
+										</div>
+									)
+								}
+							</div>
+							<h1>{title}</h1>
+							<hr />
+						</div>
+						<slot />
+					</div>}
 				</div>
-				<div class={`prose ${heroBackground ? 'hero-bg' : ''}`}>
+				{!overlayText && <div class={`prose ${heroBackground ? 'hero-bg' : ''}`}>
 					<div class="title">
 						<div class="date">
 							<FormattedDate date={pubDate} />
@@ -102,7 +119,7 @@ const { title, description, pubDate, updatedDate, heroImage, heroBackground, pag
 						<hr />
 					</div>
 					<slot />
-				</div>
+				</div>}
 			</article>
 		</main>
 		<Footer />

@@ -1,0 +1,351 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+
+const illustrativeWorkGroups = [
+  {
+    id: 'concept-art',
+    title: 'Concept Art',
+    description: 'Conceptual character and creature illustrations.',
+    works: [
+      { src: '/portfolio/illustrative/concept art1.png', alt: 'Concept art 1' },
+      { src: '/portfolio/illustrative/concept art2.webp', alt: 'Concept art 2' },
+      { src: '/portfolio/illustrative/concept art3.webp', alt: 'Concept art 3' },
+      { src: '/portfolio/illustrative/concept art4.webp', alt: 'Concept art 4' },
+      { src: '/portfolio/illustrative/concept art5.webp', alt: 'Concept art 5' },
+      { src: '/portfolio/illustrative/concept artmonster1.png', alt: 'Concept art monster 1' },
+      { src: '/portfolio/illustrative/concept artmonster2.webp', alt: 'Concept art monster 2' },
+      { src: '/portfolio/illustrative/concept artmonster3.webp', alt: 'Concept art monster 3' },
+    ],
+  },
+  {
+    id: 'commissioned-plushies',
+    title: 'Commissioned Plushies',
+    description: 'Custom plush character designs and concepts.',
+    works: [
+      { src: '/portfolio/illustrative/ales plushi.webp', alt: 'Ales plushie' },
+      { src: '/portfolio/illustrative/eligos plushi.webp', alt: 'Eligos plushie' },
+      { src: '/portfolio/illustrative/fen plushi.webp', alt: 'Fen plushie' },
+      { src: '/portfolio/illustrative/gwydion plushi.webp', alt: 'Gwydion plushie' },
+      { src: '/portfolio/illustrative/lucy plushi.webp', alt: 'Lucy plushie' },
+      { src: '/portfolio/illustrative/pen plushi.webp', alt: 'Pen plushie' },
+      { src: '/portfolio/illustrative/vi plushi.webp', alt: 'Vi plushie' },
+    ],
+  },
+  {
+    id: 'fantasy-art',
+    title: 'Fantasy Art',
+    description: 'Fantasy-themed illustrations and character designs.',
+    works: [
+      { src: '/portfolio/illustrative/Eligos Portrait painted (1).webp', alt: 'Eligos portrait painted' },
+      { src: '/portfolio/illustrative/gloria portrait.webp', alt: 'Gloria portrait' },
+      { src: '/portfolio/illustrative/Mod sword comps.png', alt: 'Mod sword comps' },
+      { src: '/portfolio/illustrative/cartonntest2.png', alt: 'Cartonntest 2' },
+      { src: '/portfolio/illustrative/item1.webp', alt: 'Illustrative item 1' },
+      { src: '/portfolio/illustrative/item2.webp', alt: 'Illustrative item 2' },
+      { src: '/portfolio/illustrative/item3.webp', alt: 'Illustrative item 3' },
+      { src: '/portfolio/illustrative/item4.webp', alt: 'Illustrative item 4' },
+      { src: '/portfolio/illustrative/item5.webp', alt: 'Illustrative item 5' },
+      { src: '/portfolio/illustrative/item6.webp', alt: 'Illustrative item 6' },
+      { src: '/portfolio/illustrative/item7.webp', alt: 'Illustrative item 7' },
+      { src: '/portfolio/illustrative/item8.webp', alt: 'Illustrative item 8' },
+      { src: '/portfolio/illustrative/item9.webp', alt: 'Illustrative item 9' },
+      { src: '/portfolio/illustrative/item10.webp', alt: 'Illustrative item 10' },
+      { src: '/portfolio/illustrative/item11.webp', alt: 'Illustrative item 11' },
+      { src: '/portfolio/illustrative/item12.webp', alt: 'Illustrative item 12' },
+      { src: '/portfolio/illustrative/item13.webp', alt: 'Illustrative item 13' },
+      { src: '/portfolio/illustrative/item14.webp', alt: 'Illustrative item 14' },
+      { src: '/portfolio/illustrative/item15.webp', alt: 'Illustrative item 15' },
+    ],
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={`Illustrative Works | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+
+    <style>
+      body { margin: 0; font-family: 'JAVATEXT', sans-serif; }
+
+      /* Hero */
+      .hero-container {
+        position: relative;
+        width: 100%;
+        min-height: 150vh;
+        overflow: visible; /* allow modal outside */
+      }
+
+      .hero-image {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+        filter: brightness(0.7) contrast(1.1) saturate(1.2) hue-rotate(210deg);
+      }
+
+      .page-title {
+        font-family: "JAVATEXT";
+        font-size: 6.5rem;
+        color: white;
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        z-index: 20;
+        margin: 0;
+      }
+
+      .work-description {
+        position: absolute;
+        left: 2.7rem;
+        max-width: 1700px;
+        color: white;
+        font-size: 1.4rem;
+        line-height: 1.5;
+        z-index: 20;
+      }
+
+      .work-description:first-of-type { top: 9rem; }
+      .work-description:last-of-type { top: 17rem; }
+
+      /* Dropdown Selector */
+      .category-selector {
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        z-index: 20;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .category-selector select {
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+        background: white;
+        cursor: pointer;
+      }
+
+      .category-selector label {
+        font-weight: bold;
+        margin-right: 0.5rem;
+        color: #333;
+      }
+
+      .works-grid {
+        position: relative;
+        z-index: 10;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        justify-items: center;
+        gap: 3rem;
+        padding-top: 0;
+        padding-bottom: 0;
+        max-width: 1400px;
+        margin: auto;
+      }
+
+      .work-item {
+        width: 300px;
+        height: 500px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .work-item:hover { transform: scale(1.07); }
+      .work-item:active { transform: scale(0.95); } /* shrink when clicked */
+
+      .work-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* do not crop */
+        border-radius: 16px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.45);
+        background: white;
+      }
+
+      /* Modal */
+      .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s ease;
+      }
+
+      .modal.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .modal-card {
+        width: 500px;
+        height: 875px;
+        perspective: 1400px;
+        transform: scale(0.9);
+        transition: transform 0.4s ease;
+      }
+
+      .modal.active .modal-card { transform: scale(1); }
+
+      .modal-inner {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transition: transform 0.7s;
+        transform-style: preserve-3d;
+      }
+
+      .modal-card:hover .modal-inner { transform: rotateY(180deg); }
+
+      .modal-front,
+      .modal-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+      }
+
+      .modal-front img,
+      .modal-back img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 0 80px rgba(0,0,0,0.8);
+        background: white;
+      }
+
+      .modal-back { transform: rotateY(180deg); }
+    </style>
+  </head>
+
+  <body>
+    <Header />
+
+    <div class="hero-container">
+      <img class="hero-image" src="/portfolio banner.webp" alt="Portfolio Banner" />
+
+      <!-- Descriptions -->
+      <p class="work-description">A curated selection of illustration projects, character art, editorial pieces, and concept visuals that show creative storytelling through image-making.</p>
+      <p class="work-description">These works demonstrate my skills in various illustration techniques and styles.</p>
+
+      <!-- Category Selector -->
+      <div class="category-selector">
+        <label for="category-select">Select Category:</label>
+        <select id="category-select">
+          {illustrativeWorkGroups.map(group => (
+            <option value={group.id}>{group.title}</option>
+          ))}
+        </select>
+      </div>
+
+      <!-- Works Display -->
+      {illustrativeWorkGroups.map(group => (
+        <section class={`work-group ${group.id}`} style="display: none;">
+          <h2>{group.title}</h2>
+          <p class="group-description">{group.description}</p>
+          <div class="works-grid">
+            {group.works.map(work => (
+              <div
+                class="work-item"
+                data-front={work.src}
+                data-back={work.back || ''}
+              >
+                <img src={work.src} alt={work.alt} />
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+      <div class="modal-card">
+        <div class="modal-inner">
+          <div class="modal-front">
+            <img id="modalFront" src="" />
+          </div>
+          <div class="modal-back">
+            <img id="modalBack" src="" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const modal = document.getElementById("modal");
+      const modalFront = document.getElementById("modalFront");
+      const modalBack = document.getElementById("modalBack");
+      const categorySelect = document.getElementById("category-select");
+      const workGroups = document.querySelectorAll(".work-group");
+
+      // Show first category by default
+      if (workGroups.length > 0) {
+        workGroups[0].style.display = 'block';
+      }
+
+      // Handle category selection
+      categorySelect.addEventListener("change", (e) => {
+        const selectedId = e.target.value;
+        
+        // Hide all groups
+        workGroups.forEach(group => {
+          group.style.display = 'none';
+        });
+        
+        // Show selected group
+        const selectedGroup = document.querySelector(`.${selectedId}`);
+        if (selectedGroup) {
+          selectedGroup.style.display = 'block';
+        }
+      });
+
+      // Modal functionality
+      const items = document.querySelectorAll(".work-item");
+
+      items.forEach(item => {
+        item.addEventListener("click", () => {
+          modalFront.src = item.dataset.front;
+          const backSrc = item.dataset.back;
+
+          if (backSrc) {
+            modalBack.src = backSrc;
+            modalBack.parentElement.style.display = '';
+          } else {
+            modalBack.src = '';
+            modalBack.parentElement.style.display = 'none';
+          }
+
+          modal.classList.add("active");
+        });
+      });
+
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          modal.classList.remove("active");
+          setTimeout(() => {
+            modalFront.src = "";
+            modalBack.src = "";
+          }, 300);
+        }
+      });
+    </script>
+
+    <Footer />
+  </body>
+</html>
