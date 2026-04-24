@@ -119,7 +119,7 @@ pre>code{all:unset}
 
 /* THIS is your red-box placement system */
 .wizard-gif{
-  position:absolute;
+  position:relative;
 
   /* tweak these 3 for positioning */
   left:8%;
