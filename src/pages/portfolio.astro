@@ -10,212 +10,378 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
   <head>
     <BaseHead title={`Portfolio | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
     <link rel="preload" href="/portfolio banner 2.webp" as="image" fetchpriority="high" />
-   <style>
-  /* Hero Banner */
-  .hero-container {
-    width: 100%;
-    position: relative;
-    background: white;
-  }
 
-  .hero-image {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
+    <style>
+      /* ── HERO WRAPPER ─────────────────────────────────────────── */
+      .hero-container {
+        display: grid;          /* stack image + overlay in same cell */
+        width: 100%;
+      }
 
-  .page-title {
-    font-family: "Superglue";
-    font-size: 8rem;
-    color: white;
-    position: absolute;
-    top: 2rem;
-    left: 2rem;
-    margin: 0;
-    z-index: 10;
-  }
+      .hero-image {
+        grid-area: 1 / 1;
+        width: 100%;
+        height: auto;
+        display: block;
+      }
 
-  /* GRID LAYOUT */
-  .portfolio-overlay {
-    position: absolute;
-    top: 0.75%;
-    right: 0%;
-    bottom: 50%;
-    left: 02%;
+      .page-title {
+        font-family: "Superglue";
+        font-size: 8rem;
+        color: white;
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        margin: 0;
+        z-index: 10;
+        pointer-events: none;
+      }
 
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    column-gap: 0.001rem;
-    row-gap: 6.5rem;
+      /* ── OVERLAY GRID ─────────────────────────────────────────── */
+      .portfolio-overlay {
+        grid-area: 1 / 1;       /* sits on top of hero image */
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        grid-template-rows: repeat(3, 300px);
+        gap: 6rem;
+        padding: 11rem 3% 2rem;
+        align-self: stretch;
+        position: relative;     /* needed for .page-title absolute */
+      }
 
-    padding: 8rem 6%;
-  }
+      /* ── BOX PLACEMENT ────────────────────────────────────────── */
+      .portfolio-overlay-box {
+        border-radius: 12px;
+        background-image: none;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        overflow: hidden;
+        padding: 1rem;
+        display: flex;
+        align-items: center;  /* center content vertically */
+        padding-top: 1.5rem;
+        position: relative;
+      }
 
-  /* BOXES */
-  .portfolio-overlay-box {
-    width: 90%;
-    height: 140%;
-    padding: 7rem;
-    border-radius: 8px;
+      .portfolio-overlay-box::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url('/box animation slow.webp');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        z-index: 0;
+      }
 
-    background-image: url('/box animation slow.webp');
-    background-size: cover;
-    background-position: center;
+      .portfolio-overlay-box--large {
+        grid-column: 1;
+        grid-row: 1 / 4;        /* tall left box */
+        min-height: 200px;
+        padding: 0;
+        overflow: hidden;
+        background-image: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-    position: relative;
-    pointer-events: auto;
-  }
+      .portfolio-overlay-box--large::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url('/box animation slow.webp');
+        background-position: 35% 0%;
+        background-repeat: no-repeat;
+        background-size: contain;
+        z-index: 0;
+      }
 
-  /* FLEX INSIDE BOX */
-  .portfolio-boxes {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    height: 100%;
-  }
+      .portfolio-overlay-box--large .portfolio-boxes {
+        position: relative;
+        z-index: 1;
+        background: transparent;
+        box-shadow: none;
+        padding: 2rem;
+        width: 95%;
+        height: auto;
+        max-width: 900px;
+        margin: 0 auto;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+      }
 
-  /* DEFAULT IMAGE STYLE */
-  .portfolio-previews img {
-    width: 150px;
-    height: auto;
-    border-radius: 10px;
-    object-fit: cover;
-    position: relative;
-    z-index: 10;
-  }
+      .portfolio-overlay-box:not(.portfolio-overlay-box--large)::before {
+        background-size: contain;
+      }
 
-  /* ✅ SPECIAL IMAGE (THIS IS THE FIX YOU WANTED) */
-  .concept-art5 {
-    width: 200px;
-    height: 330px;
-    object-fit: cover;
-  }
+      .portfolio-overlay-box--top { grid-column: 2; grid-row: 1; height: 450px; }
+      .portfolio-overlay-box--mid { grid-column: 2; grid-row: 2; height: 450px; }
+      .portfolio-overlay-box--bottom { grid-column: 2; grid-row: 3; height: 450px; }
 
-  /* TEXT */
-  .tarot-text {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
-  }
+      .portfolio-overlay-box:not(.portfolio-overlay-box--large) .portfolio-boxes {
+        position: relative;
+        z-index: 1;
+        box-shadow: none;
+      }
 
-  .portfolio-box-text {
-    font-size: 0.95rem;
-    line-height: 1.5;
-    color: #444;
-    margin: 0 0 1rem 0;
-    word-wrap: break-word;
-  }
+      .portfolio-overlay-box--large .tarot-previews img {
+        width: 220px;
+        height: auto;
+         position: absolute;
+         bottom: 0.1rem;
+        left: 100px;
+        
+      }
+.portfolio-overlay-box--large .portfolio-previews img {
+        width: 260px;
+        height: auto;
+      }
+      /* ── INNER CARD ───────────────────────────────────────────── */
+      .portfolio-boxes {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 100%;
+  height: auto;             /* don't stretch to fill the box */
+  background: transparent;
+  border-radius: 10px;
+  padding: 1rem;
+  box-sizing: border-box;
+      }
 
-  /* BUTTON */
-  .btn {
-    display: inline-block;
-    margin-top: 0.75rem;
-    padding: 0.75rem 1.6rem;
-    background: #1fb3ee;
-    color: white;
-    font-weight: bold;
-    text-align: center;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 1.1rem;
-    transition: background 0.2s ease;
-  }
+      /* ── PREVIEW IMAGES ───────────────────────────────────────── */
+      .portfolio-previews img {
+        width: 150px;
+        height: auto;
+        border-radius: 10px;
+        object-fit: cover;
+        flex-shrink: 0;
+      }
 
-  .btn:hover {
-    background: #68a6ca;
-  }
+      .concept-art5 {
+        width: 150px;
+        height: 220px;
+        object-fit: cover;
+      }
 
-  /* MOBILE */
-  @media (max-width: 1024px) {
-    .portfolio-overlay {
-      position: relative;
-      left: auto;
-      grid-template-columns: 1fr;
-      grid-template-rows: auto;
-    }
+      /* ── TEXT COLUMN ──────────────────────────────────────────── */
+      .column-text {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: left;
 
-    .portfolio-overlay-box {
-      width: 100%;
-      height: auto;
-    }
+      }
+      .tarot-main {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        text-align: left;
+        right: 4.3rem;
+        
+      }
+      .wrapper {
+  position: relative;
+}
 
-    .concept-art5 {
-      width: 160px;
-      height: 340px;
-    }
-  }
-</style>
+.tarot-main {
+  position: absolute;
+  bottom: 0.1rem;
+  left: 20rem;
+}
+
+      .column-text h2 {
+        margin: 0;
+        font-size: 1.15rem;
+        line-height: 1.2;
+      }
+
+      .portfolio-box-text {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: #444;
+        margin: 0;
+      }
+.tarot-main h2 {
+        margin: 0;
+        font-size: 4rem;
+        line-height: 1.1;
+      }
+
+      .portfolio-box-main {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: #444;
+        margin: 0;
+      }
+      /* ── VIDEO BUTTON ─────────────────────────────────────────── */
+      .portfolio-btn {
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 0.5rem;
+      }
+
+      .portfolio-btn-wrapper {
+        position: relative;
+        width: 450px;
+        height: 80px;
+        border-radius: 4px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s ease;
+      }
+
+      .portfolio-btn-wrapper:hover {
+        transform: scale(1.05);
+      }
+
+      .portfolio-btn-wrapper video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+      }
+
+      .btn-fast  { opacity: 1; z-index: 1; }
+      .btn-slow  { opacity: 0; z-index: 2; transition: opacity 0.25s ease; }
+      .portfolio-btn-wrapper:hover .btn-slow { opacity: 1; }
+
+      .portfolio-btn-text {
+        position: relative;
+        z-index: 3;
+        display: inline-block;
+        transform: scaleY(1.7) translateY(2px);
+        color: white;
+        font-size: 0.7rem;
+        font-family: "Superglue";
+      }
+
+      /* ── MOBILE ───────────────────────────────────────────────── */
+      @media (max-width: 768px) {
+        .portfolio-overlay {
+  grid-area: 1 / 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  gap: 0.75rem;
+  padding: 5rem 2% 1.5rem;
+  align-self: stretch;
+  position: relative;
+  overflow: hidden;         /* clip anything that bleeds out */
+}
+
+        .portfolio-overlay-box--large,
+        .portfolio-overlay-box--top,
+        .portfolio-overlay-box--mid,
+        .portfolio-overlay-box--bottom {
+          grid-column: 1;
+          grid-row: auto;
+        }
+
+        .portfolio-btn-wrapper {
+          width: 160px;
+          height: 48px;
+        }
+      }
+    </style>
   </head>
+
   <body>
     <Header />
 
-    <!-- Hero Banner -->
     <div class="hero-container">
-      <img class="hero-image" src="/portfolio banner 2.webp" alt="Portfolio Banner" />
-      <h1 class="page-title">PORTFOLIO</h1>
-
+      <img class="hero-image" src="/portfolio banner 2.webp" alt="Portfolio banner" />
       <div class="portfolio-overlay">
-  <!-- TAROT (unchanged) -->
-  <section class="portfolio-overlay-box portfolio-box--left overlay-box-1">
-    <div class="portfolio-boxes">
-      <div class="portfolio-previews">
-        <img src="/portfolio/tarot/0.webp" alt="January 6th Tarot cards preview" />
-      </div>
-      <div class="tarot-text">
-        <h2 class="portfolio-box-title">January 6th Tarot Cards</h2>
-        <p class="portfolio-box-text">Explore the full tarot card project — front and back artwork included.</p>
-        <a href="/tarot" class="btn">View More</a>
-      </div>
-    </div>
-  </section>
+        <h1 class="page-title">PORTFOLIO</h1>
 
-  <!-- ILLUSTRATIVE -->
-  <section class="portfolio-overlay-box portfolio-box--right overlay-box-2">
-    <div class="portfolio-boxes">
-      <div class="portfolio-previews">
-      <img class="concept-art5" src="/portfolio/illustrative/concept art5.webp" />
-      <img class="concept-art5" src="/portfolio/illustrative/concept art4.webp" />
-      <img class="concept-art5" src="/portfolio/illustrative/concept art1.webp" />
-      </div>
-      <div class="tarot-text">
-        <h2 class="portfolio-box-title">Illustrative Works</h2>
-        <p class="portfolio-box-text">A curated selection of illustration projects, character art, editorial pieces, and concept visuals that show creative storytelling through image-making.</p>
-        <a href="/portfolio/illustrative" class="btn">Explore Illustrations</a>
-      </div>
-    </div>
-  </section>
+        <!-- ILLUSTRATIVE -->
+        <section class="portfolio-overlay-box portfolio-overlay-box--top">
+          <div class="portfolio-boxes">
+            <div class="portfolio-previews">
+              <img class="concept-art5" src="/portfolio/illustrative/concept art5.webp" alt="Illustrative work preview" />
+            </div>
+            <div class="column-text">
+              <h2>Illustrative Works</h2>
+              <p class="portfolio-box-text">Character art, editorial pieces, and concept visuals.</p>
+              <a href="/portfolio/illustrative" class="portfolio-btn">
+                <div class="portfolio-btn-wrapper">
+                  <video src="/button home slow.webm" class="btn-fast" muted autoplay loop playsinline></video>
+                  <video src="/button home fast.webm" class="btn-slow" muted autoplay loop playsinline></video>
+                  <span class="portfolio-btn-text">Explore</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </section>
 
-  <!-- NON-ILLUSTRATIVE -->
-  <section class="portfolio-overlay-box portfolio-box--left overlay-box-3">
-    <div class="portfolio-boxes">
-      <div class="portfolio-previews">
-        <img class="preview-gif" src="/wizardjuice.gif" alt="Wizard Juice overlay" />
-      </div>
-      <div class="tarot-text">
-        <h2 class="portfolio-box-title">Non-Illustrative Works</h2>
-        <p class="portfolio-box-text">Design systems, branding, motion concepts, and layout-driven work that focuses on visual communication beyond illustration.</p>
-        <a href="/portfolio/non-illustrative" class="btn">View Non-Illustrative</a>
-      </div>
-    </div>
-  </section>
+        <!-- NON-ILLUSTRATIVE -->
+        <section class="portfolio-overlay-box portfolio-overlay-box--mid">
+          <div class="portfolio-boxes">
+            <div class="portfolio-previews">
+              <img src="/wizardjuice.gif" alt="Non-illustrative work preview" />
+            </div>
+            <div class="column-text">
+              <h2>Non-Illustrative Works</h2>
+              <p class="portfolio-box-text">Branding, motion, and layout-driven work.</p>
+              <a href="/portfolio/non-illustrative" class="portfolio-btn">
+                <div class="portfolio-btn-wrapper">
+                  <video src="/button about slow.webm" class="btn-fast" muted autoplay loop playsinline></video>
+                  <video src="/button about fast.webm" class="btn-slow" muted autoplay loop playsinline></video>
+                  <span class="portfolio-btn-text">See Work</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </section>
 
-  <!-- UPCOMING -->
-  <section class="portfolio-overlay-box portfolio-box--right overlay-box-4">
-    <div class="portfolio-boxes">
-      <div class="portfolio-previews">
-        <img src="/portfolio/upcoming/swordcomps.webp" alt="Upcoming projects preview" />
-      </div>
-      <div class="tarot-text">
-        <h2 class="portfolio-box-title">Upcoming Projects</h2>
-        <p class="portfolio-box-text">Sneak peeks at projects in progress, new creative directions, and upcoming collaborations that are currently being developed.</p>
-        <a href="/portfolio/upcoming" class="btn">See Upcoming</a>
-      </div>
-    </div>
-  </section>
+        <!-- UPCOMING -->
+        <section class="portfolio-overlay-box portfolio-overlay-box--bottom">
+          <div class="portfolio-boxes">
+            <div class="portfolio-previews">
+              <img src="/portfolio/upcoming/swordcomps.webp" alt="Upcoming project preview" />
+            </div>
+            <div class="column-text">
+              <h2>Upcoming Projects</h2>
+              <p class="portfolio-box-text">Sneak peeks at projects in progress.</p>
+              <a href="/portfolio/upcoming" class="portfolio-btn">
+                <div class="portfolio-btn-wrapper">
+                  <video src="/button contact slow.webm" class="btn-fast" muted autoplay loop playsinline></video>
+                  <video src="/button contact fast.webm" class="btn-slow" muted autoplay loop playsinline></video>
+                  <span class="portfolio-btn-text">See More</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </section>
 
-</div>
+        <!-- TAROT -->
+        <section class="portfolio-overlay-box portfolio-overlay-box--large">
+          <div class="portfolio-boxes">
+            <div class="tarot-previews">
+              <img src="/portfolio/tarot/0.webp" alt="Tarot card 6 preview" />
+            </div>
+            <div class="tarot-main">
+              <h2>January 6th Tarot Cards</h2>
+              <p class="portfolio-box-text"> Including the full collection both front and back, I created this tarot deck as my capstone for my bachelors in design and illustration. My goal was to narrativize the events surrounding January 6th to effectivly convey that it wasnt just a riot, but Donald Trump's genuine attempt to subvert our democracy. </p>
+              <a href="/tarot" class="portfolio-btn">
+                <div class="portfolio-btn-wrapper">
+                  <video src="/button portfolio slow.webm" class="btn-fast" muted autoplay loop playsinline></video>
+                  <video src="/button portfolio fast.webm" class="btn-slow" muted autoplay loop playsinline></video>
+                  <span class="portfolio-btn-text">See Collection</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </section>
+
+      </div>
     </div>
 
     <Footer />
