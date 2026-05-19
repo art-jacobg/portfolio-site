@@ -58,6 +58,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         box-sizing: border-box;
         max-width: 1400px;
         margin: 0 auto;
+        right: 3.75rem;
       }
 
       /* ─────────────────────────────────────────────────────────────
@@ -86,7 +87,8 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         flex-direction: row;
         align-items: center;
         gap: 2rem;
-        padding: 7.5rem;
+        padding: 8.5rem;
+         padding-top: 10rem;
       }
 
       .card--tarot .card-image {
@@ -105,6 +107,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       .card--tarot .card-text {
         flex: 1;
         min-width: 0;
+
       }
 
       .card--tarot .card-text h2 {
@@ -114,12 +117,24 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       }
 
       /* tarot button: inline in the text flow */
-      .portfolio-btn--tarot {
-        text-decoration: none;
-        display: inline-block;
-        margin-top: 0.5rem;
-        align-self: flex-start;
-      }
+.portfolio-btn--tarot {
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 1.5rem;
+  align-self: flex-start;
+  
+}
+
+/* tarot button wrapper — edit independently here */
+.portfolio-btn--tarot .portfolio-btn-wrapper {
+  width: 440px;
+  height: 82px;
+  
+}
+.portfolio-btn--tarot .portfolio-btn-text {
+  font-size: 0.8rem; /* change this value */
+  
+}
 
       /* ─────────────────────────────────────────────────────────────
          SMALL CARDS — right column
@@ -141,6 +156,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         flex-direction: column;
         align-items: flex-start;
         position: relative;
+        left: 3.75rem;
       }
 
       .card--upcoming {
@@ -157,41 +173,86 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         text-decoration: none;
         display: inline-block;
         position: absolute;
-        bottom: 3rem;
-        right: 0.75rem;
+        bottom: 3.5rem;
+        right: 4.2rem;
       }
 
       /* image thumbnails in small cards */
-      .card--illustrative .card-image img,
-      .card--non-illustrative .card-image img,
-      .card--upcoming .card-image img {
-        width: 90%;
-        height: 90px;
-        object-fit: cover;
-        border-radius: 6px;
-        display: block;
-        flex-shrink: 0;
-        
+    /* make sure the card is the anchor */
+.card--illustrative,
+.card--non-illustrative,
+.card--upcoming {
+  position: relative; /* already set, just confirming */
+}
+
+/* remove the shared translateY from thumbnails and go absolute */
+.card--illustrative .card-image img {
+  transform: none;
+  position: absolute;
+   bottom: 3.7rem;
+  left: 3.7rem;
+  width: auto%;
+  height: 50%;
+  object-fit: cover;
+}
+
+.card--non-illustrative .card-image img {
+  transform: none;
+  position: absolute;
+   bottom: 3rem;
+  left: 3.2rem;
+  width: auto;
+  height: 60%;
+  object-fit: cover;
+}
+
+.card--upcoming .card-image img {
+  transform: none;
+  position: absolute;
+   bottom: 3.7rem;
+  left: 3.7rem;
+  width: auto%;
+  height: 50%;
+  object-fit: cover;     
       }
 
       /* ─────────────────────────────────────────────────────────────
          CARD TEXT
       ───────────────────────────────────────────────────────────── */
       .card-text {
-        display: flex;
-        flex-direction: column;
-        gap: 0.35rem;
-        min-width: 0;
-      }
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+  /* remove the transform from here */
+}
+
+/* now each card's text is individually controllable */
+.card--illustrative .card-text {
+    transform: translateY(1rem) translateX(6rem);
+       padding-right:5.2rem;
+}
+
+.card--non-illustrative .card-text {
+      transform: translateY(2rem) translateX(5rem);
+      padding-right:4.5rem;
+}
+
+.card--upcoming .card-text {
+      transform: translateY(2rem) translateX(6rem);
+      padding-right:6rem;
+}
+    
 
       .card-text h2 {
         margin: 0;
         font-size: 1rem;
         line-height: 1.2;
+        
       }
 
       .card-text p {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
         line-height: 1.45;
         color: #444;
         margin: 0;
@@ -202,8 +263,8 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       ───────────────────────────────────────────────────────────── */
       .portfolio-btn-wrapper {
         position: relative;
-        width: 140px;
-        height: 32px;
+        width: 160px;
+        height: 42px;
         border-radius: 4px;
         overflow: hidden;
         display: flex;
@@ -236,6 +297,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         color: white;
         font-size: 0.55rem;
         font-family: "Superglue";
+        
       }
 
       /* ─────────────────────────────────────────────────────────────
@@ -288,7 +350,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         }
 
         .card--tarot .card-text h2 {
-          font-size: 1.8rem;
+          font-size: 1.7rem;
         }
 
         .card--illustrative .card-image img,
@@ -317,10 +379,8 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
           <div class="card-text">
             <h2>January 6th Tarot Cards</h2>
             <p>
-              Including the full collection both front and back, I created this tarot deck as my
-              capstone for my bachelor's in design and illustration. My goal was to narrativize the
-              events surrounding January 6th to effectively convey that it wasn't just a riot, but
-              Donald Trump's genuine attempt to subvert our democracy.
+              My goal was to narrativize the events surrounding January 6th to effectively convey that it wasn't just a riot, but
+              Donald Trump's genuine attempt to subvert our democracy. Including the full collection both front and back.
             </p>
             <a href="/tarot" class="portfolio-btn--tarot">
               <div class="portfolio-btn-wrapper">

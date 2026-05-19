@@ -16,18 +16,21 @@ const { title, description, pubDate, updatedDate, heroImage, heroBackground, pag
 		{heroImage && <link rel="preload" href={heroImage} as="image" fetchpriority="high" />}
 		<style>
 			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-				position: relative;
-			}
+  width: calc(100% - 2em);
+  max-width: 100%;
+  margin: 0;
+  position: relative;
+  overflow: visible;  /* add this */
+}
+
 			.hero-image {
-				width: 100%;
-				background-size: cover;
-				background-position: center;
-				position: relative;
-				background-color: white;
-			}
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  background-color: white;
+  overflow: visible;  /* add this */
+}
 			.hero-image img {
 				display: block;
 				margin: 0 auto;
@@ -46,12 +49,12 @@ const { title, description, pubDate, updatedDate, heroImage, heroBackground, pag
 			}
 			.hero-bg { color: white; }
 			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
+  width: 100%;
+  max-width: 100%;
+  margin: auto;
+  padding: 1.5em 15em;
+  color: rgb(var(--gray-dark));
+}
 			.title {
 				margin-bottom: 1em;
 				padding: 1em 0;

@@ -3,46 +3,351 @@ import Layout from '../layouts/BlogPost.astro';
 ---
 
 <Layout
-	title="About Jacob"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('2026-02-18')}
-	heroImage="/about page banner.webp"
-	heroBackground={true}
-	pageTitle="ABOUT"
-	overlayText={true}
+  title="About"
+  description="The artist in question"
+  pubDate={new Date('2026-02-18')}
+  heroImage="/about page banner.webp"
+  heroBackground={true}
+  pageTitle="ABOUT"
+  overlayText={true}
 >
-	<p>
-		Jacob Gordillo is a designer who graduated from the Herron School of Art and Design in Indianapolis Indiana with a bachelors in Design and Illustration. 
+  <style is:global>
+    .prose {
+      width: 100%;
+      max-width: 100%;
+      padding: 0.5em;
+      padding-bottom: 6rem;
+    }
+
+    .title { display: none; }
+    .date { display: none; }
+    hr { display: none; }
+
+    /* ───────── ANIMATION BOX ───────── */
+    .about-animbox {
+  position: relative;
+
+  width: min(1200px, 92vw);
+  margin: 6rem auto 7rem;
+
+  /* IMPORTANT: lets background define full height */
+  display: grid;
+
+  padding: clamp(3rem, 6vw, 6rem);
+  overflow: visible;
+}
+
+  .about-animbox-bg {
+  position: absolute;
+
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  z-index: 0;
+  border-radius: 10px;
+  pointer-events: none;
+
+  object-position: center;
+
+  transform: scale(1.3);
+  transform-origin: center;
+}
+    /* ───────── TWO COLUMN LAYOUT ───────── */
+.about-columns {
+  position: relative;
+  z-index: 1;
+    margin-top: 6%;
+
+  display: grid;
+  grid-template-columns: 1fr 2px 1fr;
+
+  gap: 0 2.5rem;
+
+  align-items: stretch; /* KEY FIX */
+}
+
+    .about-divider {
+      background: rgba(0, 0, 0, 0.2);
+      align-self: stretch;
+      border-radius: 2px;
+    }
+
+    /* ───────── SHARED COLUMN STYLES ───────── */
+    .about-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .about-section-title {
+      font-family: "Superglue", sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: #0e3947;
+      margin: 0 0 0.4rem;
+      text-transform: uppercase;
+    }
+
+    .about-dots {
+      display: flex;
+      gap: 0.4rem;
+    
+    }
 
 
+    /* ───────── LEFT COLUMN ───────── */
+    .about-name {
+      font-family: "Superglue", sans-serif;
+      font-size: clamp(1.4rem, 2.2vw, 2.2rem);
+      color: #111;
+      margin: 0;
+      line-height: 1.1;
+    }
 
-	<p>
-		Over the past eight years, as I've gotten more and more politically active, I've realized the importance of furthering democratic ideals. Seeing the opposition trample on not only our ideals, but the foundational ideas of Western liberalism that our country was built on has only served to fuel my passion for political action and our ideals. I've already volunteered twice with the organization Progressive Victory to do canvassing, door knocking, and voter registration, and I am eager to get more experience under my belt. I admire Indiana's Democratic Party, despite progress being an uphill battle in our state, you never stop fighting. I am eager to contribute my skills and ideas to support the goals of our party and to gain more experience as a professional.
-	</p>
+    .about-subtitle {
+      font-size: clamp(0.72rem, 0.95vw, 0.85rem);
+      color: #333;
+      line-height: 1.6;
+      margin: 0;
+      border-left: 3px solid #0099cc;
+      padding-left: 0.75rem;
+    }
 
-	<p>
-		As a designer, I have honed my skills in visual storytelling, branding, and communication, and I hope that I can use all I've learned to help connect with voters and amplify democratic ideals. In addition, I have experience using design software such as Adobe Photoshop and Illustrator and understand how to tailor designs for specific audiences, including through social media, email, and traditional marketing channels.
-	</p>
+    .about-col p.body {
+      margin: 0;
+      font-size: clamp(0.68rem, 0.95vw, 0.82rem);
+      line-height: 1.8;
+      color: #222;
+    }
 
-	<p>
-		
-</Layout>
-t consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+    .about-rule {
+      border: none;
+      border-top: 1px solid rgba(0,0,0,0.12);
+      margin: 0.25rem 0;
+      display: block !important;
+    }
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
+    .about-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
 
-	<img src="/about page banner.webp" alt="About Banner" />
+    .about-skills li {
+      font-size: 0.65rem;
+      background: rgba(0, 153, 204, 0.12);
+      border: 1px solid rgba(0, 153, 204, 0.35);
+      border-radius: 3px;
+      padding: 0.15rem 0.45rem;
+      color: #111;
+    }
+
+    /* ───────── RIGHT COLUMN ───────── */
+    .about-education {
+      font-size: clamp(0.68rem, 0.85vw, 0.78rem);
+      color: #333;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .about-education strong {
+      display: block;
+      color: #111;
+      font-size: 0.73rem;
+    }
+
+    .about-experience-item {
+      border-left: 2px solid rgba(0,153,204,0.4);
+      padding-left: 0.75rem;
+      margin: 0;
+    }
+
+    .about-experience-item strong {
+      display: block;
+      font-size: 0.75rem;
+      color: #111;
+      margin-bottom: 0.15rem;
+    }
+
+    .about-experience-item span {
+      font-size: 0.65rem;
+      color: #666;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .about-experience-item p {
+      font-size: 0.68rem !important;
+      color: #333;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* ───────── RESPONSIVE ───────── */
+    @media (max-width: 768px) {
+
+      .about-animbox {
+        width: 96vw;
+        padding: 2rem 1.25rem;
+		isolation: isolate;
+      }
+
+      .about-animbox-bg {
+        width: 135%;
+        height: 135%;
+      }
+
+      .about-columns {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .about-divider {
+        display: none;
+      }
+
+      .about-name {
+        font-size: 1.8rem;
+      }
+
+      .about-subtitle,
+      .about-col p.body,
+      .about-education,
+      .about-experience-item p {
+        font-size: 0.8rem !important;
+      }
+    }
+  </style>
+
+  <div class="about-animbox">
+    <img
+      class="about-animbox-bg"
+      src="/box animation slow1.webp"
+      alt=""
+      aria-hidden="true"
+    />
+
+    <div class="about-columns">
+
+      <!-- LEFT COLUMN -->
+      <div class="about-col">
+
+        <div class="about-dots">
+          <span></span><span></span><span></span>
+        </div>
+
+        <h2 class="about-name">
+          Jacob<br/>Gordillo
+        </h2>
+
+        <p class="about-subtitle">
+          Designer &amp; Editorial Illustrator<br/>
+          Herron School of Art &amp; Design<br/>
+          Indianapolis, Indiana
+        </p>
+
+        <hr class="about-rule" />
+
+        <p class="about-section-title">Artist Statement</p>
+
+        <p class="body">
+          Hi, I'm Jacob, an artist who graduated from the Herron School of Art
+          and Design with a bachelor's in Design and Illustration. I'm passionate about visual
+          storytelling, branding, and communication, with proficency in the Adobe Creative
+          Suite and an understanding of how to tailor designs for specific audiences across social
+          media, email, and traditional marketing channels.
+        </p>
+
+        <p class="body">
+          Over the past eight years, as I've become more politically active, I've realized the
+          importance of furthering democratic ideals. Seeing the opposition trample on the
+          foundational ideas of Western liberalism has only fueled my passion for political action.
+          I believe design is one of the most powerful tools we have to connect with voters and
+          communicate what's at stake. I admire Indiana's Democratic Party — despite progress being
+          an uphill battle, you never stop fighting.
+        </p>
+
+        <hr class="about-rule" />
+
+      </div>
+
+      <!-- DIVIDER -->
+      <div class="about-divider"></div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="about-col">
+
+        <!-- EDUCATION -->
+        <div>
+		<hr class="about-rule" />
+
+
+<hr class="about-rule" />
+          <p class="about-section-title">Education</p>
+
+          <p class="about-education">
+            <strong>BFA — Drawing &amp; Illustration</strong>
+            Herron School of Art and Design,<br/>
+            IU Indianapolis — 2025
+          </p>
+
+          <p class="about-education" style="margin-top:0.5rem">
+            <strong>AS — General Studies</strong>
+            Ivytech Community College,<br/>
+            Bloomington, IN — 2022
+          </p>
+        </div>
+
+        <hr class="about-rule" />
+
+        <!-- EXPERIENCE -->
+        <p class="about-section-title">Experience</p>
+
+        <div class="about-experience-item">
+          <strong>Progressive Victory — Cincinnati, OH</strong>
+          <span>Political Canvassing &amp; Voter Registration · Feb 2024</span>
+
+          <p>
+            Door knocking, canvassing, and voter registration. Developed communication skills and
+            hands-on experience working directly with voters and organizers.
+          </p>
+        </div>
+
+        <div class="about-experience-item">
+          <strong>Progressive Victory — Milwaukee, WI</strong>
+          <span>Political Canvassing &amp; Door Knocking · Oct 2024</span>
+
+          <p>
+            Built cohesive team communication, managed own workload, and accomplished goals
+            efficiently and independently.
+          </p>
+        </div>
+
+        <hr class="about-rule" />
+<div>
+  <p class="about-section-title">Skills</p>
+
+  <ul class="about-skills">
+    <li>Adobe Illustrator</li>
+    <li>Photoshop</li>
+    <li>InDesign</li>
+    <li>Vegas Movie Studio</li>
+    <li>Clip Studio Paint</li>
+    <li>Microsoft Office</li>
+    <li>Branding</li>
+    <li>Editorial Illustration</li>
+    <li>Political Advertising</li>
+  </ul>
+</div>
+      </div>
+
+    </div>
+  </div>
+
 </Layout>
