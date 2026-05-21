@@ -20,9 +20,10 @@ const illustrativeWorkGroups = [
       { src: '/portfolio/illustrative/concept artmonster3.webp', alt: 'Concept art monster 3' },
     ],
   },
+
   {
-    id: 'commissioned-plushies',
-    title: 'Commissioned Plushies',
+    id: 'commissioned-works',
+    title: 'Commissioned Works',
     description: 'Custom plush character designs and concepts.',
     works: [
       { src: '/portfolio/illustrative/ales plushi.webp', alt: 'Ales plushie' },
@@ -34,6 +35,7 @@ const illustrativeWorkGroups = [
       { src: '/portfolio/illustrative/vi plushi.webp', alt: 'Vi plushie' },
     ],
   },
+
   {
     id: 'fantasy-art',
     title: 'Fantasy Art',
@@ -42,22 +44,22 @@ const illustrativeWorkGroups = [
       { src: '/portfolio/illustrative/Eligos Portrait painted (1).webp', alt: 'Eligos portrait painted' },
       { src: '/portfolio/illustrative/gloria portrait.webp', alt: 'Gloria portrait' },
       { src: '/portfolio/illustrative/Mod sword comps.png', alt: 'Mod sword comps' },
-      { src: '/portfolio/illustrative/cartonntest2.png', alt: 'Cartonntest 2' },
-      { src: '/portfolio/illustrative/item1.webp', alt: 'Illustrative item 1' },
-      { src: '/portfolio/illustrative/item2.webp', alt: 'Illustrative item 2' },
-      { src: '/portfolio/illustrative/item3.webp', alt: 'Illustrative item 3' },
-      { src: '/portfolio/illustrative/item4.webp', alt: 'Illustrative item 4' },
-      { src: '/portfolio/illustrative/item5.webp', alt: 'Illustrative item 5' },
-      { src: '/portfolio/illustrative/item6.webp', alt: 'Illustrative item 6' },
-      { src: '/portfolio/illustrative/item7.webp', alt: 'Illustrative item 7' },
-      { src: '/portfolio/illustrative/item8.webp', alt: 'Illustrative item 8' },
-      { src: '/portfolio/illustrative/item9.webp', alt: 'Illustrative item 9' },
-      { src: '/portfolio/illustrative/item10.webp', alt: 'Illustrative item 10' },
-      { src: '/portfolio/illustrative/item11.webp', alt: 'Illustrative item 11' },
-      { src: '/portfolio/illustrative/item12.webp', alt: 'Illustrative item 12' },
-      { src: '/portfolio/illustrative/item13.webp', alt: 'Illustrative item 13' },
-      { src: '/portfolio/illustrative/item14.webp', alt: 'Illustrative item 14' },
-      { src: '/portfolio/illustrative/item15.webp', alt: 'Illustrative item 15' },
+      { src: '/portfolio/illustrative/cartonntest2.png', alt: 'Cartoon test' },
+      { src: '/portfolio/illustrative/item1.webp', alt: 'Item 1' },
+      { src: '/portfolio/illustrative/item2.webp', alt: 'Item 2' },
+      { src: '/portfolio/illustrative/item3.webp', alt: 'Item 3' },
+      { src: '/portfolio/illustrative/item4.webp', alt: 'Item 4' },
+      { src: '/portfolio/illustrative/item5.webp', alt: 'Item 5' },
+      { src: '/portfolio/illustrative/item6.webp', alt: 'Item 6' },
+      { src: '/portfolio/illustrative/item7.webp', alt: 'Item 7' },
+      { src: '/portfolio/illustrative/item8.webp', alt: 'Item 8' },
+      { src: '/portfolio/illustrative/item9.webp', alt: 'Item 9' },
+      { src: '/portfolio/illustrative/item10.webp', alt: 'Item 10' },
+      { src: '/portfolio/illustrative/item11.webp', alt: 'Item 11' },
+      { src: '/portfolio/illustrative/item12.webp', alt: 'Item 12' },
+      { src: '/portfolio/illustrative/item13.webp', alt: 'Item 13' },
+      { src: '/portfolio/illustrative/item14.webp', alt: 'Item 14' },
+      { src: '/portfolio/illustrative/item15.webp', alt: 'Item 15' },
     ],
   },
 ];
@@ -66,17 +68,28 @@ const illustrativeWorkGroups = [
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={`Illustrative Works | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+
+    <BaseHead
+      title={`Illustrative Works | ${SITE_TITLE}`}
+      description={SITE_DESCRIPTION}
+    />
 
     <style>
-      body { margin: 0; font-family: 'JAVATEXT', sans-serif; }
+      * {
+        box-sizing: border-box;
+      }
 
-      /* Hero */
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        background: #f5f5f5;
+      }
+
       .hero-container {
         position: relative;
         width: 100%;
-        min-height: 150vh;
-        overflow: visible; /* allow modal outside */
+        min-height: 100vh;
+        overflow: hidden;
       }
 
       .hero-image {
@@ -85,105 +98,373 @@ const illustrativeWorkGroups = [
         width: 100%;
         height: 100%;
         object-fit: cover;
-        z-index: 1;
-        filter: brightness(0.7) contrast(1.1) saturate(1.2) hue-rotate(210deg);
+        object-position: center;
+        z-index: 0;
+      }
+
+      .content-wrapper {
+        position: relative;
+        z-index: 2;
+
+        width: min(1450px, 94vw);
+
+        margin: 0 auto;
+
+        padding-top: 10rem;
+        padding-bottom: 6rem;
+      }
+
+      /* =========================
+         TITLE
+      ========================== */
+
+      .title-block {
+        margin-bottom: 4rem;
       }
 
       .page-title {
-        font-family: "JAVATEXT";
-        font-size: 6.5rem;
+        font-family: "Superglue";
+        font-size: clamp(4rem, 9vw, 8rem);
+        line-height: 0.85;
         color: white;
-        position: absolute;
-        top: 2rem;
-        left: 2rem;
-        z-index: 20;
         margin: 0;
+
+        max-width: 1000px;
+
+        text-transform: uppercase;
+        letter-spacing: -0.05em;
+
+        text-shadow:
+          0 0 25px rgba(255,255,255,0.1),
+          0 0 60px rgba(0,0,0,0.25);
       }
 
-      .work-description {
+      /* =========================
+         INTRO BOX
+      ========================== */
+
+      .intro-animbox {
+        position: relative;
+
+        width: 100%;
+        min-height: 380px;
+
+        margin-bottom: 3rem;
+
+        border-radius: 14px;
+        overflow: hidden;
+
+        display: flex;
+        align-items: center;
+
+        padding:
+          clamp(2.5rem, 5vw, 5rem)
+          clamp(2.5rem, 6vw, 6rem);
+
+        box-shadow:
+          0 25px 70px rgba(0,0,0,0.22),
+          inset 0 0 0 1px rgba(255,255,255,0.08);
+      }
+
+      .intro-animbox-bg {
         position: absolute;
-        left: 2.7rem;
-        max-width: 1700px;
+
+        top: 50%;
+        left: 50%;
+
+        width: 135%;
+        height: 135%;
+
+        transform:
+          translate(-50%, -50%)
+          scaleX(1.25);
+
+        object-fit: fill;
+
+        z-index: 0;
+
+        opacity: 0.96;
+
+        pointer-events: none;
+      }
+
+      .intro-overlay {
+        position: absolute;
+        inset: 0;
+
+        background:
+          linear-gradient(
+            90deg,
+            rgba(255,255,255,0.92) 0%,
+            rgba(255,255,255,0.86) 45%,
+            rgba(255,255,255,0.80) 100%
+          );
+
+        z-index: 1;
+      }
+
+      .intro-inner {
+        position: relative;
+        z-index: 2;
+
+        width: 100%;
+
+        display: grid;
+        grid-template-columns: 1fr 1px 1.1fr;
+
+        gap: 4rem;
+        align-items: center;
+      }
+
+      .intro-divider {
+        width: 1px;
+        height: 100%;
+        background: rgba(0,0,0,0.15);
+      }
+
+      .intro-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .intro-kicker {
+        font-family: "Superglue";
+        font-size: 0.75rem;
+        color: #00b7ff;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        margin-bottom: 1rem;
+      }
+
+      .intro-title {
+        font-family: "Superglue";
+        font-size: clamp(2.7rem, 5vw, 5rem);
+        line-height: 0.88;
+        margin: 0 0 1.5rem 0;
+        color: #111;
+        text-transform: uppercase;
+      }
+
+      .intro-subtitle {
+        margin: 0;
+
+        font-size: clamp(0.95rem, 1vw, 1.08rem);
+        line-height: 1.9;
+        color: #222;
+
+        border-left: 4px solid #00bfff;
+        padding-left: 1rem;
+
+        max-width: 500px;
+      }
+
+      .intro-right {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .section-label {
+        font-family: "Superglue";
+        font-size: 0.75rem;
+        letter-spacing: 0.14em;
+        color: #008bb8;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+
+      .intro-right p:last-child {
+        margin: 0;
+
+        color: #1d1d1d;
+        line-height: 2;
+        font-size: clamp(0.95rem, 1vw, 1.05rem);
+      }
+
+      /* =========================
+         CATEGORY BAR
+      ========================== */
+
+      .category-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+
+        margin-bottom: 3rem;
+      }
+
+      .cat-btn {
+        font-family: "Superglue";
+
+        border: none;
+
+        padding:
+          0.85rem
+          1.5rem;
+
+        border-radius: 999px;
+
+        background:
+          rgba(255,255,255,0.18);
+
+        backdrop-filter: blur(10px);
+
         color: white;
-        font-size: 1.4rem;
-        line-height: 1.5;
-        z-index: 20;
-      }
 
-      .work-description:first-of-type { top: 9rem; }
-      .work-description:last-of-type { top: 17rem; }
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
 
-      /* Dropdown Selector */
-      .category-selector {
-        position: absolute;
-        top: 2rem;
-        left: 2rem;
-        z-index: 20;
-        background: rgba(255, 255, 255, 0.9);
-        padding: 1rem;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      }
-
-      .category-selector select {
-        padding: 0.5rem;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 1rem;
-        background: white;
         cursor: pointer;
+
+        transition:
+          background 0.25s ease,
+          transform 0.25s ease,
+          box-shadow 0.25s ease;
       }
 
-      .category-selector label {
-        font-weight: bold;
-        margin-right: 0.5rem;
-        color: #333;
+      .cat-btn:hover {
+        transform: translateY(-2px);
+
+        background:
+          rgba(255,255,255,0.3);
       }
+
+      .cat-btn.active {
+        background: #00bfff;
+
+        box-shadow:
+          0 0 25px rgba(0,191,255,0.45);
+
+        color: white;
+      }
+
+      /* =========================
+         GROUPS
+      ========================== */
+
+      .work-group {
+        display: none;
+      }
+
+      .work-group.visible {
+        display: block;
+      }
+
+      .group-header {
+        margin-bottom: 2rem;
+      }
+
+      .group-title {
+        font-family: "Superglue";
+        font-size: clamp(2rem, 4vw, 3.5rem);
+        color: white;
+        margin: 0 0 0.5rem 0;
+        text-transform: uppercase;
+      }
+
+      .group-desc {
+        margin: 0;
+
+        color: rgba(255,255,255,0.85);
+
+        font-size: 1rem;
+        line-height: 1.8;
+      }
+
+      /* =========================
+         GRID
+      ========================== */
 
       .works-grid {
-        position: relative;
-        z-index: 10;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        justify-items: center;
-        gap: 3rem;
-        padding-top: 0;
-        padding-bottom: 0;
-        max-width: 1400px;
-        margin: auto;
+
+        grid-template-columns:
+          repeat(auto-fit, minmax(240px, 1fr));
+
+        gap: 2rem;
       }
 
       .work-item {
-        width: 300px;
-        height: 500px;
+        position: relative;
+
+        aspect-ratio: 3 / 4;
+
+        border-radius: 14px;
+        overflow: hidden;
+
         cursor: pointer;
-        transition: transform 0.2s ease;
+
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
       }
 
-      .work-item:hover { transform: scale(1.07); }
-      .work-item:active { transform: scale(0.95); } /* shrink when clicked */
+      .work-item:hover {
+        transform:
+          translateY(-10px)
+          scale(1.02);
+
+        box-shadow:
+          0 25px 50px rgba(0,0,0,0.35),
+          0 0 0 1px rgba(255,255,255,0.15);
+      }
 
       .work-item img {
         width: 100%;
         height: 100%;
-        object-fit: contain; /* do not crop */
-        border-radius: 16px;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.45);
-        background: white;
+
+        object-fit: cover;
+
+        display: block;
       }
 
-      /* Modal */
+      .work-overlay {
+        position: absolute;
+        inset: 0;
+
+        display: flex;
+        align-items: flex-end;
+
+        padding: 1.25rem;
+
+        background:
+          linear-gradient(
+            to top,
+            rgba(0,0,0,0.72) 0%,
+            rgba(0,0,0,0.15) 45%,
+            transparent 70%
+          );
+      }
+
+      .work-label {
+        font-family: "Superglue";
+        color: white;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+      }
+
+      /* =========================
+         MODAL
+      ========================== */
+
       .modal {
         position: fixed;
         inset: 0;
-        background: rgba(0,0,0,0.85);
+
         display: flex;
         align-items: center;
         justify-content: center;
+
+        background: rgba(0,0,0,0.88);
+
         z-index: 9999;
+
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.35s ease;
+
+        transition: opacity 0.3s ease;
       }
 
       .modal.active {
@@ -192,160 +473,351 @@ const illustrativeWorkGroups = [
       }
 
       .modal-card {
-        width: 500px;
-        height: 875px;
-        perspective: 1400px;
-        transform: scale(0.9);
-        transition: transform 0.4s ease;
+        width: min(520px, 90vw);
+        height: min(900px, 88vh);
+
+        perspective: 1600px;
+
+        transform: scale(0.92);
+        transition: transform 0.35s ease;
       }
 
-      .modal.active .modal-card { transform: scale(1); }
+      .modal.active .modal-card {
+        transform: scale(1);
+      }
 
       .modal-inner {
         width: 100%;
         height: 100%;
+
         position: relative;
-        transition: transform 0.7s;
+
         transform-style: preserve-3d;
+        transition: transform 0.8s ease;
       }
 
-      .modal-card:hover .modal-inner { transform: rotateY(180deg); }
+      .modal-card:hover .modal-inner {
+        transform: rotateY(180deg);
+      }
 
       .modal-front,
       .modal-back {
         position: absolute;
-        width: 100%;
-        height: 100%;
+        inset: 0;
+
         backface-visibility: hidden;
+      }
+
+      .modal-back {
+        transform: rotateY(180deg);
       }
 
       .modal-front img,
       .modal-back img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        border-radius: 10px;
-        box-shadow: 0 0 80px rgba(0,0,0,0.8);
+
+        object-fit: contain;
+
         background: white;
+
+        border-radius: 12px;
+
+        box-shadow:
+          0 0 80px rgba(0,0,0,0.75);
       }
 
-      .modal-back { transform: rotateY(180deg); }
+      /* =========================
+         MOBILE
+      ========================== */
+
+      @media (max-width: 900px) {
+        .content-wrapper {
+          padding-top: 8rem;
+        }
+
+        .page-title {
+          font-size: clamp(3rem, 14vw, 5.5rem);
+        }
+
+        .intro-inner {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .intro-divider {
+          display: none;
+        }
+
+        .intro-animbox {
+          min-height: auto;
+          padding: 2rem;
+        }
+
+        .works-grid {
+          grid-template-columns:
+            repeat(auto-fit, minmax(170px, 1fr));
+
+          gap: 1rem;
+        }
+
+        .category-bar {
+          gap: 0.75rem;
+        }
+
+        .cat-btn {
+          width: 100%;
+          justify-content: center;
+        }
+      }
     </style>
+
   </head>
 
   <body>
+
     <Header />
 
-    <div class="hero-container">
-      <img class="hero-image" src="/portfolio banner.webp" alt="Portfolio Banner" />
+    <main class="hero-container">
 
-      <!-- Descriptions -->
-      <p class="work-description">A curated selection of illustration projects, character art, editorial pieces, and concept visuals that show creative storytelling through image-making.</p>
-      <p class="work-description">These works demonstrate my skills in various illustration techniques and styles.</p>
+      <img
+        class="hero-image"
+        src="/portfolio banner 2.webp"
+        alt="Portfolio banner"
+      />
 
-      <!-- Category Selector -->
-      <div class="category-selector">
-        <label for="category-select">Select Category:</label>
-        <select id="category-select">
-          {illustrativeWorkGroups.map(group => (
-            <option value={group.id}>{group.title}</option>
-          ))}
-        </select>
-      </div>
+      <div class="content-wrapper">
 
-      <!-- Works Display -->
-      {illustrativeWorkGroups.map(group => (
-        <section class={`work-group ${group.id}`} style="display: none;">
-          <h2>{group.title}</h2>
-          <p class="group-description">{group.description}</p>
-          <div class="works-grid">
-            {group.works.map(work => (
-              <div
-                class="work-item"
-                data-front={work.src}
-                data-back={work.back || ''}
-              >
-                <img src={work.src} alt={work.alt} />
-              </div>
-            ))}
-          </div>
+        <!-- TITLE -->
+
+        <section class="title-block">
+
+          <h1 class="page-title">
+            ILLUSTRATIVE<br />
+            WORKS
+          </h1>
+
         </section>
-      ))}
-    </div>
 
-    <!-- Modal -->
-    <div id="modal" class="modal">
-      <div class="modal-card">
-        <div class="modal-inner">
-          <div class="modal-front">
-            <img id="modalFront" src="" />
+        <!-- INTRO -->
+
+        <section class="intro-animbox">
+
+          <img
+            class="intro-animbox-bg"
+            src="/box animation slow1.webp"
+            alt=""
+            aria-hidden="true"
+          />
+
+          <div class="intro-overlay"></div>
+
+          <div class="intro-inner">
+
+            <div class="intro-left">
+
+              <div class="intro-kicker">
+                Illustration Archive
+              </div>
+
+              <h2 class="intro-title">
+                Visual<br />
+                Storytelling
+              </h2>
+
+              <p class="intro-subtitle">
+                Character illustration, fantasy artwork,
+                plushie concepts, editorial visuals,
+                and experimental visual development.
+              </p>
+
+            </div>
+
+            <div class="intro-divider"></div>
+
+            <div class="intro-right">
+
+              <div class="section-label">
+                About This Collection
+              </div>
+
+              <p>
+                This archive brings together a wide range
+                of illustrative work spanning concept art,
+                creature design, fantasy illustration,
+                commissioned projects, and stylized visual
+                storytelling. Each category explores a
+                different approach to character, atmosphere,
+                and narrative design.
+              </p>
+
+            </div>
+
           </div>
-          <div class="modal-back">
-            <img id="modalBack" src="" />
-          </div>
-        </div>
+
+        </section>
+
+        <!-- CATEGORY BUTTONS -->
+
+        <section class="category-bar">
+
+          {illustrativeWorkGroups.map((group, i) => (
+            <button
+              class={`cat-btn${i === 0 ? ' active' : ''}`}
+              data-id={group.id}
+            >
+              {group.title}
+            </button>
+          ))}
+
+        </section>
+
+        <!-- WORK GROUPS -->
+
+        <section>
+
+          {illustrativeWorkGroups.map((group, i) => (
+
+            <div
+              class={`work-group${i === 0 ? ' visible' : ''}`}
+              data-group={group.id}
+            >
+
+              <div class="group-header">
+
+                <h2 class="group-title">
+                  {group.title}
+                </h2>
+
+                <p class="group-desc">
+                  {group.description}
+                </p>
+
+              </div>
+
+              <div class="works-grid">
+
+                {group.works.map((work, index) => (
+
+                  <div
+                    class="work-item"
+                    data-front={work.src}
+                    data-back={work.back || ''}
+                  >
+
+                    <img
+                      src={work.src}
+                      alt={work.alt}
+                      loading="lazy"
+                    />
+
+                    <div class="work-overlay">
+
+                      <div class="work-label">
+                        {group.title} #{index + 1}
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                ))}
+
+              </div>
+
+            </div>
+
+          ))}
+
+        </section>
+
       </div>
+
+    </main>
+
+    <!-- MODAL -->
+
+    <div id="modal" class="modal">
+
+      <div class="modal-card">
+
+        <div class="modal-inner">
+
+          <div class="modal-front">
+            <img id="modalFront" src="" alt="" />
+          </div>
+
+          <div class="modal-back">
+            <img id="modalBack" src="" alt="" />
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
 
     <script>
-      const modal = document.getElementById("modal");
-      const modalFront = document.getElementById("modalFront");
-      const modalBack = document.getElementById("modalBack");
-      const categorySelect = document.getElementById("category-select");
-      const workGroups = document.querySelectorAll(".work-group");
+      const modal = document.getElementById('modal');
+      const modalFront = document.getElementById('modalFront');
+      const modalBack = document.getElementById('modalBack');
 
-      // Show first category by default
-      if (workGroups.length > 0) {
-        workGroups[0].style.display = 'block';
-      }
+      const catBtns = document.querySelectorAll('.cat-btn');
+      const workGroups = document.querySelectorAll('.work-group');
 
-      // Handle category selection
-      categorySelect.addEventListener("change", (e) => {
-        const selectedId = e.target.value;
-        
-        // Hide all groups
-        workGroups.forEach(group => {
-          group.style.display = 'none';
+      catBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+
+          catBtns.forEach((b) =>
+            b.classList.remove('active')
+          );
+
+          btn.classList.add('active');
+
+          const id = btn.dataset.id;
+
+          workGroups.forEach((group) => {
+            group.classList.toggle(
+              'visible',
+              group.dataset.group === id
+            );
+          });
+
         });
-        
-        // Show selected group
-        const selectedGroup = document.querySelector(`.${selectedId}`);
-        if (selectedGroup) {
-          selectedGroup.style.display = 'block';
-        }
       });
 
-      // Modal functionality
-      const items = document.querySelectorAll(".work-item");
+      document.querySelectorAll('.work-item').forEach((item) => {
 
-      items.forEach(item => {
-        item.addEventListener("click", () => {
+        item.addEventListener('click', () => {
+
           modalFront.src = item.dataset.front;
-          const backSrc = item.dataset.back;
+          modalBack.src = item.dataset.back || '';
 
-          if (backSrc) {
-            modalBack.src = backSrc;
-            modalBack.parentElement.style.display = '';
-          } else {
-            modalBack.src = '';
-            modalBack.parentElement.style.display = 'none';
-          }
+          modal.classList.add('active');
 
-          modal.classList.add("active");
         });
+
       });
 
-      modal.addEventListener("click", (e) => {
+      modal.addEventListener('click', (e) => {
+
         if (e.target === modal) {
-          modal.classList.remove("active");
+
+          modal.classList.remove('active');
+
           setTimeout(() => {
-            modalFront.src = "";
-            modalBack.src = "";
+
+            modalFront.src = '';
+            modalBack.src = '';
+
           }, 300);
+
         }
+
       });
     </script>
 
     <Footer />
+
   </body>
 </html>

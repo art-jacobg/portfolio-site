@@ -6,22 +6,60 @@ import Layout from '../layouts/BlogPost.astro';
   title="About"
   description="The artist in question"
   pubDate={new Date('2026-02-18')}
-  heroImage="/about page banner.webp"
-  heroBackground={true}
   pageTitle="ABOUT"
   overlayText={true}
 >
-  <style is:global>
-    .prose {
-      width: 100%;
-      max-width: 100%;
-      padding: 0.5em;
-      padding-bottom: 6rem;
-    }
 
-    .title { display: none; }
-    .date { display: none; }
-    hr { display: none; }
+<video class="about-bg-video" autoplay muted loop playsinline>
+  <source src="/aboutbackround.webm" type="video/webm" />
+</video>
+
+<style is:global>
+
+  body {
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  /* =========================
+     BACKGROUND VIDEO
+  ========================== */
+
+  .about-bg-video {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+
+    pointer-events: none;
+  }
+
+  /* dark readability layer */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,0.22);
+    z-index: ;
+    pointer-events: none;
+  }
+
+  /* keep content above video */
+  .prose {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 100%;
+    padding: 0.5em;
+    padding-bottom: 6rem;
+  }
+
+  .title { display: none; }
+  .date { display: none; }
+  hr { display: none; }
+
 
     /* ───────── ANIMATION BOX ───────── */
     .about-animbox {
@@ -52,14 +90,14 @@ import Layout from '../layouts/BlogPost.astro';
 
   object-position: center;
 
-  transform: scale(1.3);
+  transform: scale(1.3) scaleY(1.4);
   transform-origin: center;
 }
     /* ───────── TWO COLUMN LAYOUT ───────── */
 .about-columns {
   position: relative;
   z-index: 1;
-    margin-top: 6%;
+    margin-top: 8%;
 
   display: grid;
   grid-template-columns: 1fr 2px 1fr;
@@ -83,8 +121,8 @@ import Layout from '../layouts/BlogPost.astro';
     }
 
     .about-section-title {
-      font-family: "Superglue", sans-serif;
-      font-size: 0.65rem;
+      font-family: "Superglue";
+      font-size: 1rem;
       letter-spacing: 0.12em;
       color: #0e3947;
       margin: 0 0 0.4rem;
@@ -108,7 +146,7 @@ import Layout from '../layouts/BlogPost.astro';
     }
 
     .about-subtitle {
-      font-size: clamp(0.72rem, 0.95vw, 0.85rem);
+      font-size: clamp(0.72rem, 0.95vw, 0.95rem);
       color: #333;
       line-height: 1.6;
       margin: 0;
@@ -118,9 +156,11 @@ import Layout from '../layouts/BlogPost.astro';
 
     .about-col p.body {
       margin: 0;
-      font-size: clamp(0.68rem, 0.95vw, 0.82rem);
+      font-size: clamp(0.68rem, 0.95vw, 1rem);
       line-height: 1.8;
       color: #222;
+      
+      
     }
 
     .about-rule {
@@ -140,11 +180,11 @@ import Layout from '../layouts/BlogPost.astro';
     }
 
     .about-skills li {
-      font-size: 0.65rem;
+      font-size: 1.1rem;
       background: rgba(0, 153, 204, 0.12);
       border: 1px solid rgba(0, 153, 204, 0.35);
       border-radius: 3px;
-      padding: 0.15rem 0.45rem;
+      padding: 0.25rem 0.15rem;
       color: #111;
     }
 
@@ -159,31 +199,31 @@ import Layout from '../layouts/BlogPost.astro';
     .about-education strong {
       display: block;
       color: #111;
-      font-size: 0.73rem;
+      font-size: 0.83rem;
     }
 
     .about-experience-item {
       border-left: 2px solid rgba(0,153,204,0.4);
-      padding-left: 0.75rem;
+      padding-left: 0.85rem;
       margin: 0;
     }
 
     .about-experience-item strong {
       display: block;
-      font-size: 0.75rem;
+      font-size: 0.85rem;
       color: #111;
       margin-bottom: 0.15rem;
     }
 
     .about-experience-item span {
-      font-size: 0.65rem;
+      font-size: 0.85rem;
       color: #666;
       display: block;
       margin-bottom: 0.25rem;
     }
 
     .about-experience-item p {
-      font-size: 0.68rem !important;
+      font-size: 0.88rem !important;
       color: #333;
       margin: 0;
       line-height: 1.6;
@@ -257,20 +297,17 @@ import Layout from '../layouts/BlogPost.astro';
         <p class="about-section-title">Artist Statement</p>
 
         <p class="body">
-          Hi, I'm Jacob, an artist who graduated from the Herron School of Art
+          Hi, I'm Jacob, a designer who graduated from the Herron School of Art
           and Design with a bachelor's in Design and Illustration. I'm passionate about visual
-          storytelling, branding, and communication, with proficency in the Adobe Creative
-          Suite and an understanding of how to tailor designs for specific audiences across social
-          media, email, and traditional marketing channels.
+          storytelling, branding, and communication, with proficency in a variety of professional design tools and mediums with an understanding of how to tailor designs and construct compelling narratives for specific audiences. I love bringing stories to life!
         </p>
 
         <p class="body">
           Over the past eight years, as I've become more politically active, I've realized the
           importance of furthering democratic ideals. Seeing the opposition trample on the
-          foundational ideas of Western liberalism has only fueled my passion for political action.
-          I believe design is one of the most powerful tools we have to connect with voters and
-          communicate what's at stake. I admire Indiana's Democratic Party — despite progress being
-          an uphill battle, you never stop fighting.
+          foundational ideas of Western liberalism has only fueled my passion for political action. I've done volunteer canvassing and doorknocking and I'm eager to engange in further activism and professional work!
+          I believe design is one of the most powerful tools we have to connect with and
+          communicate our values to voters and the broader populace. 
         </p>
 
         <hr class="about-rule" />
@@ -324,7 +361,7 @@ import Layout from '../layouts/BlogPost.astro';
           <span>Political Canvassing &amp; Door Knocking · Oct 2024</span>
 
           <p>
-            Built cohesive team communication, managed own workload, and accomplished goals
+            More experience working with voters and organizers, managing my own workload and accomplishing tasks 
             efficiently and independently.
           </p>
         </div>
@@ -341,8 +378,10 @@ import Layout from '../layouts/BlogPost.astro';
     <li>Clip Studio Paint</li>
     <li>Microsoft Office</li>
     <li>Branding</li>
+    <li>Character Design</li>
     <li>Editorial Illustration</li>
     <li>Political Advertising</li>
+    <li>Narrative storytelling</li>
   </ul>
 </div>
       </div>

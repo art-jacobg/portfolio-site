@@ -1,32 +1,234 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import Layout from '../layouts/BlogPost.astro';
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={`Contact | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
-		<link rel="preload" href="/contact banner.webp" as="image" fetchpriority="high" />
-		<style>
-			.hero-container { margin: 0; padding: 0; width: 100%; position: relative; background: white; }
-			.hero-image { width: 100%; height: auto; display: block; margin: 0; padding: 0; }
-			.page-title { font-family: "Superglue"; font-size: 5.5rem; color: white; position: absolute; top: 2rem; left: 2rem; margin: 0; z-index: 10; }
-			main { background: white; margin: 0; padding: 3em 1em; width: 100%; max-width: 100%; }
-			@media (max-width: 720px) { .page-title { font-size: 3rem; top: 1rem; left: 1rem; } main { padding: 2em 1em; } }
-		</style>
-	</head>
-	<body>
-		<Header />
-		<div class="hero-container">
-			<img class="hero-image" src="/contact banner.webp" alt="Contact Banner" />
-			<h1 class="page-title">CONTACT</h1>
-		</div>
-		<main>
-			<p>Get in touch with me here.</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<Layout
+  title="Contact"
+  description="Get in touch"
+  pubDate={new Date('2026-02-18')}
+  heroImage="/about page banner.webp"
+  heroBackground={true}
+  pageTitle="CONTACT"
+  overlayText={true}
+>
+  <style is:global>
+    .prose {
+      width: 100%;
+      max-width: 100%;
+      padding: 0.5em;
+      padding-bottom: 6rem;
+	  
+    }
+
+    .title { display: none; }
+    .date { display: none; }
+    hr { display: none; }
+	
+
+    .contact-animbox {
+  position: relative;
+  width: min(1200px, 92vw);
+  margin: 6rem auto 7rem;
+  display: grid;
+  padding: clamp(3rem, 6vw, 6rem);
+  padding-top: clamp(5rem, 10vw, 10rem);
+  overflow: hidden;   /* change from visible to hidden */
+}
+
+.contact-animbox-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* change from fill to cover */
+  z-index: 0;
+  border-radius: 10px;
+  pointer-events: none;
+  transform: scale(1.2);
+}
+
+    .contact-columns {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 2px 1fr;
+      gap: 0 2rem;
+      align-items: start;
+
+    }
+
+    .contact-divider {
+      background: rgba(0, 0, 0, 0.2);
+      align-self: stretch;
+      border-radius: 2px;
+    }
+
+    .contact-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .contact-section-title {
+      font-family: "Superglue", sans-serif;
+      font-size: (1rem);
+      color: #111;
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    .contact-name {
+      font-family: "Superglue", sans-serif;
+      font-size: clamp(1.2rem, 2vw, 2rem);
+      color: #111;
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    .contact-subtitle {
+      font-size: clamp(0.65rem, 0.9vw, 0.8rem);
+      color: #333;
+      line-height: 1.6;
+      margin: 0;
+      border-left: 3px solid #111;
+      padding-left: 0.75rem;
+    }
+
+    .contact-rule {
+      border: none;
+      border-top: 1px solid rgba(0,0,0,0.12);
+      margin: 0.1rem 0;
+      display: block !important;
+    }
+
+    .contact-col p.body {
+      margin: 0;
+      font-size: clamp(0.62rem, 0.85vw, 0.78rem);
+      line-height: 1.75;
+      color: #222;
+    }
+
+    /* contact links */
+    .contact-link-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      border-left: 2px solid rgba(0,0,0,0.25);
+      padding-left: 0.75rem;
+    }
+
+    .contact-link-item strong {
+      font-size: clamp(0.65rem, 0.82vw, 0.77rem);
+      color: #111;
+    }
+
+    .contact-link-item a {
+      font-size: clamp(0.6rem, 0.78vw, 0.72rem);
+      color: #0099cc;
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .contact-link-item a:hover {
+      text-decoration: underline;
+    }
+
+    .contact-link-item span {
+      font-size: clamp(0.6rem, 0.78vw, 0.72rem);
+      color: #333;
+    }
+
+    @media (max-width: 768px) {
+      .contact-animbox { max-width: 95%; padding: 8%; }
+      .contact-columns { grid-template-columns: 1fr; gap: 1.5rem 0; }
+      .contact-divider { display: none; }
+    }
+  </style>
+
+  <div class="contact-animbox">
+    <img class="contact-animbox-bg" src="/box animation slow1.webp" alt="" aria-hidden="true" />
+
+    <div class="contact-columns">
+
+      <!-- LEFT: intro + message -->
+      <div class="contact-col">
+        <div class="contact-dots"><span></span><span></span><span></span></div>
+
+        <h2 class="contact-name">Get In<br/>Touch</h2>
+
+        <p class="contact-subtitle">
+          Jacob Gordillo<br/>
+          Designer &amp; Editorial Illustrator<br/>
+          Indianapolis, Indiana
+        </p>
+
+        <hr class="contact-rule" />
+
+        <p class="contact-section-title">Let's Work Together</p>
+        <p class="body">
+          I'm currently available for freelance work, commissions, and collaborative projects.
+          Whether you need editorial illustration, branding, political advertising, or concept
+          art — I'd love to hear from you.
+        </p>
+        <p class="body">
+          I'm also open to opportunities in design, campaign work, and political communication.
+          If you think my skills could be a good fit for your team or project, don't hesitate
+          to reach out.
+        </p>
+
+        <hr class="contact-rule" />
+
+        </ul>
+      </div>
+
+      <!-- DIVIDER -->
+      <div class="contact-divider"></div>
+
+      <!-- RIGHT: contact details -->
+      <div class="contact-col" style="padding-top: 3rem;">
+        <p class="contact-section-title">Contact</p>
+
+        <div class="contact-link-item">
+          <strong>Email</strong>
+          <a href="mailto:Jacobfgordillo@gmail.com">Jacobfgordillo@gmail.com</a>
+        </div>
+
+        <div class="contact-link-item">
+          <strong>Phone</strong>
+          <span>812-361-3942</span>
+        </div>
+
+        <div class="contact-link-item">
+          <strong>Location</strong>
+          <span>Indianapolis, Indiana</span>
+        </div>
+
+        <div class="contact-link-item">
+          <strong>Portfolio</strong>
+          <a href="/portfolio">art-jacobg.com/portfolio</a>
+        </div>
+
+        <hr class="contact-rule" />
+
+        <p class="contact-section-title">Availability</p>
+
+        <div class="contact-link-item">
+          <strong>Freelance &amp; Commissions</strong>
+          <span>Open — reach out any time</span>
+        </div>
+
+        <div class="contact-link-item">
+          <strong>Full-time / Contract</strong>
+          <span>Available — design, illustration, campaign work</span>
+        </div>
+
+        <div class="contact-link-item">
+          <strong>Response Time</strong>
+          <span>Usually within 24–48 hours</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</Layout>
