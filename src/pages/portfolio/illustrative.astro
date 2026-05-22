@@ -20,7 +20,6 @@ const illustrativeWorkGroups = [
       { src: '/portfolio/illustrative/concept artmonster3.webp', alt: 'Concept art monster 3' },
     ],
   },
-
   {
     id: 'commissioned-works',
     title: 'Commissioned Works',
@@ -35,7 +34,6 @@ const illustrativeWorkGroups = [
       { src: '/portfolio/illustrative/vi plushi.webp', alt: 'Vi plushie' },
     ],
   },
-
   {
     id: 'fantasy-art',
     title: 'Fantasy Art',
@@ -68,756 +66,563 @@ const illustrativeWorkGroups = [
 <!doctype html>
 <html lang="en">
   <head>
-
-    <BaseHead
-      title={`Illustrative Works | ${SITE_TITLE}`}
-      description={SITE_DESCRIPTION}
-    />
-
+    <BaseHead title={`Illustrative Works | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
     <style>
-      * {
-        box-sizing: border-box;
-      }
+      *, *::before, *::after { box-sizing: border-box; }
+      html { font-size: 16px; }
 
       body {
         margin: 0;
+        padding: 0 !important;
         overflow-x: hidden;
         background: #f5f5f5;
+        font-size: 16px;
       }
 
-      .hero-container {
-        position: relative;
-        width: 100%;
-        min-height: 100vh;
-        overflow: hidden;
+      main {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
 
-      .hero-image {
+      /* ── HERO ── */
+      .ilw-hero {
+  position: relative;
+  width: 100%;
+  min-height: 100%;   /* was 100vh — now grows with content */
+  overflow: hidden;
+  background: #4ad9e6;
+}
+
+    /* ── VIDEO BACKGROUND ── */
+
+.ilw-hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #4ad9e6;
+}
+
+.ilw-bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  z-index: 0;
+  pointer-events: none;
+}
+
+
+/* keep content above video */
+.ilw-wrap {
+  position: relative;
+  z-index: 2;
+}
+
+      /* ── CONTENT SHELL ── */
+     .ilw-wrap {
+  position: relative;
+  z-index: 2;
+  width: min(1050px, 78vw);
+  margin: 0 auto;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+      /* ── PAGE TITLE ── */
+   .ilw-title {
+  font-family: "Superglue", sans-serif;
+  font-size: clamp(40px, 5.2vw, 82px);
+  line-height: 0.9;
+  color: white;
+  margin: 0 0 110px 0;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  text-shadow: 0 0 50px rgba(0,0,0,0.35);
+}
+
+      /* ── INTRO BOX ── */
+      .ilw-intro {
+  position: relative;
+  width: 72%;
+  margin: 0 auto 50px auto;
+  border-radius: 18px;
+  overflow: visible;
+  padding: 56px 64px;
+  box-shadow: 0 28px 80px rgba(0,0,0,0.28);
+}
+
+      .ilw-intro-bg {
         position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-        z-index: 0;
-      }
-
-      .content-wrapper {
-        position: relative;
-        z-index: 2;
-
-        width: min(1450px, 94vw);
-
-        margin: 0 auto;
-
-        padding-top: 10rem;
-        padding-bottom: 6rem;
-      }
-
-      /* =========================
-         TITLE
-      ========================== */
-
-      .title-block {
-        margin-bottom: 4rem;
-      }
-
-      .page-title {
-        font-family: "Superglue";
-        font-size: clamp(4rem, 9vw, 8rem);
-        line-height: 0.85;
-        color: white;
-        margin: 0;
-
-        max-width: 1000px;
-
-        text-transform: uppercase;
-        letter-spacing: -0.05em;
-
-        text-shadow:
-          0 0 25px rgba(255,255,255,0.1),
-          0 0 60px rgba(0,0,0,0.25);
-      }
-
-      /* =========================
-         INTRO BOX
-      ========================== */
-
-      .intro-animbox {
-        position: relative;
-
-        width: 100%;
-        min-height: 380px;
-
-        margin-bottom: 3rem;
-
-        border-radius: 14px;
-        overflow: hidden;
-
-        display: flex;
-        align-items: center;
-
-        padding:
-          clamp(2.5rem, 5vw, 5rem)
-          clamp(2.5rem, 6vw, 6rem);
-
-        box-shadow:
-          0 25px 70px rgba(0,0,0,0.22),
-          inset 0 0 0 1px rgba(255,255,255,0.08);
-      }
-
-      .intro-animbox-bg {
-        position: absolute;
-
         top: 50%;
         left: 50%;
-
-        width: 135%;
-        height: 135%;
-
-        transform:
-          translate(-50%, -50%)
-          scaleX(1.25);
-
+        width: 100%;
+        height: 100%;
+        transform: translate(-50%, -50%) scale(1.7);
         object-fit: fill;
-
         z-index: 0;
-
         opacity: 0.96;
-
         pointer-events: none;
       }
 
-      .intro-overlay {
-        position: absolute;
-        inset: 0;
-
-        background:
-          linear-gradient(
-            90deg,
-            rgba(255,255,255,0.92) 0%,
-            rgba(255,255,255,0.86) 45%,
-            rgba(255,255,255,0.80) 100%
-          );
-
-        z-index: 1;
-      }
-
-      .intro-inner {
+      .ilw-intro-inner {
         position: relative;
         z-index: 2;
-
         width: 100%;
-
-        display: grid;
-        grid-template-columns: 1fr 1px 1.1fr;
-
-        gap: 4rem;
-        align-items: center;
-      }
-
-      .intro-divider {
-        width: 1px;
-        height: 100%;
-        background: rgba(0,0,0,0.15);
-      }
-
-      .intro-left {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        gap: 32px;
       }
 
-      .intro-kicker {
-        font-family: "Superglue";
-        font-size: 0.75rem;
+      .ilw-intro-top { display: flex; flex-direction: column; }
+
+      .ilw-intro-kicker {
+        font-family: "Superglue", sans-serif;
+        font-size: 11px;
         color: #00b7ff;
         text-transform: uppercase;
         letter-spacing: 0.15em;
-        margin-bottom: 1rem;
+        margin: 0 0 12px 0;
       }
 
-      .intro-title {
-        font-family: "Superglue";
-        font-size: clamp(2.7rem, 5vw, 5rem);
+      .ilw-intro-heading {
+        font-family: "Superglue", sans-serif;
+        font-size: clamp(22px, 2.8vw, 38px);
         line-height: 0.88;
-        margin: 0 0 1.5rem 0;
         color: #111;
         text-transform: uppercase;
+        margin: 0 0 20px 0;
       }
 
-      .intro-subtitle {
+      .ilw-intro-sub {
         margin: 0;
-
-        font-size: clamp(0.95rem, 1vw, 1.08rem);
-        line-height: 1.9;
-        color: #222;
-
+        font-size: 14px;
+        line-height: 1.85;
+        color: #333;
         border-left: 4px solid #00bfff;
-        padding-left: 1rem;
-
-        max-width: 500px;
+        padding-left: 14px;
+        max-width: 520px;
       }
 
-      .intro-right {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+      .ilw-intro-divider {
+        width: 100%;
+        height: 1px;
+        background: rgba(0,0,0,0.12);
       }
 
-      .section-label {
-        font-family: "Superglue";
-        font-size: 0.75rem;
+      .ilw-intro-bottom { display: flex; flex-direction: column; gap: 10px; }
+
+      .ilw-intro-label {
+        font-family: "Superglue", sans-serif;
+        font-size: 11px;
         letter-spacing: 0.14em;
         color: #008bb8;
         text-transform: uppercase;
-        margin-bottom: 1rem;
-      }
-
-      .intro-right p:last-child {
         margin: 0;
-
-        color: #1d1d1d;
-        line-height: 2;
-        font-size: clamp(0.95rem, 1vw, 1.05rem);
       }
 
-      /* =========================
-         CATEGORY BAR
-      ========================== */
+      .ilw-intro-body {
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.9;
+        color: #1d1d1d;
+        max-width: 680px;
+      }
 
-      .category-bar {
+      /* ── CATEGORY BAR ── */
+      .ilw-catbar {
         display: flex;
         flex-wrap: wrap;
-        gap: 1rem;
-
-        margin-bottom: 3rem;
+        gap: 12px;
+        margin-top: 100px;
+        margin-bottom: 50px;
+        width: 55%;
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
       }
 
-      .cat-btn {
-        font-family: "Superglue";
-
-        border: none;
-
-        padding:
-          0.85rem
-          1.5rem;
-
-        border-radius: 999px;
-
-        background:
-          rgba(255,255,255,0.18);
-
-        backdrop-filter: blur(10px);
-
-        color: white;
-
-        font-size: 0.8rem;
+      .ilw-catbtn {
+        font-family: "Superglue", sans-serif;
+        font-size: 12px;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-
+        border: none;
+        padding: 12px 22px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.18);
+        backdrop-filter: blur(10px);
+        color: white;
         cursor: pointer;
-
-        transition:
-          background 0.25s ease,
-          transform 0.25s ease,
-          box-shadow 0.25s ease;
+        transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
       }
 
-      .cat-btn:hover {
+      .ilw-catbtn:hover {
         transform: translateY(-2px);
-
-        background:
-          rgba(255,255,255,0.3);
+        background: rgba(255,255,255,0.3);
       }
 
-      .cat-btn.active {
+      .ilw-catbtn.active {
         background: #00bfff;
+        box-shadow: 0 0 24px rgba(0,191,255,0.5);
+      }
 
-        box-shadow:
-          0 0 25px rgba(0,191,255,0.45);
+      /* ── WORK GROUPS ── */
+      .ilw-group { display: none; }
+      .ilw-group.visible { display: block; }
 
+      .ilw-group-title {
+        font-family: "Superglue", sans-serif;
+        font-size: clamp(24px, 3vw, 44px);
         color: white;
-      }
-
-      /* =========================
-         GROUPS
-      ========================== */
-
-      .work-group {
-        display: none;
-      }
-
-      .work-group.visible {
-        display: block;
-      }
-
-      .group-header {
-        margin-bottom: 2rem;
-      }
-
-      .group-title {
-        font-family: "Superglue";
-        font-size: clamp(2rem, 4vw, 3.5rem);
-        color: white;
-        margin: 0 0 0.5rem 0;
         text-transform: uppercase;
+        margin: 0 0 6px 0;
       }
 
-      .group-desc {
-        margin: 0;
-
+      .ilw-group-desc {
+        font-size: 14px;
         color: rgba(255,255,255,0.85);
-
-        font-size: 1rem;
         line-height: 1.8;
+        margin: 0 0 28px 0;
       }
 
-      /* =========================
-         GRID
-      ========================== */
+      /* ── GRID ── */
+     .ilw-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
 
-      .works-grid {
-        display: grid;
-
-        grid-template-columns:
-          repeat(auto-fit, minmax(240px, 1fr));
-
-        gap: 2rem;
-      }
-
-      .work-item {
+      .ilw-item {
         position: relative;
-
         aspect-ratio: 3 / 4;
-
-        border-radius: 14px;
+        border-radius: 12px;
         overflow: hidden;
-
         cursor: pointer;
-
-        transition:
-          transform 0.3s ease,
-          box-shadow 0.3s ease;
+        transition: transform 0.3s, box-shadow 0.3s;
       }
 
-      .work-item:hover {
-        transform:
-          translateY(-10px)
-          scale(1.02);
-
-        box-shadow:
-          0 25px 50px rgba(0,0,0,0.35),
-          0 0 0 1px rgba(255,255,255,0.15);
+      .ilw-item:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 24px 48px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.15);
       }
 
-      .work-item img {
+      .ilw-item img {
         width: 100%;
         height: 100%;
-
         object-fit: cover;
-
         display: block;
       }
 
-      .work-overlay {
+      .ilw-item-overlay {
         position: absolute;
         inset: 0;
-
         display: flex;
         align-items: flex-end;
-
-        padding: 1.25rem;
-
-        background:
-          linear-gradient(
-            to top,
-            rgba(0,0,0,0.72) 0%,
-            rgba(0,0,0,0.15) 45%,
-            transparent 70%
-          );
+        padding: 16px;
+        background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 45%, transparent 70%);
       }
 
-      .work-label {
-        font-family: "Superglue";
+      .ilw-item-label {
+        font-family: "Superglue", sans-serif;
         color: white;
-        font-size: 0.95rem;
+        font-size: 13px;
         text-transform: uppercase;
       }
 
-      /* =========================
-         MODAL
-      ========================== */
-
-      .modal {
+      /* ── MODAL ── */
+      .ilw-modal {
         position: fixed;
         inset: 0;
-
         display: flex;
         align-items: center;
         justify-content: center;
-
         background: rgba(0,0,0,0.88);
-
         z-index: 9999;
-
         opacity: 0;
         pointer-events: none;
-
-        transition: opacity 0.3s ease;
+        transition: opacity 0.3s;
       }
 
-      .modal.active {
+      .ilw-modal.active {
         opacity: 1;
         pointer-events: auto;
       }
 
-      .modal-card {
-        width: min(520px, 90vw);
-        height: min(900px, 88vh);
-
-        perspective: 1600px;
-
-        transform: scale(0.92);
-        transition: transform 0.35s ease;
+      /* image wrapper so nav buttons sit outside the image */
+      .ilw-modal-inner {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 24px;
       }
 
-      .modal.active .modal-card {
+      .ilw-modal-img {
+        display: block;
+        max-width: 80vw;
+        max-height: 88vh;
+        width: auto;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 0 80px rgba(0,0,0,0.75);
+        transform: scale(0.92);
+        transition: transform 0.35s, opacity 0.2s;
+      }
+
+      .ilw-modal.active .ilw-modal-img {
         transform: scale(1);
       }
 
-      .modal-inner {
-        width: 100%;
-        height: 100%;
-
-        position: relative;
-
-        transform-style: preserve-3d;
-        transition: transform 0.8s ease;
+      .ilw-modal-img.fade {
+        opacity: 0;
       }
 
-      .modal-card:hover .modal-inner {
-        transform: rotateY(180deg);
+      /* nav arrows */
+      .ilw-nav {
+        background: rgba(255,255,255,0.12);
+        border: none;
+        color: white;
+        font-size: 28px;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: background 0.2s, transform 0.2s;
+        backdrop-filter: blur(8px);
       }
 
-      .modal-front,
-      .modal-back {
+      .ilw-nav:hover {
+        background: rgba(255,255,255,0.25);
+        transform: scale(1.1);
+      }
+
+      .ilw-nav:disabled {
+        opacity: 0.25;
+        cursor: default;
+        transform: none;
+      }
+
+      /* counter */
+      .ilw-modal-counter {
         position: absolute;
-        inset: 0;
-
-        backface-visibility: hidden;
+        bottom: -32px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: "Superglue", sans-serif;
+        font-size: 12px;
+        color: rgba(255,255,255,0.55);
+        letter-spacing: 0.1em;
+        white-space: nowrap;
       }
 
-      .modal-back {
-        transform: rotateY(180deg);
-      }
-
-      .modal-front img,
-      .modal-back img {
-        width: 100%;
-        height: 100%;
-
-        object-fit: contain;
-
-        background: white;
-
-        border-radius: 12px;
-
-        box-shadow:
-          0 0 80px rgba(0,0,0,0.75);
-      }
-
-      /* =========================
-         MOBILE
-      ========================== */
-
+      /* ── MOBILE ── */
       @media (max-width: 900px) {
-        .content-wrapper {
-          padding-top: 8rem;
-        }
-
-        .page-title {
-          font-size: clamp(3rem, 14vw, 5.5rem);
-        }
-
-        .intro-inner {
-          grid-template-columns: 1fr;
-          gap: 2rem;
-        }
-
-        .intro-divider {
-          display: none;
-        }
-
-        .intro-animbox {
-          min-height: auto;
-          padding: 2rem;
-        }
-
-        .works-grid {
-          grid-template-columns:
-            repeat(auto-fit, minmax(170px, 1fr));
-
-          gap: 1rem;
-        }
-
-        .category-bar {
-          gap: 0.75rem;
-        }
-
-        .cat-btn {
-          width: 100%;
-          justify-content: center;
-        }
+        .ilw-wrap { padding-top: 60px; }
+        .ilw-intro, .ilw-catbar { width: 100%; }
+        .ilw-intro { padding: 28px 24px; }
+        ..ilw-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+        .ilw-modal-img { max-width: 92vw; }
+        .ilw-nav { width: 40px; height: 40px; font-size: 20px; }
       }
     </style>
-
   </head>
 
   <body>
-
     <Header />
 
-    <main class="hero-container">
+    <main>
+     <div class="ilw-hero">
 
-      <img
-        class="hero-image"
-        src="/portfolio banner 2.webp"
-        alt="Portfolio banner"
-      />
+  <!-- VIDEO BACKGROUND -->
+  <video
+    class="ilw-bg-video"
+    autoplay
+    muted
+    loop
+    playsinline
+  >
+    <source src="/portfoliobannerani.webm" type="video/webm" />
+  </video>
 
-      <div class="content-wrapper">
+  <!-- DARK OVERLAY -->
+  <div class="ilw-bg-overlay"></div>
 
-        <!-- TITLE -->
+  <div class="ilw-wrap">
 
-        <section class="title-block">
+          <!-- TITLE -->
+          <h1 class="ilw-title">ILLUSTRATIVE<br />WORKS</h1>
 
-          <h1 class="page-title">
-            ILLUSTRATIVE<br />
-            WORKS
-          </h1>
-
-        </section>
-
-        <!-- INTRO -->
-
-        <section class="intro-animbox">
-
-          <img
-            class="intro-animbox-bg"
-            src="/box animation slow1.webp"
-            alt=""
-            aria-hidden="true"
-          />
-
-          <div class="intro-overlay"></div>
-
-          <div class="intro-inner">
-
-            <div class="intro-left">
-
-              <div class="intro-kicker">
-                Illustration Archive
+          <!-- INTRO BOX -->
+          <div class="ilw-intro">
+            <img class="ilw-intro-bg" src="/box animation slow1.webp" alt="" aria-hidden="true" />
+            <div class="ilw-intro-inner">
+              <div class="ilw-intro-top">
+                <p class="ilw-intro-kicker">Illustration Archive</p>
+                <h2 class="ilw-intro-heading">Visual<br />Storytelling</h2>
+                <p class="ilw-intro-sub">
+                  Character illustration, fantasy artwork, plushie concepts,
+                  editorial visuals, and experimental visual development.
+                </p>
               </div>
-
-              <h2 class="intro-title">
-                Visual<br />
-                Storytelling
-              </h2>
-
-              <p class="intro-subtitle">
-                Character illustration, fantasy artwork,
-                plushie concepts, editorial visuals,
-                and experimental visual development.
-              </p>
-
-            </div>
-
-            <div class="intro-divider"></div>
-
-            <div class="intro-right">
-
-              <div class="section-label">
-                About This Collection
+              <div class="ilw-intro-divider"></div>
+              <div class="ilw-intro-bottom">
+                <p class="ilw-intro-label">About This Collection</p>
+                <p class="ilw-intro-body">
+                  This archive brings together a wide range of illustrative work
+                  spanning concept art, creature design, fantasy illustration,
+                  commissioned projects, and stylized visual storytelling.
+                  Each category explores a different approach to character,
+                  atmosphere, and narrative design.
+                </p>
               </div>
-
-              <p>
-                This archive brings together a wide range
-                of illustrative work spanning concept art,
-                creature design, fantasy illustration,
-                commissioned projects, and stylized visual
-                storytelling. Each category explores a
-                different approach to character, atmosphere,
-                and narrative design.
-              </p>
-
             </div>
-
           </div>
 
-        </section>
+          <!-- CATEGORY BAR -->
+          <div class="ilw-catbar">
+            {illustrativeWorkGroups.map((group, i) => (
+              <button
+                class={`ilw-catbtn${i === 0 ? ' active' : ''}`}
+                data-id={group.id}
+              >
+                {group.title}
+              </button>
+            ))}
+          </div>
 
-        <!-- CATEGORY BUTTONS -->
-
-        <section class="category-bar">
-
+          <!-- WORK GROUPS -->
           {illustrativeWorkGroups.map((group, i) => (
-            <button
-              class={`cat-btn${i === 0 ? ' active' : ''}`}
-              data-id={group.id}
-            >
-              {group.title}
-            </button>
-          ))}
-
-        </section>
-
-        <!-- WORK GROUPS -->
-
-        <section>
-
-          {illustrativeWorkGroups.map((group, i) => (
-
             <div
-              class={`work-group${i === 0 ? ' visible' : ''}`}
+              class={`ilw-group${i === 0 ? ' visible' : ''}`}
               data-group={group.id}
             >
-
-              <div class="group-header">
-
-                <h2 class="group-title">
-                  {group.title}
-                </h2>
-
-                <p class="group-desc">
-                  {group.description}
-                </p>
-
-              </div>
-
-              <div class="works-grid">
-
+              <h2 class="ilw-group-title">{group.title}</h2>
+              <p class="ilw-group-desc">{group.description}</p>
+              <div class="ilw-grid">
                 {group.works.map((work, index) => (
-
                   <div
-                    class="work-item"
-                    data-front={work.src}
-                    data-back={work.back || ''}
+                    class="ilw-item"
+                    data-src={work.src}
+                    data-alt={work.alt}
+                    data-index={index}
                   >
-
-                    <img
-                      src={work.src}
-                      alt={work.alt}
-                      loading="lazy"
-                    />
-
-                    <div class="work-overlay">
-
-                      <div class="work-label">
-                        {group.title} #{index + 1}
-                      </div>
-
+                    <img src={work.src} alt={work.alt} loading="lazy" />
+                    <div class="ilw-item-overlay">
+                      <span class="ilw-item-label">{group.title} #{index + 1}</span>
                     </div>
-
                   </div>
-
                 ))}
-
               </div>
-
             </div>
-
           ))}
 
-        </section>
-
+        </div>
       </div>
-
     </main>
 
     <!-- MODAL -->
-
-    <div id="modal" class="modal">
-
-      <div class="modal-card">
-
-        <div class="modal-inner">
-
-          <div class="modal-front">
-            <img id="modalFront" src="" alt="" />
-          </div>
-
-          <div class="modal-back">
-            <img id="modalBack" src="" alt="" />
-          </div>
-
+    <div id="ilwModal" class="ilw-modal">
+      <div class="ilw-modal-inner">
+        <button id="ilwPrev" class="ilw-nav" aria-label="Previous">&#8592;</button>
+        <div style="position:relative;">
+          <img id="ilwModalImg" class="ilw-modal-img" src="" alt="" />
+          <span id="ilwCounter" class="ilw-modal-counter"></span>
         </div>
-
+        <button id="ilwNext" class="ilw-nav" aria-label="Next">&#8594;</button>
       </div>
-
     </div>
 
     <script>
-      const modal = document.getElementById('modal');
-      const modalFront = document.getElementById('modalFront');
-      const modalBack = document.getElementById('modalBack');
+      const modal    = document.getElementById('ilwModal');
+      const modalImg = document.getElementById('ilwModalImg');
+      const counter  = document.getElementById('ilwCounter');
+      const prevBtn  = document.getElementById('ilwPrev');
+      const nextBtn  = document.getElementById('ilwNext');
 
-      const catBtns = document.querySelectorAll('.cat-btn');
-      const workGroups = document.querySelectorAll('.work-group');
+      let currentGroup = [];
+      let currentIndex = 0;
 
-      catBtns.forEach((btn) => {
+      function showImage(index) {
+        modalImg.classList.add('fade');
+        setTimeout(() => {
+          currentIndex = index;
+          modalImg.src = currentGroup[currentIndex].src;
+          modalImg.alt = currentGroup[currentIndex].alt;
+          counter.textContent = `${currentIndex + 1} / ${currentGroup.length}`;
+          prevBtn.disabled = currentIndex === 0;
+          nextBtn.disabled = currentIndex === currentGroup.length - 1;
+          modalImg.classList.remove('fade');
+        }, 180);
+      }
+
+      function openModal(group, index) {
+        currentGroup = group;
+        showImage(index);
+        modal.classList.add('active');
+      }
+
+      function closeModal() {
+        modal.classList.remove('active');
+        setTimeout(() => { modalImg.src = ''; }, 300);
+      }
+
+      // category switching
+      document.querySelectorAll('.ilw-catbtn').forEach(btn => {
         btn.addEventListener('click', () => {
-
-          catBtns.forEach((b) =>
-            b.classList.remove('active')
-          );
-
+          document.querySelectorAll('.ilw-catbtn').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
-
           const id = btn.dataset.id;
-
-          workGroups.forEach((group) => {
-            group.classList.toggle(
-              'visible',
-              group.dataset.group === id
-            );
+          document.querySelectorAll('.ilw-group').forEach(g => {
+            g.classList.toggle('visible', g.dataset.group === id);
           });
-
         });
       });
 
-      document.querySelectorAll('.work-item').forEach((item) => {
+      // open modal — collect all items from the same group
+      document.querySelectorAll('.ilw-group').forEach(group => {
+        const items = Array.from(group.querySelectorAll('.ilw-item'));
+        const groupData = items.map(el => ({ src: el.dataset.src, alt: el.dataset.alt }));
 
-        item.addEventListener('click', () => {
-
-          modalFront.src = item.dataset.front;
-          modalBack.src = item.dataset.back || '';
-
-          modal.classList.add('active');
-
+        items.forEach((item, index) => {
+          item.addEventListener('click', () => openModal(groupData, index));
         });
-
       });
 
-      modal.addEventListener('click', (e) => {
+      prevBtn.addEventListener('click', () => {
+        if (currentIndex > 0) showImage(currentIndex - 1);
+      });
 
-        if (e.target === modal) {
+      nextBtn.addEventListener('click', () => {
+        if (currentIndex < currentGroup.length - 1) showImage(currentIndex + 1);
+      });
 
-          modal.classList.remove('active');
+      // close on backdrop click
+      modal.addEventListener('click', e => {
+        if (e.target === modal) closeModal();
+      });
 
-          setTimeout(() => {
-
-            modalFront.src = '';
-            modalBack.src = '';
-
-          }, 300);
-
-        }
-
+      // keyboard nav
+      document.addEventListener('keydown', e => {
+        if (!modal.classList.contains('active')) return;
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowLeft' && currentIndex > 0) showImage(currentIndex - 1);
+        if (e.key === 'ArrowRight' && currentIndex < currentGroup.length - 1) showImage(currentIndex + 1);
       });
     </script>
 
     <Footer />
-
   </body>
 </html>

@@ -10,93 +10,98 @@ const tarotCards = Array.from({ length: 22 }, (_, i) => i);
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead
-      title={`Portfolio Tarot | ${SITE_TITLE}`}
-      description={SITE_DESCRIPTION}
-    />
+    <BaseHead title={`Portfolio Tarot | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 
     <style>
-      * {
-        box-sizing: border-box;
+      *, *::before, *::after { box-sizing: border-box; }
+
+      html {
+        font-size: 16px;
       }
 
       body {
         margin: 0;
-        font-family: 'Vipnagorgialla Bd', sans-serif;
-        background: #000;
+        padding: 0;
         overflow-x: hidden;
+        background: #f5f5f5;
       }
 
-      /* =========================
-         HERO
-      ========================== */
+      main {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
 
-      .hero-container {
+      /* ─────────────────────────────
+         HERO (IDENTICAL STRUCTURE TO ILLUSTRATIVE)
+      ───────────────────────────── */
+
+      .ilw-hero {
         position: relative;
         width: 100%;
         min-height: 100vh;
+        overflow: hidden;
+        background: transparent;
       }
 
-      .hero-image {
+      .ilw-bg-video {
         position: absolute;
-        inset: 0;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
-        filter: brightness(0.65) contrast(1.15) saturate(1.2) hue-rotate(210deg);
+        object-position: center;
         z-index: 0;
+        pointer-events: none;
+
+        /* YOUR EXACT FILTERS (UNCHANGED) */
+        filter:
+          sepia(1)
+          saturate(2.5)
+          hue-rotate(5deg)
+          brightness(0.97)
+          contrast(1.1);
       }
 
-      .hero-content {
+      /* CONTENT WRAP (MATCHES ILLUSTRATIVE) */
+      .ilw-wrap {
         position: relative;
         z-index: 2;
-        width: min(1400px, 92vw);
+        width: min(1050px, 78vw);
         margin: 0 auto;
-        padding: 10rem 0 6rem;
+        padding-top: 100px;
+        padding-bottom: 100px;
       }
 
-      /* =========================
-         TITLE
-      ========================== */
-
-      .page-title {
+      /* TITLE */
+      .ilw-title {
         font-family: "JAVATEXT";
-        font-size: clamp(3.5rem, 7vw, 7rem);
+        font-size: clamp(40px, 5.2vw, 100px);
+        line-height: 0.9;
         color: white;
         margin: 0 0 2rem 0;
-        line-height: 0.9;
         text-transform: uppercase;
-        max-width: 900px;
-        text-shadow: 0 0 25px rgba(255,255,255,0.08);
+        letter-spacing: -0.04em;
+        text-shadow: 0 0 50px rgba(255,200,80,0.3);
       }
 
-      /* =========================
-         DESCRIPTION BLOCKS
-      ========================== */
-
-      .description-wrap {
-        display: grid;
-        grid-template-columns: 1fr 0.1fr;
-        gap: 3rem;
-        margin-bottom: 4rem;
+      /* DESCRIPTION */
+      .tarot-desc {
         font-family: "JAVATEXT";
-     
-      }
-
-      .description {
         color: white;
-        font-size: clamp(1.3rem, 1.1vw, 1.1rem);
+        font-size: clamp(1rem, 1.1vw, 1.1rem);
         line-height: 1.7;
         opacity: 0.9;
+        margin: 0 0 4rem 0;
+        max-width: 720px;
       }
 
-      /* =========================
-         GRID
-      ========================== */
-
+      /* GRID */
       .tarot-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        grid-template-columns: repeat(4, 1fr);
         gap: 2.5rem;
         margin-top: 3rem;
       }
@@ -112,27 +117,18 @@ const tarotCards = Array.from({ length: 22 }, (_, i) => i);
         transform: translateY(-6px) scale(1.03);
       }
 
-      .tarot-card:active {
-        transform: scale(0.97);
-      }
-
       .tarot-card img {
         width: 100%;
         height: 100%;
         object-fit: contain;
         border-radius: 14px;
         background: white;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.6);
       }
 
-      /* =========================
-         MODAL
-      ========================== */
-
+      /* MODAL (UNCHANGED) */
       .modal {
         position: fixed;
         inset: 0;
-        background: rgba(0,0,0,0.9);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -189,23 +185,18 @@ const tarotCards = Array.from({ length: 22 }, (_, i) => i);
         object-fit: contain;
         background: white;
         border-radius: 12px;
-        box-shadow: 0 0 90px rgba(0,0,0,0.85);
       }
 
-      /* =========================
-         MOBILE
-      ========================== */
-
+      /* MOBILE */
       @media (max-width: 900px) {
-        .description-wrap {
-          grid-template-columns: 1fr;
-        }
+        .ilw-wrap { padding-top: 60px; }
 
-        .page-title {
+        .ilw-title {
           font-size: clamp(2.8rem, 12vw, 5rem);
         }
 
         .tarot-grid {
+          grid-template-columns: repeat(2, 1fr);
           gap: 1.5rem;
         }
       }
@@ -215,38 +206,42 @@ const tarotCards = Array.from({ length: 22 }, (_, i) => i);
   <body>
     <Header />
 
-    <main class="hero-container">
-      <img class="hero-image" src="/portfolio banner.webp" alt="Portfolio Banner" />
+    <main>
 
-      <div class="hero-content">
+      <!-- SAME HERO STRUCTURE AS ILLUSTRATIVE -->
+      <div class="ilw-hero">
 
-        <h1 class="page-title">
-          The Jan 6th<br />
-          Tarot
-        </h1>
+        <video class="ilw-bg-video" autoplay muted loop playsinline>
+          <source src="/portfoliobannerani.webm" type="video/webm" />
+        </video>
 
-        <div class="description-wrap">
-          <p class="description">
-            Made for my senior capstone for my bachelors of design and illustration, this project is a visual retelling of the events of and leading up to January 6th using the medium of tarot.<br />
-            January 6th is a long and complex subject, but once you understand what happened its impossible to come to any conclusion other than that Donald Trump and his allies attemped to subvert the will of the people and overthrow democracy through illegal means. My goal with this project was to narrativize this story into a simple, viewer friendly manner so that the crimes of our presidant are not forgotten.  
-           <br /> Presented as part of a senior thesis exhibition, the physical prints function as both
-            narrative sequence and conceptual critique.
+        <div class="ilw-wrap">
+
+          <h1 class="ilw-title">
+            The Jan 6th<br />
+            Tarot
+          </h1>
+
+          <p class="tarot-desc">
+            Made for my senior capstone for my bachelors of design and illustration, this project is a visual retelling of the events of and leading up to January 6th using the medium of tarot.<br /><br />
+            January 6th is a long and complex subject, but once you understand what happened its impossible to come to any conclusion other than that Donald Trump and his allies attempted to subvert the will of the people and overthrow democracy through illegal means.
           </p>
-        </div>
 
-        <div class="tarot-grid">
-          {tarotCards.map((i) => (
-            <div
-              class="tarot-card"
-              data-front={`/portfolio/tarot/${i}.webp`}
-              data-back={`/portfolio/tarot/${i} back.webp`}
-            >
-              <img src={`/portfolio/tarot/${i}.webp`} alt={`Tarot card ${i}`} />
-            </div>
-          ))}
-        </div>
+          <div class="tarot-grid">
+            {tarotCards.map((i) => (
+              <div
+                class="tarot-card"
+                data-front={`/portfolio/tarot/${i}.webp`}
+                data-back={`/portfolio/tarot/${i} back.webp`}
+              >
+                <img src={`/portfolio/tarot/${i}.webp`} alt={`Tarot card ${i}`} loading="lazy" />
+              </div>
+            ))}
+          </div>
 
+        </div>
       </div>
+
     </main>
 
     <!-- MODAL -->
@@ -254,10 +249,10 @@ const tarotCards = Array.from({ length: 22 }, (_, i) => i);
       <div class="modal-card">
         <div class="modal-inner">
           <div class="modal-front">
-            <img id="modalFront" src="" />
+            <img id="modalFront" />
           </div>
           <div class="modal-back">
-            <img id="modalBack" src="" />
+            <img id="modalBack" />
           </div>
         </div>
       </div>
@@ -279,10 +274,16 @@ const tarotCards = Array.from({ length: 22 }, (_, i) => i);
       modal.addEventListener("click", (e) => {
         if (e.target === modal) {
           modal.classList.remove("active");
-          setTimeout(() => {
-            modalFront.src = "";
-            modalBack.src = "";
-          }, 300);
+          modalFront.src = "";
+          modalBack.src = "";
+        }
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          modal.classList.remove("active");
+          modalFront.src = "";
+          modalBack.src = "";
         }
       });
     </script>

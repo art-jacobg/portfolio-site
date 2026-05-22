@@ -10,300 +10,207 @@ const upcomingProjects = Array.from({ length: 5 }, (_, i) => i);
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead
-      title={`Upcoming Projects | ${SITE_TITLE}`}
-      description={SITE_DESCRIPTION}
-    />
+    <BaseHead title={`Upcoming Projects | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 
     <style>
-      * {
-        box-sizing: border-box;
-      }
+      *, *::before, *::after { box-sizing: border-box; }
+
+      html { font-size: 16px; }
 
       body {
         margin: 0;
+        padding: 0;
         overflow-x: hidden;
         background: #f5f5f5;
       }
 
-      .hero-container {
+      main {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      /* ─────────────────────────────
+         HERO (MATCHES ILLUSTRATIVE)
+      ───────────────────────────── */
+
+      .ilw-hero {
         position: relative;
         width: 100%;
         min-height: 100vh;
         overflow: hidden;
       }
 
-      .hero-image {
+      /* VIDEO BACKGROUND (THIS IS THE KEY FIX) */
+      .ilw-bg-video {
         position: absolute;
-        inset: 0;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
         object-position: center;
         z-index: 0;
+        pointer-events: none;
       }
 
-      .hero-overlay {
-        position: relative;
-        z-index: 2;
-        width: min(1450px, 94vw);
-        margin: 0 auto;
-        padding-top: 11rem;
-        padding-bottom: 6rem;
-      }
+      /* CONTENT WRAP */
+      .wrap {
+  position: relative;
+  z-index: 2;
+  width: min(1050px, 78vw);
+  margin: 0 auto;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
 
-      /* =========================
-         TITLE
-      ========================== */
-
-      .title-block {
-        margin-bottom: 5rem;
-      }
-
+      /* TITLE */
       .page-title {
-        font-family: "Superglue";
-        font-size: clamp(4rem, 10vw, 9rem);
-        line-height: 0.85;
+        font-family: "Superglue", sans-serif;
+        font-size: clamp(40px, 5.2vw, 82px);
+        line-height: 0.9;
         color: white;
-        margin: 0;
+        margin: 0 0 110px 0;
+        text-align: center;
         text-transform: uppercase;
-        max-width: 850px;
         letter-spacing: -0.04em;
-        text-shadow:
-          0 0 10px rgba(255,255,255,0.1),
-          0 0 30px rgba(0,0,0,0.25);
+        text-shadow: 0 0 50px rgba(0,0,0,0.35);
       }
 
-      /* =========================
-         INFO BOX
-      ========================== */
-
-      .intro-animbox {
-        position: relative;
-        width: 100%;
-        min-height: 360px;
-        border-radius: 12px;
-        overflow: hidden;
-        padding: clamp(3rem, 5vw, 5rem);
-        margin-bottom: 5rem;
-
-        display: flex;
-        align-items: center;
-
-        box-shadow:
-          0 20px 60px rgba(0,0,0,0.22),
-          inset 0 0 0 1px rgba(255,255,255,0.15);
-      }
-
-      .intro-animbox-bg {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: 0;
-        opacity: 0.95;
-      }
-
-      .intro-darken {
-        position: absolute;
-        inset: 0;
-        background:
-          linear-gradient(
-            90deg,
-            rgba(255,255,255,0.94) 0%,
-            rgba(255,255,255,0.88) 50%,
-            rgba(255,255,255,0.82) 100%
-          );
-        z-index: 1;
-      }
+      /* INTRO BOX */
+     .intro {
+  position: relative;
+  width: 72%;
+  margin: 0 auto 50px auto;
+  border-radius: 18px;
+  padding: 56px 64px;
+  box-shadow: 0 28px 80px rgba(0,0,0,0.28);
+}
 
       .intro-inner {
         position: relative;
         z-index: 2;
-
-        width: 100%;
-
-        display: grid;
-        grid-template-columns: 1.1fr 1px 1fr;
-        gap: 4rem;
-        align-items: center;
-      }
-
-      .intro-divider {
-        width: 1px;
-        height: 100%;
-        background: rgba(0,0,0,0.15);
-      }
-
-      .intro-left {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        gap: 32px;
       }
 
-      .section-tag {
-        font-family: "Superglue";
-        font-size: 0.8rem;
-        color: #00aee6;
-        margin-bottom: 1rem;
+      .intro-kicker {
+        font-family: "Superglue", sans-serif;
+        font-size: 11px;
+        color: #00b7ff;
         text-transform: uppercase;
-        letter-spacing: 0.14em;
-      }
-
-      .intro-title {
-        font-family: "Superglue";
-        font-size: clamp(2.8rem, 5vw, 5rem);
-        line-height: 0.9;
-        color: #111;
-        margin: 0 0 1.5rem 0;
-        text-transform: uppercase;
-      }
-
-      .intro-subtitle {
-        font-size: clamp(0.95rem, 1.1vw, 1.1rem);
-        line-height: 1.8;
-        color: #222;
-        max-width: 520px;
-
-        border-left: 4px solid #00bfff;
-        padding-left: 1rem;
-      }
-
-      .intro-right {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-
-      .intro-right-label {
-        font-family: "Superglue";
-        font-size: 0.75rem;
-        color: #0086b3;
-        margin-bottom: 1rem;
         letter-spacing: 0.15em;
+      }
+
+      .intro-heading {
+        font-family: "Superglue", sans-serif;
+        font-size: clamp(22px, 2.8vw, 38px);
+        line-height: 0.88;
+        color: #111;
         text-transform: uppercase;
       }
 
-      .intro-right p {
-        margin: 0;
-        color: #1b1b1b;
-        line-height: 2;
-        font-size: clamp(0.95rem, 1vw, 1.05rem);
+      .intro-sub {
+        font-size: 14px;
+        line-height: 1.85;
+        color: #333;
+        border-left: 4px solid #00bfff;
+        padding-left: 14px;
+        max-width: 520px;
       }
-
-      /* =========================
-         PROJECT GRID
-      ========================== */
-
-      .works-section {
-        position: relative;
-        z-index: 2;
-      }
-
+.intro-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%) scale(1.7);
+  object-fit: fill;
+  z-index: 0;
+  opacity: 0.96;
+  pointer-events: none;
+}
+      /* HEADER */
       .works-header {
         display: flex;
-        align-items: center;
         justify-content: space-between;
-        margin-bottom: 2rem;
+        margin-top: 100px;
+        margin-bottom: 28px;
       }
 
       .works-title {
-        font-family: "Superglue";
-        font-size: clamp(1.5rem, 3vw, 2.8rem);
+        font-family: "Superglue", sans-serif;
+        font-size: clamp(24px, 3vw, 44px);
         color: white;
-        margin: 0;
         text-transform: uppercase;
       }
 
       .works-count {
         color: rgba(255,255,255,0.8);
         font-size: 0.9rem;
-        letter-spacing: 0.1em;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
       }
 
+      /* GRID */
       .works-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 2rem;
-      }
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+      
 
       .work-item {
         position: relative;
         aspect-ratio: 3 / 4;
-        border-radius: 14px;
+        border-radius: 12px;
         overflow: hidden;
         cursor: pointer;
-
         background: rgba(255,255,255,0.12);
         backdrop-filter: blur(6px);
-
-        transition:
-          transform 0.3s ease,
-          box-shadow 0.3s ease;
+        transition: transform 0.3s;
       }
 
       .work-item:hover {
-        transform: translateY(-10px) scale(1.02);
-
-        box-shadow:
-          0 20px 40px rgba(0,0,0,0.35),
-          0 0 0 1px rgba(255,255,255,0.15);
+        transform: translateY(-8px) scale(1.02);
       }
 
       .work-item img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        display: block;
       }
 
       .work-overlay {
         position: absolute;
         inset: 0;
-
-        background:
-          linear-gradient(
-            to top,
-            rgba(0,0,0,0.7) 0%,
-            rgba(0,0,0,0.15) 40%,
-            transparent 70%
-          );
-
         display: flex;
         align-items: flex-end;
-
-        padding: 1.25rem;
+        padding: 16px;
+        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
       }
 
-      .work-title {
-        font-family: "Superglue";
+      .work-label {
+        font-family: "Superglue", sans-serif;
         color: white;
-        font-size: 1rem;
-        line-height: 1.2;
+        font-size: 13px;
         text-transform: uppercase;
       }
 
-      /* =========================
-         MODAL
-      ========================== */
-
+      /* MODAL */
       .modal {
         position: fixed;
         inset: 0;
-        z-index: 9999;
-
         display: flex;
         align-items: center;
         justify-content: center;
-
         background: rgba(0,0,0,0.88);
-
+        z-index: 9999;
         opacity: 0;
         pointer-events: none;
-
-        transition: opacity 0.35s ease;
+        transition: opacity 0.3s;
       }
 
       .modal.active {
@@ -314,249 +221,77 @@ const upcomingProjects = Array.from({ length: 5 }, (_, i) => i);
       .modal-card {
         width: min(520px, 90vw);
         height: min(900px, 88vh);
-
-        perspective: 1600px;
-
-        transform: scale(0.92);
-        transition: transform 0.35s ease;
       }
 
-      .modal.active .modal-card {
-        transform: scale(1);
-      }
+     @media (max-width: 900px) {
+  .wrap { padding-top: 60px; }
 
-      .modal-inner {
-        position: relative;
-        width: 100%;
-        height: 100%;
+  .intro {
+    width: 100%;
+    padding: 28px 24px;
+  }
 
-        transform-style: preserve-3d;
-        transition: transform 0.8s ease;
-      }
-
-      .modal-card:hover .modal-inner {
-        transform: rotateY(180deg);
-      }
-
-      .modal-front,
-      .modal-back {
-        position: absolute;
-        inset: 0;
-
-        backface-visibility: hidden;
-      }
-
-      .modal-back {
-        transform: rotateY(180deg);
-      }
-
-      .modal-front img,
-      .modal-back img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-
-        border-radius: 12px;
-
-        background: white;
-
-        box-shadow:
-          0 0 80px rgba(0,0,0,0.7);
-      }
-
-      /* =========================
-         MOBILE
-      ========================== */
-
-      @media (max-width: 900px) {
-        .hero-overlay {
-          padding-top: 8rem;
-        }
-
-        .page-title {
-          font-size: clamp(3.5rem, 16vw, 6rem);
-          max-width: 100%;
-        }
-
-        .intro-inner {
-          grid-template-columns: 1fr;
-          gap: 2rem;
-        }
-
-        .intro-divider {
-          display: none;
-        }
-
-        .intro-animbox {
-          min-height: auto;
-          padding: 2rem;
-        }
-
-        .works-grid {
-          grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-          gap: 1rem;
-        }
-
-        .works-header {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 0.5rem;
-        }
-      }
+  .works-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
     </style>
   </head>
 
   <body>
     <Header />
 
-    <main class="hero-container">
-      <img
-        class="hero-image"
-        src="/portfolio banner 2.webp"
-        alt="Portfolio banner"
-      />
+    <main>
 
-      <div class="hero-overlay">
+      <!-- FIXED: NOW USING WORKING ANIMATED BACKGROUND -->
+      <div class="ilw-hero">
 
-        <!-- TITLE -->
-        <section class="title-block">
-          <h1 class="page-title">
-            UPCOMING<br />
-            PROJECTS
-          </h1>
-        </section>
+        <video class="ilw-bg-video" autoplay muted loop playsinline>
+          <source src="/portfoliobannerani.webm" type="video/webm" />
+        </video>
 
-        <!-- INFO BOX -->
-        <section class="intro-animbox">
-          <img
-            class="intro-animbox-bg"
-            src="/box animation slow3.webp"
-            alt=""
-            aria-hidden="true"
-          />
+        <div class="wrap">
 
-          <div class="intro-darken"></div>
+          <h1 class="page-title">UPCOMING<br />PROJECTS</h1>
 
-          <div class="intro-inner">
+         <div class="intro">
+  <!-- THIS IS THE MISSING “central animation box slow” BACKGROUND -->
+  <img
+    class="intro-bg"
+    src="/box animation slow3.webp"
+    alt=""
+    aria-hidden="true"
+  />
 
-            <div class="intro-left">
-              <div class="section-tag">In Development</div>
-
-              <h2 class="intro-title">
-                Future<br />
-                Works
-              </h2>
-
-              <div class="intro-subtitle">
-                Sneak peeks at projects currently in progress,
-                experimental concepts, and upcoming creative directions.
-              </div>
-            </div>
-
-            <div class="intro-divider"></div>
-
-            <div class="intro-right">
-              <div class="intro-right-label">
-                Coming Soon
-              </div>
-
-              <p>
-                These projects represent the next stage of my
-                creative practice — combining digital design,
-                experimental visuals, branding systems, and
-                new forms of interactive storytelling.
-                More information and final releases will
-                be revealed over time.
-              </p>
-            </div>
-
-          </div>
-        </section>
-
-        <!-- PROJECT GRID -->
-        <section class="works-section">
-
+  <div class="intro-inner">
+    <p class="intro-kicker">In Development</p>
+    <h2 class="intro-heading">Future Works</h2>
+    <p class="intro-sub">
+      Sneak peeks at projects currently in progress and upcoming creative directions.ks at projects currently in progress and upcoming creative directions.
+    </p>
+  </div>
+</div>
           <div class="works-header">
-            <h2 class="works-title">
-              Preview Gallery
-            </h2>
-
-            <div class="works-count">
-              05 Upcoming Releases
-            </div>
+            <h2 class="works-title">Preview Gallery</h2>
+            <div class="works-count">05 Upcoming Releases</div>
           </div>
 
           <div class="works-grid">
             {upcomingProjects.map((i) => (
-              <div
-                class="work-item"
-                data-front={`/portfolio/upcoming/${i}.webp`}
-                data-back={`/portfolio/upcoming/${i} back.webp`}
-              >
-                <img
-  class="intro-animbox-bg"
-  src="/box animation slow1.webp"
-  alt=""
-  aria-hidden="true"
-/>
-
+              <div class="work-item">
+                <img src="/box animation slow1.webp" alt="" />
                 <div class="work-overlay">
-                  <div class="work-title">
-                    Upcoming Project {i + 1}
-                  </div>
+                  <span class="work-label">Upcoming Project {i + 1}</span>
                 </div>
               </div>
             ))}
           </div>
 
-        </section>
-
-      </div>
-    </main>
-
-    <!-- MODAL -->
-
-    <div id="modal" class="modal">
-      <div class="modal-card">
-        <div class="modal-inner">
-
-          <div class="modal-front">
-            <img id="modalFront" src="" alt="" />
-          </div>
-
-          <div class="modal-back">
-            <img id="modalBack" src="" alt="" />
-          </div>
-
         </div>
       </div>
-    </div>
 
-    <script>
-      const modal = document.getElementById('modal');
-      const modalFront = document.getElementById('modalFront');
-      const modalBack = document.getElementById('modalBack');
-
-      document.querySelectorAll('.work-item').forEach((item) => {
-        item.addEventListener('click', () => {
-          modalFront.src = item.dataset.front;
-          modalBack.src = item.dataset.back || '';
-
-          modal.classList.add('active');
-        });
-      });
-
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          modal.classList.remove('active');
-
-          setTimeout(() => {
-            modalFront.src = '';
-            modalBack.src = '';
-          }, 300);
-        }
-      });
-    </script>
+    </main>
 
     <Footer />
   </body>
