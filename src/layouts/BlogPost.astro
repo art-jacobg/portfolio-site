@@ -7,157 +7,40 @@ import FormattedDate from '../components/FormattedDate.astro';
 
 type Props = CollectionEntry<'blog'>['data'] & { overlayText?: boolean };
 
-const { title, description, pubDate, updatedDate, heroImage, heroBackground, pageTitle, overlayText } = Astro.props;
+const { title, description, pubDate, updatedDate } = Astro.props;
 ---
 
 <html lang="en">
-	<head>
-		<BaseHead title={title} description={description} />
-		{heroImage && <link rel="preload" href={heroImage} as="image" fetchpriority="high" />}
-		<style>
-			body {
-				padding-top: 0;
-				margin-top: 0;
-			}
+  <head>
+    <BaseHead title={title} description={description} />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
 
-			main {
-				width: 100%;
-				max-width: 100%;
-				margin: 0;
-				padding: 0;
-			}
+      body {
+        margin: 0;
+        padding: 0 !important;
+        overflow-x: hidden;
+      }
 
-			article {
-				margin: 0;
-				padding: 0;
-			}
+      main {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
 
-			.hero-image {
-				width: 100%;
-				background-size: cover;
-				background-position: center;
-				position: relative;
-				background-color: white;
-				overflow: visible;
-				border-radius: 0;
-			}
+      footer {
+        position: relative;
+        z-index: 10;
+      }
+    </style>
+  </head>
 
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 0;
-				box-shadow: var(--box-shadow);
-			}
-
-			/* centered wrapper matches nav width */
-			.hero-title-wrapper {
-				position: absolute;
-				top: 2rem;
-				left: 50%;
-				transform: translateX(-50%);
-				width: 1400px;
-				max-width: 100%;
-				pointer-events: none;
-				z-index: 10;
-			}
-
-			.hero-title {
-				font-family: "Superglue";
-				font-size: clamp(2rem, 5.5vw, 5.5rem);
-				color: white;
-				margin: 0;
-				position: relative;
-				right: 13.5rem;  /* adjust to move left/right */
-				bottom: 0.5rem;
-			}
-
-			.hero-bg { color: white; }
-
-			.prose {
-				width: 100%;
-				max-width: 100%;
-				margin: auto;
-				padding: 1.5em 1em;
-				color: rgb(var(--gray-dark));
-			}
-
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-
-			.last-updated-on {
-				font-style: italic;
-			}
-
-			@media (max-width: 720px) {
-				.hero-title {
-					font-size: 3rem;
-					left: 1rem;
-				}
-			}
-		</style>
-	</head>
-
-	<body>
-		<Header />
-		<main>
-			<article>
-				<div class="hero-image" style={heroBackground && heroImage ? `background-image: url('${heroImage}'); ${overlayText ? 'min-height: 100vh;' : 'height: 50vh;'}` : ''}>
-					{!heroBackground && heroImage && <img width={1020} height={510} src={heroImage} alt="" />}
-					{heroBackground && pageTitle && (
-						<div class="hero-title-wrapper">
-							<h1 class="hero-title">{pageTitle}</h1>
-						</div>
-					)}
-					{overlayText && <div class={`prose ${heroBackground ? 'hero-bg' : ''}`}>
-						<div class="title">
-							<div class="date">
-								<FormattedDate date={pubDate} />
-								{
-									updatedDate && (
-										<div class="last-updated-on">
-											Last updated on <FormattedDate date={updatedDate} />
-										</div>
-									)
-								}
-							</div>
-							<h1>{title}</h1>
-							<hr />
-						</div>
-						<slot />
-					</div>}
-				</div>
-				{!overlayText && <div class={`prose ${heroBackground ? 'hero-bg' : ''}`}>
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<hr />
-					</div>
-					<slot />
-				</div>}
-			</article>
-		</main>
-		<Footer />
-	</body>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
 </html>

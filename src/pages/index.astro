@@ -9,28 +9,24 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    <link rel="preload" href="/main image.webp" as="image" fetchpriority="high" />
 
     <style>
-      /* Reset */
-      body {
-        margin: 0;
-        background: white;
-        font-family: sans-serif;
-      }
+    body {
+  margin: 0;
+  background: none;
+  font-family: sans-serif;
+}
 
-      /* HERO IMAGE */
       .hero {
         position: relative;
       }
 
-      .hero img {
-        width: 200%;
-        height: auto;
-        display: block;
-      }
+      .hero video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
-      /* HERO OVERLAY */
       .banner-gif {
         position: absolute;
         top: 38%;
@@ -41,7 +37,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         pointer-events: none;
       }
 
-      /* TEXT OVERLAY (DESKTOP) */
       .gordillo-box {
         position: absolute;
         top: 20%;
@@ -64,7 +59,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         font-family: "Overload Burn", sans-serif;
       }
 
-      /* MOBILE FIX */
       @media (max-width: 720px) {
         .gordillo-box {
           position: static;
@@ -83,21 +77,21 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         }
       }
 
-      /* MAIN CONTENT */
       main {
-        padding: 2rem 1rem;
-        max-width: 800px;
-        margin: 0 auto;
-      }
+  margin: 0;
+  padding: 0;
+
+}
     </style>
   </head>
 
   <body>
     <Header />
 
-    <!-- HERO -->
     <div class="hero">
-      <img src="/main image.webp" alt="Main Banner" />
+      <video autoplay muted loop playsinline>
+        <source src="/homepageani.webm" type="video/webm" />
+      </video>
     </div>
 
     <main>

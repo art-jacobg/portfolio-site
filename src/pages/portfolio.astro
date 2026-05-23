@@ -9,26 +9,43 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 <html lang="en">
   <head>
     <BaseHead title={`Portfolio | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
-    <link rel="preload" href="/portfolio banner 2.webp" as="image" fetchpriority="high" />
+    <link rel="preload" href="/portfoliobannerani.webm" as="video" fetchpriority="high" />
 
     <style>
-      /* ─────────────────────────────────────────────────────────────
-         HERO
-      ───────────────────────────────────────────────────────────── */
+      *, *::before, *::after { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        padding: 0 !important;
+        overflow-x: hidden;
+      }
+
+      main {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      /* ── HERO ── */
       .hero-container {
         position: relative;
         width: 100%;
+        min-height: 100vh;
+        overflow: hidden;
+        background: #4ad9e6;
       }
 
-      .hero-image {
+      .hero-video {
         position: absolute;
-        inset: 0;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
         object-position: center top;
         z-index: 0;
-        display: block;
+        pointer-events: none;
       }
 
       .page-title {
@@ -41,12 +58,9 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         margin: 0;
         z-index: 20;
         pointer-events: none;
-        mix-blend-mode: normal;
       }
 
-      /* ─────────────────────────────────────────────────────────────
-         OVERLAY GRID
-      ───────────────────────────────────────────────────────────── */
+      /* ── OVERLAY GRID ── */
       .portfolio-overlay {
         position: relative;
         z-index: 1;
@@ -61,9 +75,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         right: 3.75rem;
       }
 
-      /* ─────────────────────────────────────────────────────────────
-         SECTION BASE
-      ───────────────────────────────────────────────────────────── */
       .portfolio-section {
         display: flex;
         align-items: center;
@@ -77,9 +88,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         border-radius: 4px;
       }
 
-      /* ─────────────────────────────────────────────────────────────
-         LARGE CARD — Tarot
-      ───────────────────────────────────────────────────────────── */
       .card--tarot {
         grid-column: 1;
         grid-row: 1 / 4;
@@ -88,12 +96,10 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         align-items: center;
         gap: 2rem;
         padding: 8.5rem;
-         padding-top: 10rem;
+        padding-top: 10rem;
       }
 
-      .card--tarot .card-image {
-        flex-shrink: 0;
-      }
+      .card--tarot .card-image { flex-shrink: 0; }
 
       .card--tarot .card-image img {
         width: auto;
@@ -104,11 +110,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         object-fit: contain;
       }
 
-      .card--tarot .card-text {
-        flex: 1;
-        min-width: 0;
-
-      }
+      .card--tarot .card-text { flex: 1; min-width: 0; }
 
       .card--tarot .card-text h2 {
         font-size: clamp(1.8rem, 3vw, 3.4rem);
@@ -116,30 +118,20 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         margin: 0 0 0.45rem;
       }
 
-      /* tarot button: inline in the text flow */
-.portfolio-btn--tarot {
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 0.1rem;
-  align-self: flex-start;
-  
-}
+      .portfolio-btn--tarot {
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 0.1rem;
+        align-self: flex-start;
+      }
 
-/* tarot button wrapper — edit independently here */
-.portfolio-btn--tarot .portfolio-btn-wrapper {
-  width: 440px;
-  height: 82px;
-  
-}
-.portfolio-btn--tarot .portfolio-btn-text {
-  font-size: 0.8rem; /* change this value */
-  
-}
+      .portfolio-btn--tarot .portfolio-btn-wrapper {
+        width: 440px;
+        height: 82px;
+      }
 
-      /* ─────────────────────────────────────────────────────────────
-         SMALL CARDS — right column
-         position: relative anchors the absolute button inside each card
-      ───────────────────────────────────────────────────────────── */
+      .portfolio-btn--tarot .portfolio-btn-text { font-size: 0.8rem; }
+
       .card--illustrative {
         grid-column: 2;
         grid-row: 1;
@@ -168,7 +160,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         position: relative;
       }
 
-      /* right column button: pinned to bottom-right of its card */
       .portfolio-btn--small {
         text-decoration: none;
         display: inline-block;
@@ -177,80 +168,67 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         right: 4.2rem;
       }
 
-      /* image thumbnails in small cards */
-    /* make sure the card is the anchor */
-.card--illustrative,
-.card--non-illustrative,
-.card--upcoming {
-  position: relative; /* already set, just confirming */
-}
+      .card--illustrative,
+      .card--non-illustrative,
+      .card--upcoming { position: relative; }
 
-/* remove the shared translateY from thumbnails and go absolute */
-.card--illustrative .card-image img {
-  transform: none;
-  position: absolute;
-   bottom: 3.7rem;
-  left: 3.7rem;
-  width: auto%;
-  height: 50%;
-  object-fit: cover;
-}
-
-.card--non-illustrative .card-image img {
-  transform: none;
-  position: absolute;
-   bottom: 3rem;
-  left: 3.2rem;
-  width: auto;
-  height: 60%;
-  object-fit: cover;
-}
-
-.card--upcoming .card-image img {
-  transform: none;
-  position: absolute;
-   bottom: 3.7rem;
-  left: 3.7rem;
-  width: auto%;
-  height: 50%;
-  object-fit: cover;     
+      .card--illustrative .card-image img {
+        transform: none;
+        position: absolute;
+        bottom: 3.7rem;
+        left: 3.7rem;
+        width: auto;
+        height: 50%;
+        object-fit: cover;
       }
 
-      /* ─────────────────────────────────────────────────────────────
-         CARD TEXT
-      ───────────────────────────────────────────────────────────── */
+      .card--non-illustrative .card-image img {
+        transform: none;
+        position: absolute;
+        bottom: 3rem;
+        left: 3.2rem;
+        width: auto;
+        height: 60%;
+        object-fit: cover;
+      }
+
+      .card--upcoming .card-image img {
+        transform: none;
+        position: absolute;
+        bottom: 3.7rem;
+        left: 3.7rem;
+        width: auto;
+        height: 50%;
+        object-fit: cover;
+      }
+
       .card-text {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  min-width: 0;
-  /* remove the transform from here */
-}
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        min-width: 0;
+      }
 
-/* now each card's text is individually controllable */
-.card--illustrative .card-text {
-    transform: translateY(0.4rem) translateX(6rem);
-       padding-right:5.2rem;
-       
-}
+      .card--illustrative .card-text {
+        transform: translateY(0.4rem) translateX(6rem);
+        padding-right: 5.2rem;
+      }
 
-.card--non-illustrative .card-text {
-      transform: translateY(0.6rem) translateX(5rem);
-      padding-right:4.5rem;
-}
+      .card--non-illustrative .card-text {
+        transform: translateY(0.6rem) translateX(5rem);
+        padding-right: 4.5rem;
+      }
 
-.card--upcoming .card-text {
-      transform: translateY(1rem) translateX(6rem);
-      padding-right:6rem;
-}
-    
+      .card--upcoming .card-text {
+        transform: translateY(1rem) translateX(6rem);
+        padding-right: 6rem;
+      }
 
       .card-text h2 {
         margin: 0;
         font-size: 0.9rem;
         line-height: 1;
         font-family: "Superglue";
-        
       }
 
       .card-text p {
@@ -260,9 +238,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         margin: 0;
       }
 
-      /* ─────────────────────────────────────────────────────────────
-         VIDEO BUTTON — shared wrapper styles
-      ───────────────────────────────────────────────────────────── */
       .portfolio-btn-wrapper {
         position: relative;
         width: 160px;
@@ -275,9 +250,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         transition: transform 0.2s ease;
       }
 
-      .portfolio-btn-wrapper:hover {
-        transform: scale(1.05);
-      }
+      .portfolio-btn-wrapper:hover { transform: scale(1.05); }
 
       .portfolio-btn-wrapper video {
         position: absolute;
@@ -299,26 +272,11 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         color: white;
         font-size: 0.55rem;
         font-family: "Superglue";
-        
       }
 
-      /* ─────────────────────────────────────────────────────────────
-         MOBILE
-      ───────────────────────────────────────────────────────────── */
       @media (max-width: 768px) {
-        .hero-image {
-          display: none;
-        }
-
-        .hero-container {
-          background: #b8e8f0;
-        }
-
-        .page-title {
-          font-size: 3rem;
-          top: 0.5rem;
-        }
-
+        .hero-container { background: #b8e8f0; }
+        .page-title { font-size: 3rem; top: 0.5rem; }
         .portfolio-overlay {
           display: flex;
           flex-direction: column;
@@ -327,7 +285,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
           grid-template-columns: unset;
           grid-template-rows: unset;
         }
-
         .card--tarot,
         .card--illustrative,
         .card--non-illustrative,
@@ -339,27 +296,12 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
           align-items: flex-start;
           min-height: 200px;
         }
-
-        /* revert absolute button to normal flow on mobile */
-        .portfolio-btn--small {
-          position: static;
-          margin-top: 0.5rem;
-        }
-
-        .card--tarot .card-image img {
-          max-width: 120px;
-          max-height: 200px;
-        }
-
-        .card--tarot .card-text h2 {
-          font-size: 1.7rem;
-        }
-
+        .portfolio-btn--small { position: static; margin-top: 0.5rem; }
+        .card--tarot .card-image img { max-width: 120px; max-height: 200px; }
+        .card--tarot .card-text h2 { font-size: 1.7rem; }
         .card--illustrative .card-image img,
         .card--non-illustrative .card-image img,
-        .card--upcoming .card-image img {
-          height: 80px;
-        }
+        .card--upcoming .card-image img { height: 80px; }
       }
     </style>
   </head>
@@ -368,12 +310,13 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
     <Header />
 
     <div class="hero-container">
-      <img class="hero-image" src="/portfolio banner 2.webp" alt="Portfolio banner" />
+      <video class="hero-video" autoplay muted loop playsinline>
+        <source src="/portfoliobannerani.webm" type="video/webm" />
+      </video>
 
       <div class="portfolio-overlay">
         <h1 class="page-title">PORTFOLIO</h1>
 
-        <!-- ── TAROT (large, left) ─────────────────────────────── -->
         <section class="portfolio-section card--tarot">
           <div class="card-image">
             <img src="/portfolio/tarot/0.webp" alt="Tarot card preview" />
@@ -394,7 +337,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
           </div>
         </section>
 
-        <!-- ── ILLUSTRATIVE (top right) ───────────────────────── -->
         <section class="portfolio-section card--illustrative">
           <div class="card-image">
             <img src="/portfolio/illustrative/concept art5.webp" alt="Illustrative work preview" />
@@ -412,7 +354,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
           </a>
         </section>
 
-        <!-- ── NON-ILLUSTRATIVE (mid right) ───────────────────── -->
         <section class="portfolio-section card--non-illustrative">
           <div class="card-image">
             <img src="/wizardjuice.gif" alt="Non-illustrative work preview" />
@@ -430,7 +371,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
           </a>
         </section>
 
-        <!-- ── UPCOMING (bottom right) ────────────────────────── -->
         <section class="portfolio-section card--upcoming">
           <div class="card-image">
             <img src="/portfolio/upcoming/swordcomps.webp" alt="Upcoming project preview" />
