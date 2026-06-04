@@ -2,6 +2,207 @@
 import { SITE_TITLE } from '../consts';
 ---
 
+
+
+<style>
+  header {
+  margin: 0;
+  padding: 0;
+  background: white;
+  box-shadow: 0 2px 8px rgba(var(--black), 5%);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  line-height: 0;        /* removes inline spacing */
+}
+
+  nav {
+    width: 100%;
+    overflow: hidden;
+  }
+
+
+.nav-inner {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(1.5rem, 5vw, 4rem);
+    flex-wrap: nowrap;
+    line-height: normal;
+    padding: 0.65rem 1.5rem 0.65rem 1rem;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(0.4rem, 1vw, 0.75rem);
+    align-items: center;
+  }
+
+  .nav-links a {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    background: transparent;
+    border: none;
+    line-height: 1;
+  }
+
+  .nav-links a::before,
+  .nav-links a::after {
+    content: none;
+    display: none;
+  }
+
+  .nav-button-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    height: 82px;
+    min-width: 120px;
+    padding: 0 8px;
+    box-sizing: border-box;
+    margin-top: 0px;
+    opacity: 0;
+    transform: translateY(6px);
+    animation: btnShow 0.5s cubic-bezier(.2,.9,.2,1) forwards;
+  }
+
+  .nav-button {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-height: 100px;
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+    z-index: 1;
+    transform-origin: center;
+    transform: scale(0.9);
+  }
+
+  .nav-gif {
+    position: relative;
+    z-index: 2;
+    width: auto;
+    height: 100%;
+    max-height: 84px;
+    display: block;
+    transform: scale(0.95);
+    transition: opacity 0.18s ease;
+  }
+
+  .nav-button-text {
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+    font-family: "Overload Burn", sans-serif;
+    font-weight: 900;
+    font-size: 1.25rem;
+    color: #fff;
+    pointer-events: none;
+    text-align: center;
+    text-shadow: 0 3px 8px rgba(0,0,0,0.6);
+  }
+
+  @keyframes btnShow { to { opacity: 1; transform: translateY(0); } }
+
+  .social-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(0.5rem, 1.5vw, 1rem);
+    align-items: center;
+    flex-shrink: 0;
+    justify-content: center;
+    margin-right: 1.5rem;
+  }
+
+  .social-links a { display: inline-flex; }
+
+  .gif-wrapper {
+    position: relative;
+    width: clamp(52px, 6vw, 85px);
+    height: clamp(48px, 6vw, 80px);
+    overflow: hidden;
+  }
+
+  .gif {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: opacity 0.18s ease;
+    backface-visibility: hidden;
+    will-change: opacity;
+    background-color: transparent;
+  }
+
+  .gif.base {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .gif.hover {
+    opacity: 0;
+    z-index: 2;
+  }
+
+  .gif-wrapper:hover .gif.hover {
+    opacity: 1;
+  }
+
+  .gif-wrapper:hover .gif.base {
+    opacity: 1;
+  }
+
+  @media (max-width: 1024px) {
+    .nav-button-wrapper { height: 78px; min-width: 108px; padding: 0 6px; }
+    .nav-button { max-height: 80px; }
+    .nav-gif { max-height: 72px; }
+    .nav-button-text { font-size: 1.1rem; }
+    .gif-wrapper { width: 62px; height: 54px; }
+  }
+
+  @media (max-width: 768px) {
+    .nav-inner { flex-wrap: wrap; justify-content: center; gap: 0.9rem; }
+    .social-links { width: 100%; justify-content: center; }
+    .nav-button-wrapper { height: 70px; min-width: 100px; }
+    .nav-button { max-height: 74px; }
+    .nav-gif { max-height: 64px; }
+    .gif-wrapper { width: 56px; height: 48px; }
+  }
+
+  @media (max-width: 768px) {
+    .nav-inner { justify-content: center; gap: 1.2rem; }
+    .nav-links { gap: 0.65rem; }
+    .social-links { gap: 0.5rem; }
+    .nav-button-wrapper { height: 72px; min-width: 110px; padding: 0 6px; }
+    .nav-button { max-height: 82px; }
+    .nav-gif { max-height: 68px; }
+    .nav-button-text { font-size: 1.1rem; }
+    .gif-wrapper { width: 60px; height: 52px; }
+  }
+
+  @media (max-width: 480px) {
+    .nav-inner { justify-content: center; gap: 0.85rem; }
+    .nav-links { gap: 0.5rem; }
+    .social-links { display: none; }
+    .nav-button-wrapper { height: 56px; min-width: 84px; padding: 0 4px; }
+    .nav-button { max-height: 58px; }
+    .nav-gif { max-height: 50px; }
+    .nav-button-text { font-size: 1rem; }
+    .gif-wrapper { width: 52px; height: 48px; }
+  }
+</style>
 <header>
   <nav>
     <div class="nav-inner">
@@ -70,153 +271,47 @@ import { SITE_TITLE } from '../consts';
       </div>
     </div>
   </nav>
+  <script is:inline>
+    (function () {
+      const pageOrder = {
+        '/': 0,
+        '/portfolio': 1,
+        '/about': 2,
+        '/contact': 3,
+      };
+
+      const root = document.documentElement;
+      const normalizePath = (href) => {
+        const url = new URL(href, location.origin);
+        const pathname = url.pathname.replace(/\/$/, '');
+        return pathname === '' ? '/' : pathname;
+      };
+
+      const getDirection = (href) => {
+        const current = normalizePath(location.pathname);
+        const target = normalizePath(href);
+        const currentIndex = pageOrder[current] ?? 0;
+        const targetIndex = pageOrder[target] ?? 0;
+        return targetIndex >= currentIndex ? 'forward' : 'backward';
+      };
+
+      document.querySelectorAll('.nav-links a[href]').forEach((anchor) => {
+        anchor.addEventListener('click', (event) => {
+          if (anchor.target === '_blank' || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+          const href = anchor.getAttribute('href');
+          if (!href || normalizePath(href) === normalizePath(location.pathname)) return;
+          event.preventDefault();
+
+          root.dataset.pageTransition = getDirection(href);
+          const navigate = () => window.location.assign(href);
+
+          if (document.startViewTransition) {
+            document.startViewTransition(navigate);
+          } else {
+            navigate();
+          }
+        });
+      });
+    })();
+  </script>
 </header>
-
-<style>
-  header {
-  margin: 0;
-  padding: 0;
-  background: white;
-  box-shadow: 0 2px 8px rgba(var(--black), 5%);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  width: 100%;
-  line-height: 0;        /* removes inline spacing */
-}
-
-  nav {
-    width: 100%;
-    overflow: hidden;
-  }
-
-  /* this is the key — fixed pixel width centered, so zoom creates side margins */
-.nav-inner {
-  width: 1400px;
-  max-width: 100%;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 26rem;
-  flex-wrap: nowrap;
-  line-height: normal;   /* restore for children */
-}
-
-  .nav-links {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 0;
-    align-items: center;
-    flex-shrink: 0;
-  }
-
-  .nav-links a {
-    padding: 0.25rem;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-  }
-
-  .nav-button-wrapper {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    height: 104px;
-    min-width: 120px;
-    padding: 0 6px;
-    box-sizing: border-box;
-    margin-top: 0px;
-    opacity: 0;
-    transform: translateY(6px);
-    animation: btnShow 0.5s cubic-bezier(.2,.9,.2,1) forwards;
-  }
-
-  .nav-button {
-    display: block;
-    width: 100%;
-    height: 100%;
-    max-height: 119px;
-    position: absolute;
-    inset: 0;
-    object-fit: cover;
-    z-index: 1;
-    transform-origin: center;
-    transform: scale(0.85);
-  }
-
-  .nav-gif {
-    position: relative;
-    z-index: 2;
-    width: auto;
-    height: 100%;
-    max-height: 100px;
-    display: block;
-    transform: scale(0.9);
-    transition: opacity 0.18s ease;
-  }
-
-  .gif.hover {
-  }
-
-  .nav-button-text {
-    position: absolute;
-    width: 100%;
-    z-index: 10;
-    font-family: "Overload Burn", sans-serif;
-    font-weight: 900;
-    font-size: 1.35rem;
-    color: #fff;
-    pointer-events: none;
-    text-align: center;
-    text-shadow: 0 3px 8px rgba(0,0,0,0.6);
-  }
-
-  @keyframes btnShow { to { opacity: 1; transform: translateY(0); } }
-
-  .social-links {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 0;
-    align-items: center;
-    flex-shrink: 0;
-  }
-
-  .social-links a { display: inline-flex; }
-
-  .gif-wrapper {
-    position: relative;
-    width: 110px;
-    height: 96px;
-  }
-
-  .gif {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    transition: opacity 0.15s ease;
-  }
-
-  .gif.hover { opacity: 0; }
-  .gif-wrapper:hover .gif.hover { opacity: 1; }
-  .gif-wrapper:hover .gif.base { opacity: 0; }
-
-  @media (max-width: 768px) {
-    .nav-inner { width: 100%; }
-    .nav-button-wrapper { height: 72px; min-width: 80px; }
-    .nav-button { max-height: 80px; }
-    .nav-gif { max-height: 70px; }
-    .nav-button-text { font-size: 0.9rem; }
-    .gif-wrapper { width: 72px; height: 64px; }
-  }
-
-  @media (max-width: 480px) {
-    .nav-button-wrapper { height: 56px; min-width: 64px; }
-    .nav-gif { max-height: 54px; }
-    .nav-button-text { font-size: 0.75rem; }
-    .gif-wrapper { width: 56px; height: 50px; }
-  }
-</style>

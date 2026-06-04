@@ -56,10 +56,10 @@ const nonIllustrativeWorks = Array.from({ length: 8 }, (_, i) => i);
       .wrap {
         position: relative;
         z-index: 2;
-        width: min(1050px, 78vw);
+        width: min(1050px, 90vw);
         margin: 0 auto;
-        padding-top: 100px;
-        padding-bottom: 100px;
+        padding: clamp(4rem, 8vw, 7rem) 1rem;
+        padding-bottom: clamp(4rem, 8vw, 7rem);
       }
 
       /* ── PAGE TITLE ── */
@@ -78,11 +78,11 @@ const nonIllustrativeWorks = Array.from({ length: 8 }, (_, i) => i);
       /* ── INTRO BOX ── */
       .intro {
         position: relative;
-        width: 72%;
-        margin: 0 auto 50px auto;
+        width: min(680px, 100%);
+        margin: 0 auto clamp(2rem, 4vw, 3.5rem) auto;
         border-radius: 18px;
         overflow: visible;
-        padding: 56px 64px;
+        padding: clamp(2rem, 4vw, 3.5rem);
         box-shadow: 0 28px 80px rgba(0,0,0,0.28);
       }
 
@@ -130,12 +130,12 @@ const nonIllustrativeWorks = Array.from({ length: 8 }, (_, i) => i);
 
       .intro-sub {
         margin: 0;
-        font-size: 14px;
+        font-size: clamp(0.85rem, 1vw, 1rem);
         line-height: 1.85;
         color: #333;
         border-left: 4px solid #00bfff;
-        padding-left: 14px;
-        max-width: 520px;
+        padding-left: clamp(0.85rem, 1vw, 1.1rem);
+        max-width: 100%;
       }
 
       .intro-divider {
@@ -157,10 +157,10 @@ const nonIllustrativeWorks = Array.from({ length: 8 }, (_, i) => i);
 
       .intro-body {
         margin: 0;
-        font-size: 13px;
+        font-size: clamp(0.95rem, 1vw, 1rem);
         line-height: 1.9;
         color: #1d1d1d;
-        max-width: 680px;
+        max-width: 100%;
       }
 
       /* ── WORKS HEADER ── */
@@ -168,8 +168,9 @@ const nonIllustrativeWorks = Array.from({ length: 8 }, (_, i) => i);
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-top: 100px;
-        margin-bottom: 28px;
+        gap: clamp(1rem, 2vw, 2rem);
+        margin-top: clamp(4rem, 8vw, 6rem);
+        margin-bottom: clamp(1.5rem, 3vw, 2rem);
       }
 
       .works-title {
@@ -191,7 +192,7 @@ const nonIllustrativeWorks = Array.from({ length: 8 }, (_, i) => i);
       .works-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
+        gap: clamp(1rem, 2vw, 1.5rem);
       }
 
       .work-item {
@@ -294,12 +295,22 @@ const nonIllustrativeWorks = Array.from({ length: 8 }, (_, i) => i);
       }
 
       /* ── MOBILE ── */
-      @media (max-width: 900px) {
+      @media (max-width: 1024px) {
         .wrap { padding-top: 60px; }
         .intro, .works-header { width: 100%; }
         .intro { padding: 28px 24px; width: 100%; }
         .works-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
         .modal-card { width: 92vw; }
+      }
+
+      @media (max-width: 768px) {
+        .wrap { padding: 40px 1rem; }
+        .works-header { flex-direction: column; align-items: flex-start; }
+        .works-grid { grid-template-columns: 1fr; gap: 12px; }
+      }
+
+      @media (max-width: 480px) {
+        .wrap { padding: 28px 0.75rem; }
       }
     </style>
   </head>

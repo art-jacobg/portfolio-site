@@ -69,10 +69,10 @@ const tarotCards = Array.from({ length: 22 }, (_, i) => i);
       .ilw-wrap {
         position: relative;
         z-index: 2;
-        width: min(1050px, 78vw);
+        width: min(1050px, 90vw);
         margin: 0 auto;
-        padding-top: 100px;
-        padding-bottom: 100px;
+        padding: clamp(4rem, 8vw, 7rem) 1rem;
+        padding-bottom: clamp(4rem, 8vw, 7rem);
       }
 
       /* TITLE */
@@ -102,7 +102,7 @@ const tarotCards = Array.from({ length: 22 }, (_, i) => i);
       .tarot-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 2.5rem;
+        gap: clamp(1rem, 2vw, 2.5rem);
         margin-top: 3rem;
       }
 
@@ -187,18 +187,22 @@ const tarotCards = Array.from({ length: 22 }, (_, i) => i);
         border-radius: 12px;
       }
 
-      /* MOBILE */
-      @media (max-width: 900px) {
+      /* TABLET */
+      @media (max-width: 1024px) {
         .ilw-wrap { padding-top: 60px; }
+        .tarot-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+      }
 
-        .ilw-title {
-          font-size: clamp(2.8rem, 12vw, 5rem);
-        }
+      /* MOBILE */
+      @media (max-width: 768px) {
+        .ilw-wrap { padding: 40px 1rem; }
+        .ilw-title { font-size: clamp(2.8rem, 12vw, 4.5rem); }
+        .tarot-grid { grid-template-columns: 1fr; gap: 1rem; }
+      }
 
-        .tarot-grid {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 1.5rem;
-        }
+      @media (max-width: 480px) {
+        .ilw-wrap { padding: 28px 0.75rem; }
+        .ilw-title { font-size: clamp(2.4rem, 14vw, 3.8rem); }
       }
     </style>
   </head>
@@ -211,7 +215,7 @@ const tarotCards = Array.from({ length: 22 }, (_, i) => i);
       <!-- SAME HERO STRUCTURE AS ILLUSTRATIVE -->
       <div class="ilw-hero">
 
-        <video class="ilw-bg-video" autoplay muted loop playsinline>
+        <video class="ilw-bg-video" autoplay muted loop playsinline preload="metadata">
           <source src="/portfoliobannerani.webm" type="video/webm" />
         </video>
 

@@ -11,7 +11,7 @@
   --box-shadow:0 2px 6px rgba(var(--gray),25%),0 8px 24px rgba(var(--gray),33%),0 16px 32px rgba(var(--gray),33%);
 }
 
- reset */
+/* reset */
 *,*::before,*::after{box-sizing:border-box}
 
 /* ===================== FONTS (RESTORED) ===================== */
@@ -31,17 +31,53 @@
   font-display:swap;
 }
 
+@font-face{
+  font-family:"JAVATEXT";
+  src:url("/fonts/JAVATEXT.TTF") format("truetype");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
+
 /* ===================== BASE ===================== */
-body{
-  font-family:"Overload Burn",sans-serif;
-  margin:0;
-  padding:0;
-  background:none;
-  background-size:100% 600px;
-  color:rgb(var(--gray-dark));
-  font-size:20px;
-  line-height:1.7;
-  animation:slideIn .4s ease-in-out;
+html {
+  scroll-behavior: smooth;
+  background: #fff;
+  min-height: 100%;
+  height: 100%;
+}
+
+html body {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 100vh !important;
+  height: 100% !important;
+}
+
+body {
+  font-family: "Overload Burn", sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  color: rgb(var(--gray-dark));
+  font-size: clamp(16px, 1.1vw, 20px);
+  line-height: 1.7;
+  min-height: 100%;
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+main {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  flex: 1 0 auto;
+}
+
+footer {
+  flex-shrink: 0;
 }
 
 @keyframes slideIn{
@@ -96,8 +132,8 @@ pre>code{all:unset}
 /* wrapper you use for nav/hover gifs */
 .gif-wrapper{
   position:relative;
-  width:130px;
-  height:110px;
+  width: clamp(60px, 8vw, 130px);
+  height: clamp(52px, 8vw, 110px);
 }
 
 .gif{
@@ -215,31 +251,64 @@ pre>code{all:unset}
 }
 
 /* ===================== RESPONSIVE ===================== */
-@media (max-width:720px){
-  body{font-size:18px}
-  main{padding:1em}
+@media (max-width:1024px){
+  body{font-size:clamp(16px, 1vw, 18px);}
+}
+
+@media (max-width:768px){
+  body{font-size:15px;}
+  main{padding:1rem;}
+}
+
+@media (max-width:480px){
+  body{font-size:14px;}
+  main{padding:0.75rem;}
 }
 
 /* ===================== PAGE TRANSITIONS ===================== */
-::view-transition-old(root),
-::view-transition-new(root){
-  animation-duration:.6s;
+.page-transition-content {
+  view-transition-name: page;
 }
 
-::view-transition-old(root){
-  animation:pixel-out .6s steps(12) forwards;
+::view-transition-old(page),
+::view-transition-new(page) {
+  animation-duration: 650ms;
+  animation-timing-function: cubic-bezier(0.25,0.1,0.25,1);
+  animation-fill-mode: both;
+  backface-visibility: hidden;
 }
 
-::view-transition-new(root){
-  animation:pixel-in .6s steps(12) forwards;
+::view-transition-old(page){
+  animation-name: fade-out;
 }
 
-@keyframes pixel-out{
-  0%{opacity:1;filter:blur(0);transform:scale(1)}
-  100%{opacity:0;filter:blur(12px);transform:scale(1.05)}
+::view-transition-new(page){
+  animation-name: fade-in;
 }
 
-@keyframes pixel-in{
-  0%{opacity:0;filter:blur(12px);transform:scale(.95)}
-  100%{opacity:1;filter:blur(0);transform:scale(1)}
+:root[data-page-transition="backward"] ::view-transition-old(page){
+  animation-name: fade-out;
 }
+
+:root[data-page-transition="backward"] ::view-transition-new(page){
+  animation-name: fade-in;
+}
+
+@keyframes fade-out{
+  0%{opacity:1;transform:translateZ(0) scale(1);}
+  100%{opacity:0;transform:translateZ(0) scale(0.99);}
+}
+
+@keyframes fade-in{
+  0%{opacity:0;transform:translateZ(0) scale(1.01);}
+  100%{opacity:1;transform:translateZ(0) scale(1);}
+}
+
+@media (max-width: 768px) {
+  ::view-transition-old(page),
+  ::view-transition-new(page) {
+    animation-duration: 420ms;
+  }
+}
+
+

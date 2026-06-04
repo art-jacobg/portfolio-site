@@ -9,95 +9,63 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-
     <style>
-    body {
-  margin: 0;
-  background: none;
-  font-family: sans-serif;
-}
-
-      .hero {
-        position: relative;
-      }
-
-      .hero video {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-      .banner-gif {
-        position: absolute;
-        top: 38%;
-        left: 10%;
-        width: min(24vw, 5625px);
-        max-width: 260px;
-        z-index: 2;
-        pointer-events: none;
-      }
-
-      .gordillo-box {
-        position: absolute;
-        top: 20%;
-        left: 5%;
-        max-width: 500px;
-        color: white;
-        text-shadow: 0 3px 12px rgba(160, 51, 51, 0.6);
-      }
-
-      .gordillo-box h3 {
-        margin: 0 0 0.5rem 0;
-        font-size: 2rem;
-        font-family: "Overload Burn", sans-serif;
-        font-weight: 900;
-      }
-
-      .gordillo-box p {
+      * {
         margin: 0;
-        line-height: 1.5;
-        font-family: "Overload Burn", sans-serif;
+        padding: 0;
+        box-sizing: border-box;
       }
 
-      @media (max-width: 720px) {
-        .gordillo-box {
-          position: static;
-          max-width: 90%;
-          margin: 1.5rem auto;
-          text-align: center;
-          color: black;
-          text-shadow: none;
+      html, body {
+        width: 100%;
+        min-height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        margin: 0;
+        padding: 0;
+        background: #fff;
+      }
+
+      video.hero {
+        display: block;
+        width: 100vw;
+        height: auto;
+        object-fit: contain;
+        object-position: center center;
+        background: transparent;
+      }
+
+      video.hero.mobile {
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        video.hero.desktop {
+          display: none;
         }
 
-        .banner-gif {
-          left: 10%;
-          top: 18%;
-          transform: translateX(-50%);
-          width: min(48vw, 0px);
+        video.hero.mobile {
+          display: block;
         }
       }
 
-      main {
-  margin: 0;
-  padding: 0;
-
-}
+      @media (max-width: 480px) {
+        video.hero {
+          height: min(100svh, 100vh);
+        }
+      }
     </style>
   </head>
-
   <body>
     <Header />
-
-    <div class="hero">
-      <video autoplay muted loop playsinline>
+    <div class="page-transition-content">
+      <video class="hero desktop" autoplay muted loop playsinline preload="metadata">
         <source src="/homepageani.webm" type="video/webm" />
       </video>
+    <video class="hero mobile" autoplay muted loop playsinline preload="metadata">
+      <source src="/indexmobileanimation.webm" type="video/webm" />
+    </video>
     </div>
-
-    <main>
-      <!-- Your future content -->
-    </main>
-
     <Footer />
   </body>
 </html>

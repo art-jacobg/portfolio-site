@@ -8,16 +8,33 @@ const illustrativeWorkGroups = [
   {
     id: 'concept-art',
     title: 'Concept Art',
-    description: 'Conceptual character and creature illustrations.',
+    description: 'Conceptual and fantasy character illustrations with creature and world-building studies.',
     works: [
-      { src: '/portfolio/illustrative/concept art1.png', alt: 'Concept art 1' },
+      { src: '/portfolio/illustrative/concept art1.webp', alt: 'Concept art 1' },
       { src: '/portfolio/illustrative/concept art2.webp', alt: 'Concept art 2' },
       { src: '/portfolio/illustrative/concept art3.webp', alt: 'Concept art 3' },
       { src: '/portfolio/illustrative/concept art4.webp', alt: 'Concept art 4' },
       { src: '/portfolio/illustrative/concept art5.webp', alt: 'Concept art 5' },
-      { src: '/portfolio/illustrative/concept artmonster1.png', alt: 'Concept art monster 1' },
-      { src: '/portfolio/illustrative/concept artmonster2.webp', alt: 'Concept art monster 2' },
-      { src: '/portfolio/illustrative/concept artmonster3.webp', alt: 'Concept art monster 3' },
+      { src: '/portfolio/illustrative/concept art6.webp', alt: 'Concept art 6' },
+      { src: '/portfolio/illustrative/conceptartmonster1.webp', alt: 'Concept art monster 1' },
+      { src: '/portfolio/illustrative/conceptartmonster2.webp', alt: 'Concept art monster 2' },
+      { src: '/portfolio/illustrative/conceptartmonster3.webp', alt: 'Concept art monster 3' },
+      { src: '/portfolio/illustrative/cartonntest2.webp', alt: 'Cartoon test' },
+      { src: '/portfolio/illustrative/item1.webp', alt: 'Item 1' },
+      { src: '/portfolio/illustrative/item2.webp', alt: 'Item 2' },
+      { src: '/portfolio/illustrative/item3.webp', alt: 'Item 3' },
+      { src: '/portfolio/illustrative/item4.webp', alt: 'Item 4' },
+      { src: '/portfolio/illustrative/item5.webp', alt: 'Item 5' },
+      { src: '/portfolio/illustrative/item6.webp', alt: 'Item 6' },
+      { src: '/portfolio/illustrative/item7.webp', alt: 'Item 7' },
+      { src: '/portfolio/illustrative/item8.webp', alt: 'Item 8' },
+      { src: '/portfolio/illustrative/item9.webp', alt: 'Item 9' },
+      { src: '/portfolio/illustrative/item10.webp', alt: 'Item 10' },
+      { src: '/portfolio/illustrative/item11.webp', alt: 'Item 11' },
+      { src: '/portfolio/illustrative/item12.webp', alt: 'Item 12' },
+      { src: '/portfolio/illustrative/item13.webp', alt: 'Item 13' },
+      { src: '/portfolio/illustrative/item14.webp', alt: 'Item 14' },
+      { src: '/portfolio/illustrative/item15.webp', alt: 'Item 15' },
     ],
   },
   {
@@ -32,32 +49,7 @@ const illustrativeWorkGroups = [
       { src: '/portfolio/illustrative/lucy plushi.webp', alt: 'Lucy plushie' },
       { src: '/portfolio/illustrative/pen plushi.webp', alt: 'Pen plushie' },
       { src: '/portfolio/illustrative/vi plushi.webp', alt: 'Vi plushie' },
-    ],
-  },
-  {
-    id: 'fantasy-art',
-    title: 'Fantasy Art',
-    description: 'Fantasy-themed illustrations and character designs.',
-    works: [
-      { src: '/portfolio/illustrative/Eligos Portrait painted (1).webp', alt: 'Eligos portrait painted' },
-      { src: '/portfolio/illustrative/gloria portrait.webp', alt: 'Gloria portrait' },
-      { src: '/portfolio/illustrative/Mod sword comps.png', alt: 'Mod sword comps' },
-      { src: '/portfolio/illustrative/cartonntest2.png', alt: 'Cartoon test' },
-      { src: '/portfolio/illustrative/concept art1.webp', alt: 'Item 1' },
-      { src: '/portfolio/illustrative/concept art2.webp', alt: 'Item 2' },
-      { src: '/portfolio/illustrative/concept art3.webp', alt: 'Item 3' },
-      { src: '/portfolio/illustrative/concept art4.webp', alt: 'Item 4' },
-      { src: '/portfolio/illustrative/concept art5.webp', alt: 'Item 5' },
-      { src: '/portfolio/illustrative/concept art6.webp', alt: 'Item 6' },
-      { src: '/portfolio/illustrative/conceptartmonster1.webp', alt: 'Item 7' },
-      { src: '/portfolio/illustrative/conceptartmonster2.webp', alt: 'Item 8' },
-      { src: '/portfolio/illustrative/conceptartmonster3.webp', alt: 'Item 9' },
-      { src: '/portfolio/illustrative/item10.webp', alt: 'Item 10' },
-      { src: '/portfolio/illustrative/item11.webp', alt: 'Item 11' },
-      { src: '/portfolio/illustrative/item12.webp', alt: 'Item 12' },
-      { src: '/portfolio/illustrative/item13.webp', alt: 'Item 13' },
-      { src: '/portfolio/illustrative/item14.webp', alt: 'Item 14' },
-      { src: '/portfolio/illustrative/item15.webp', alt: 'Item 15' },
+            { src: '/portfolio/illustrative/gloria portrait.webp', alt: 'Gloria portrait' },
     ],
   },
 ];
@@ -92,7 +84,7 @@ const illustrativeWorkGroups = [
   width: 100%;
   min-height: 100%;   /* was 100vh — now grows with content */
   overflow: hidden;
-  background: #4ad9e6;
+  background: #fff;
 }
 
     /* ── VIDEO BACKGROUND ── */
@@ -102,7 +94,7 @@ const illustrativeWorkGroups = [
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
-  background: #4ad9e6;
+  background: #fff;
 }
 
 .ilw-bg-video {
@@ -128,19 +120,19 @@ const illustrativeWorkGroups = [
      .ilw-wrap {
   position: relative;
   z-index: 2;
-  width: min(1050px, 78vw);
+  width: min(1050px, 90vw);
   margin: 0 auto;
-  padding-top: 100px;
-  padding-bottom: 100px;
+  padding: clamp(4rem, 8vw, 7rem) 1rem;
+  padding-bottom: clamp(4.5rem, 10vw, 8rem);
 }
 
       /* ── PAGE TITLE ── */
    .ilw-title {
   font-family: "Superglue", sans-serif;
-  font-size: clamp(40px, 5.2vw, 82px);
+  font-size: clamp(3rem, 5.2vw, 82px);
   line-height: 0.9;
   color: white;
-  margin: 0 0 110px 0;
+  margin: 0 0 clamp(3rem, 4vw, 6rem) 0;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: -0.04em;
@@ -150,11 +142,11 @@ const illustrativeWorkGroups = [
       /* ── INTRO BOX ── */
       .ilw-intro {
   position: relative;
-  width: 72%;
-  margin: 0 auto 50px auto;
+  width: min(680px, 100%);
+  margin: 0 auto clamp(2rem, 4vw, 3.5rem) auto;
   border-radius: 18px;
   overflow: visible;
-  padding: 56px 64px;
+  padding: clamp(2rem, 4vw, 3.5rem);
   box-shadow: 0 28px 80px rgba(0,0,0,0.28);
 }
 
@@ -202,12 +194,12 @@ const illustrativeWorkGroups = [
 
       .ilw-intro-sub {
         margin: 0;
-        font-size: 14px;
+        font-size: clamp(0.85rem, 1vw, 1rem);
         line-height: 1.85;
         color: #333;
         border-left: 4px solid #00bfff;
-        padding-left: 14px;
-        max-width: 520px;
+        padding-left: clamp(0.85rem, 1vw, 1.1rem);
+        max-width: 100%;
       }
 
       .ilw-intro-divider {
@@ -220,7 +212,7 @@ const illustrativeWorkGroups = [
 
       .ilw-intro-label {
         font-family: "Superglue", sans-serif;
-        font-size: 11px;
+        font-size: clamp(0.75rem, 1vw, 0.95rem);
         letter-spacing: 0.14em;
         color: #008bb8;
         text-transform: uppercase;
@@ -229,20 +221,20 @@ const illustrativeWorkGroups = [
 
       .ilw-intro-body {
         margin: 0;
-        font-size: 13px;
+        font-size: clamp(0.95rem, 1vw, 1rem);
         line-height: 1.9;
         color: #1d1d1d;
-        max-width: 680px;
+        max-width: 100%;
       }
 
       /* ── CATEGORY BAR ── */
       .ilw-catbar {
         display: flex;
         flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 100px;
-        margin-bottom: 50px;
-        width: 55%;
+        gap: clamp(0.75rem, 1.5vw, 1.25rem);
+        margin-top: clamp(4rem, 8vw, 6rem);
+        margin-bottom: clamp(2rem, 4vw, 3rem);
+        width: min(720px, 100%);
         margin-left: auto;
         margin-right: auto;
         justify-content: center;
@@ -250,11 +242,11 @@ const illustrativeWorkGroups = [
 
       .ilw-catbtn {
         font-family: "Superglue", sans-serif;
-        font-size: 12px;
+        font-size: clamp(0.75rem, 1vw, 0.95rem);
         text-transform: uppercase;
         letter-spacing: 0.1em;
         border: none;
-        padding: 12px 22px;
+        padding: clamp(10px, 1vw, 16px) clamp(14px, 2vw, 22px);
         border-radius: 999px;
         background: rgba(255,255,255,0.18);
         backdrop-filter: blur(10px);
@@ -425,17 +417,34 @@ const illustrativeWorkGroups = [
         white-space: nowrap;
       }
 
-      /* ── MOBILE ── */
-      @media (max-width: 900px) {
+      /* ── TABLET ── */
+      @media (max-width: 1024px) {
         .ilw-wrap { padding-top: 60px; }
         .ilw-intro, .ilw-catbar { width: 100%; }
         .ilw-intro { padding: 28px 24px; }
-        ..ilw-grid {
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
+        .ilw-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+        }
         .ilw-modal-img { max-width: 92vw; }
         .ilw-nav { width: 40px; height: 40px; font-size: 20px; }
+      }
+
+      @media (max-width: 768px) {
+        .ilw-wrap { padding: 40px 1rem; }
+        .ilw-title { font-size: clamp(2.8rem, 10vw, 4.5rem); }
+        .ilw-intro { padding: 24px 18px; }
+        .ilw-catbar { padding: 0; width: 100%; gap: 0.75rem; }
+        .ilw-grid { grid-template-columns: 1fr; gap: 12px; }
+        .ilw-modal-img { max-width: 95vw; }
+        .ilw-nav { width: 36px; height: 36px; font-size: 18px; }
+      }
+
+      @media (max-width: 480px) {
+        .ilw-wrap { padding: 30px 0.75rem; }
+        .ilw-title { font-size: clamp(2.4rem, 12vw, 4rem); }
+        .ilw-intro { padding: 20px 16px; }
+        .ilw-catbar { gap: 0.5rem; }
       }
     </style>
   </head>
@@ -453,6 +462,7 @@ const illustrativeWorkGroups = [
     muted
     loop
     playsinline
+    preload="metadata"
   >
     <source src="/portfoliobannerani.webm" type="video/webm" />
   </video>

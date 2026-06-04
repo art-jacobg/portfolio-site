@@ -18,6 +18,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         margin: 0;
         padding: 0 !important;
         overflow-x: hidden;
+        background: #fff;
       }
 
       main {
@@ -33,7 +34,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         width: 100%;
         min-height: 100vh;
         overflow: hidden;
-        background: #4ad9e6;
+        background: #fff;
       }
 
       .hero-video {
@@ -50,11 +51,11 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
       .page-title {
         font-family: "Superglue";
-        font-size: 6rem;
+        font-size: clamp(4rem, 7vw, 6rem);
         color: white;
         position: absolute;
         top: 1rem;
-        left: -10rem;
+        left: clamp(-8rem, -6vw, -4rem);
         margin: 0;
         z-index: 20;
         pointer-events: none;
@@ -66,24 +67,23 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         z-index: 1;
         display: grid;
         grid-template-columns: 2.5fr 1fr;
-        grid-template-rows: repeat(3, 260px);
-        gap: 3px;
-        padding: 8rem 1rem 3rem;
+        grid-template-rows: repeat(3, minmax(220px, 260px));
+        gap: clamp(0.5rem, 1vw, 1rem);
+        padding: clamp(4rem, 6vw, 8rem) 1rem 3rem;
         box-sizing: border-box;
         max-width: 1400px;
         margin: 0 auto;
-        right: 3.75rem;
       }
 
       .portfolio-section {
         display: flex;
         align-items: center;
-        gap: 0.1rem;
+        gap: 0.75rem;
         overflow: hidden;
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
-        padding: 3.8rem;
+        padding: clamp(2.5rem, 4vw, 4rem);
         box-sizing: border-box;
         border-radius: 4px;
       }
@@ -94,16 +94,16 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         background-image: url('/box animation slow1.webp');
         flex-direction: row;
         align-items: center;
-        gap: 2rem;
-        padding: 8.5rem;
-        padding-top: 10rem;
+        gap: clamp(1.5rem, 2vw, 2rem);
+        padding: clamp(4rem, 5vw, 8.5rem);
+        padding-top: clamp(5rem, 6vw, 10rem);
       }
 
       .card--tarot .card-image { flex-shrink: 0; }
 
       .card--tarot .card-image img {
         width: auto;
-        max-width: 220px;
+        max-width: min(220px, 35vw);
         max-height: calc(3 * 260px - 5rem);
         height: auto;
         display: block;
@@ -126,11 +126,11 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       }
 
       .portfolio-btn--tarot .portfolio-btn-wrapper {
-        width: 440px;
-        height: 82px;
+        width: min(440px, 70vw);
+        height: clamp(68px, 7vw, 82px);
       }
 
-      .portfolio-btn--tarot .portfolio-btn-text { font-size: 0.8rem; }
+      .portfolio-btn--tarot .portfolio-btn-text { font-size: clamp(0.75rem, 1.1vw, 0.8rem); }
 
       .card--illustrative {
         grid-column: 2;
@@ -139,6 +139,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         flex-direction: column;
         align-items: flex-start;
         position: relative;
+        padding-bottom: clamp(5rem, 6vw, 6.5rem);
       }
 
       .card--non-illustrative {
@@ -149,6 +150,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         align-items: flex-start;
         position: relative;
         left: 3.75rem;
+        padding-bottom: clamp(5rem, 6vw, 6.5rem);
       }
 
       .card--upcoming {
@@ -158,13 +160,14 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         flex-direction: column;
         align-items: flex-start;
         position: relative;
+        padding-bottom: clamp(5rem, 6vw, 6.5rem);
       }
 
       .portfolio-btn--small {
         text-decoration: none;
         display: inline-block;
         position: absolute;
-        bottom: 3.5rem;
+        bottom: 3.2rem;
         right: 4.2rem;
       }
 
@@ -172,34 +175,31 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       .card--non-illustrative,
       .card--upcoming { position: relative; }
 
-      .card--illustrative .card-image img {
-        transform: none;
-        position: absolute;
-        bottom: 3.7rem;
-        left: 3.7rem;
-        width: auto;
-        height: 50%;
-        object-fit: cover;
-      }
-
-      .card--non-illustrative .card-image img {
-        transform: none;
-        position: absolute;
-        bottom: 3rem;
-        left: 3.2rem;
-        width: auto;
-        height: 60%;
-        object-fit: cover;
-      }
-
+      .card--illustrative .card-image img,
+      .card--non-illustrative .card-image img,
       .card--upcoming .card-image img {
         transform: none;
         position: absolute;
+        width: auto;
+        object-fit: cover;
+      }
+
+      .card--illustrative .card-image img {
         bottom: 3.7rem;
         left: 3.7rem;
-        width: auto;
         height: 50%;
-        object-fit: cover;
+      }
+
+      .card--non-illustrative .card-image img {
+        bottom: 3rem;
+        left: 3.2rem;
+        height: 60%;
+      }
+
+      .card--upcoming .card-image img {
+        bottom: 3.7rem;
+        left: 3.7rem;
+        height: 50%;
       }
 
       .card-text {
@@ -210,17 +210,17 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       }
 
       .card--illustrative .card-text {
-        transform: translateY(0.4rem) translateX(6rem);
+        transform: translateY(-0.2rem) translateX(5.6rem);
         padding-right: 5.2rem;
       }
 
       .card--non-illustrative .card-text {
-        transform: translateY(0.6rem) translateX(5rem);
+        transform: translateY(-0.05rem) translateX(5rem);
         padding-right: 4.5rem;
       }
 
       .card--upcoming .card-text {
-        transform: translateY(1rem) translateX(6rem);
+        transform: translateY(0rem) translateX(6rem);
         padding-right: 6rem;
       }
 
@@ -274,17 +274,13 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         font-family: "Superglue";
       }
 
-      @media (max-width: 768px) {
-        .hero-container { background: #b8e8f0; }
-        .page-title { font-size: 3rem; top: 0.5rem; }
+      @media (max-width: 1024px) {
         .portfolio-overlay {
-          display: flex;
-          flex-direction: column;
-          gap: 0.75rem;
-          padding: 6rem 1rem 2rem;
-          grid-template-columns: unset;
+          grid-template-columns: 1fr;
           grid-template-rows: unset;
+          padding: 6rem 1rem 2rem;
         }
+
         .card--tarot,
         .card--illustrative,
         .card--non-illustrative,
@@ -294,14 +290,31 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
           width: 100%;
           flex-direction: column;
           align-items: flex-start;
-          min-height: 200px;
+          min-height: auto;
         }
-        .portfolio-btn--small { position: static; margin-top: 0.5rem; }
-        .card--tarot .card-image img { max-width: 120px; max-height: 200px; }
-        .card--tarot .card-text h2 { font-size: 1.7rem; }
+
+        .card--non-illustrative { left: 0; }
         .card--illustrative .card-image img,
         .card--non-illustrative .card-image img,
         .card--upcoming .card-image img { height: 80px; }
+      }
+
+      @media (max-width: 768px) {
+        .hero-container { background: #b8e8f0; }
+        .page-title { font-size: clamp(3rem, 8vw, 4.2rem); top: 0.5rem; left: 1rem; }
+        .portfolio-overlay { padding: 5rem 0.75rem 2rem; gap: 0.75rem; }
+        .portfolio-section { padding: clamp(2rem, 4vw, 3rem); }
+        .portfolio-btn--small { position: static; margin-top: 0.65rem; }
+        .card--tarot .card-image img { max-width: 160px; max-height: 200px; }
+        .card--tarot .card-text h2 { font-size: clamp(1.8rem, 5vw, 2.4rem); }
+      }
+
+      @media (max-width: 480px) {
+        .portfolio-overlay { padding: 3.5rem 0.75rem 1.5rem; }
+        .portfolio-section { padding: 1.5rem; gap: 0.5rem; }
+        .card--tarot { padding: 3rem 2rem 4rem; }
+        .portfolio-btn--tarot .portfolio-btn-wrapper { width: min(280px, 100%); height: clamp(56px, 9vw, 68px); }
+        .portfolio-btn-text { font-size: 0.7rem; }
       }
     </style>
   </head>
@@ -309,12 +322,13 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
   <body>
     <Header />
 
-    <div class="hero-container">
-      <video class="hero-video" autoplay muted loop playsinline>
-        <source src="/portfoliobannerani.webm" type="video/webm" />
-      </video>
+    <div class="page-transition-content">
+      <div class="hero-container">
+        <video class="hero-video" autoplay muted loop playsinline preload="metadata">
+          <source src="/portfoliobannerani.webm" type="video/webm" />
+        </video>
 
-      <div class="portfolio-overlay">
+        <div class="portfolio-overlay">
         <h1 class="page-title">PORTFOLIO</h1>
 
         <section class="portfolio-section card--tarot">
@@ -329,8 +343,8 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
             </p>
             <a href="/tarot" class="portfolio-btn--tarot">
               <div class="portfolio-btn-wrapper">
-                <video src="/button portfolio slow.webm" class="btn-fast" muted autoplay loop playsinline></video>
-                <video src="/button portfolio fast.webm" class="btn-slow" muted autoplay loop playsinline></video>
+                <video src="/button portfolio slow.webm" class="btn-fast" muted autoplay loop playsinline preload="metadata"></video>
+                <video src="/button portfolio fast.webm" class="btn-slow" muted autoplay loop playsinline preload="metadata"></video>
                 <span class="portfolio-btn-text">See Collection</span>
               </div>
             </a>
@@ -347,8 +361,8 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
           </div>
           <a href="/portfolio/illustrative" class="portfolio-btn--small">
             <div class="portfolio-btn-wrapper">
-              <video src="/button home slow.webm" class="btn-fast" muted autoplay loop playsinline></video>
-              <video src="/button home fast.webm" class="btn-slow" muted autoplay loop playsinline></video>
+              <video src="/button home slow.webm" class="btn-fast" muted autoplay loop playsinline preload="metadata"></video>
+              <video src="/button home fast.webm" class="btn-slow" muted autoplay loop playsinline preload="metadata"></video>
               <span class="portfolio-btn-text">Explore</span>
             </div>
           </a>
@@ -364,8 +378,8 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
           </div>
           <a href="/portfolio/non-illustrative" class="portfolio-btn--small">
             <div class="portfolio-btn-wrapper">
-              <video src="/button about slow.webm" class="btn-fast" muted autoplay loop playsinline></video>
-              <video src="/button about fast.webm" class="btn-slow" muted autoplay loop playsinline></video>
+              <video src="/button about slow.webm" class="btn-fast" muted autoplay loop playsinline preload="metadata"></video>
+              <video src="/button about fast.webm" class="btn-slow" muted autoplay loop playsinline preload="metadata"></video>
               <span class="portfolio-btn-text">See Work</span>
             </div>
           </a>
@@ -381,8 +395,8 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
           </div>
           <a href="/portfolio/upcoming" class="portfolio-btn--small">
             <div class="portfolio-btn-wrapper">
-              <video src="/button contact slow.webm" class="btn-fast" muted autoplay loop playsinline></video>
-              <video src="/button contact fast.webm" class="btn-slow" muted autoplay loop playsinline></video>
+              <video src="/button contact slow.webm" class="btn-fast" muted autoplay loop playsinline preload="metadata"></video>
+              <video src="/button contact fast.webm" class="btn-slow" muted autoplay loop playsinline preload="metadata"></video>
               <span class="portfolio-btn-text">See More</span>
             </div>
           </a>
