@@ -18,54 +18,64 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
       html, body {
         width: 100%;
-        min-height: 100%;
         overflow-x: hidden;
         overflow-y: auto;
-        margin: 0;
-        padding: 0;
-        background: #fff;
       }
 
-      video.hero {
+      .hero-video {
         display: block;
-        width: 100vw;
+        width: 100%;
         height: auto;
-        object-fit: contain;
-        object-position: center center;
-        background: transparent;
       }
 
-      video.hero.mobile {
+::view-transition-old(page) {
+  animation: fade-out 800ms ease-in both;
+}
+
+::view-transition-new(page) {
+  animation: fade-in 800ms ease-out both;
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+      .hero-video.mobile {
         display: none;
       }
 
+      .hero-video.desktop {
+        display: block;
+      }
+
       @media (max-width: 768px) {
-        video.hero.desktop {
+        .hero-video.desktop {
           display: none;
         }
 
-        video.hero.mobile {
+        .hero-video.mobile {
           display: block;
-        }
-      }
-
-      @media (max-width: 480px) {
-        video.hero {
-          height: min(100svh, 100vh);
         }
       }
     </style>
   </head>
   <body>
     <Header />
-    <div class="page-transition-content">
-      <video class="hero desktop" autoplay muted loop playsinline preload="metadata">
-        <source src="/homepageani.webm" type="video/webm" />
-      </video>
-    <video class="hero mobile" autoplay muted loop playsinline preload="metadata">
-      <source src="/indexmobileanimation.webm" type="video/webm" />
-    </video>
-    </div>
+    <main>
+      <div class="page-transition-content">
+        <video class="hero-video desktop" autoplay muted loop playsinline preload="metadata">
+          <source src="/homepageani.webm" type="video/webm" />
+        </video>
+        <video class="hero-video mobile" autoplay muted loop playsinline preload="metadata">
+          <source src="/indexmobileanimation.webm" type="video/webm" />
+        </video>
+      </div>
+    </main>
     <Footer />
   </body>
 </html>

@@ -1,337 +1,342 @@
 ---
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 ---
 
-<Layout
-  title="Contact"
-  description="Get in touch"
-  pubDate={new Date('2026-02-18')}
->
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title="Contact | Jacob Gordillo" description="Get in touch" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+     html, body {
+        width: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
 
-<style is:global>
-  *, *::before, *::after { box-sizing: border-box; }
+      main {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
 
-  body {
-    margin: 0;
-    padding: 0 !important;
-    overflow-x: hidden;
-    background: #fff;
-  }
+      .contact-video-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+        z-index: 1;
+        pointer-events: none;
+      }
 
-  main {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
 
-  .title { display: none; }
-  .date { display: none; }
-  hr { display: none; }
+      .contact-page {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        overflow: hidden;
+      }
 
-  .contact-video-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-    object-position: center center;
-    z-index: 1;
-    pointer-events: none;
-    background: #fff;
-  }
+      .contact-wrap {
+        position: relative;
+        z-index: 2;
+        width: min(1000px, 75vw);
+        margin: 0 auto;
+        padding-top: 132px;
+        padding-bottom: 450px;
+        transform: translateX(1rem);
+        animation: fadeIn 500ms ease 200ms forwards;
+  opacity: 0;
+      }
 
-  .contact-page {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
-    background: #fff;
-  }
+      .page-title {
+        font-family: "Superglue";
+        font-size: clamp(4rem, 8vw, 6rem);
+        color: white;
+        position: absolute;
+        top: 1rem;
+        left: clamp(-24rem, -20vw, -18rem);
+        margin: 0;
+        z-index: 20;
+        pointer-events: none;
+      }
 
-  .contact-wrap {
-    position: relative;
-    z-index: 2;
-    width: min(1000px, 75vw);
-    margin: 0 auto;
-    padding-top: 132px;
-    padding-bottom: 450px;
-    transform: translateX(1rem);
-  }
+      .contact-animbox {
+        position: relative;
+        width: 100%;
+        display: grid;
+        padding: clamp(1.5rem, 3vw, 3rem);
+        overflow: visible;
+        margin-top: 4rem;
+      }
 
-  .page-title {
-    font-family: "Superglue";
-    font-size: clamp(4rem, 8vw, 6rem);
-    color: white;
-    position: absolute;
-    top: 1rem;
-    left: clamp(-24rem, -20vw, -18rem);
-    margin: 0;
-    z-index: 20;
-    pointer-events: none;
-  }
+      .contact-animbox-bg {
+        position: absolute;
+        inset: -8% 2%;
+        width: 85%;
+        height: 116%;
+        object-fit: fill;
+        z-index: 0;
+        pointer-events: none;
+        transform: scale(1.45);
+      }
 
-  .contact-animbox {
-    position: relative;
-    width: 100%;
-    display: grid;
-    padding: clamp(1.5rem, 3vw, 3rem);
-    overflow: visible;
-    margin-top: 4rem;
-  }
+      .contact-columns {
+        position: relative;
+        z-index: 1;
+        margin-top: 1rem;
+        display: grid;
+        grid-template-columns: 1fr 1px 1fr;
+        gap: 0 clamp(1rem, 2.5vw, 3rem);
+        align-items: start;
+      }
 
-  .contact-animbox-bg {
-    position: absolute;
-    inset: -8% 2%;
-    width: 85%;
-    height: 116%;
-    object-fit: fill;
-    z-index: 0;
-    pointer-events: none;
-    transform: scale(1.45);
-  }
+      .contact-divider {
+        background: rgba(0, 0, 0, 0.15);
+        align-self: stretch;
+      }
 
-  .contact-columns {
-    position: relative;
-    z-index: 1;
-    margin-top: 1rem;
-    display: grid;
-    grid-template-columns: 1fr 1px 1fr;
-    gap: 0 clamp(1rem, 2.5vw, 3rem);
-    align-items: start;
-  }
+      .contact-col {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(0.85rem, 1.5vw, 1rem);
+      }
 
-  .contact-divider {
-    background: rgba(0, 0, 0, 0.15);
-    align-self: stretch;
-  }
+      .contact-section-title {
+        font-family: "Superglue", sans-serif;
+        font-size: clamp(1rem, 1.4vw, 1.2rem);
+        color: #0e3947;
+        margin: 0 0 0.4rem;
+        line-height: 1.1;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
 
-  .contact-col {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(0.85rem, 1.5vw, 1rem);
-  }
+      .contact-name {
+        font-family: "Superglue", sans-serif;
+        font-size: clamp(1.4rem, 2.3vw, 2.5rem);
+        color: #111;
+        margin: 0;
+        line-height: 1.1;
+      }
 
-  .contact-section-title {
-    font-family: "Superglue", sans-serif;
-    font-size: clamp(1rem, 1.4vw, 1.2rem);
-    color: #0e3947;
-    margin: 0 0 0.4rem;
-    line-height: 1.1;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
+      .contact-subtitle {
+        font-size: clamp(0.78rem, 1vw, 1rem);
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        border-left: 3px solid #0099cc;
+        padding-left: 0.75rem;
+        font-family: "Overload Burn";
+      }
 
-  .contact-name {
-    font-family: "Superglue", sans-serif;
-    font-size: clamp(1.4rem, 2.3vw, 2.5rem);
-    color: #111;
-    margin: 0;
-    line-height: 1.1;
-  }
+      .contact-rule {
+        border: none;
+        border-top: 1px solid rgba(0,0,0,0.12);
+        margin: 0.1rem 0;
+        display: block !important;
+      }
 
-  .contact-subtitle {
-    font-size: clamp(0.78rem, 1vw, 1rem);
-    color: #333;
-    line-height: 1.6;
-    margin: 0;
-    border-left: 3px solid #0099cc;
-    padding-left: 0.75rem;
-    font-family: "Overload Burn";
-  }
+      .contact-col p.body {
+        margin: 0;
+        font-size: clamp(0.96rem, 1.2vw, 1rem);
+        line-height: 1.8;
+        color: #222;
+        font-family: "JAVATEXT";
+      }
 
-  .contact-rule {
-    border: none;
-    border-top: 1px solid rgba(0,0,0,0.12);
-    margin: 0.1rem 0;
-    display: block !important;
-  }
+      .contact-link-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.1rem;
+        border-left: 2px solid rgba(0, 153, 204, 0.35);
+        padding-left: 0.75rem;
+        font-family: "JAVATEXT";
+      }
 
-  .contact-col p.body {
-    margin: 0;
-    font-size: clamp(0.96rem, 1.2vw, 1rem);
-    line-height: 1.8;
-    color: #222;
-    font-family: "JAVATEXT";
-  }
+      .contact-link-item strong {
+        font-size: clamp(1rem, 1vw, 1.05rem);
+        color: #111;
+        font-family: "Overload Burn";
+      }
 
-  .contact-link-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-    border-left: 2px solid rgba(0, 153, 204, 0.35);
-    padding-left: 0.75rem;
-    font-family: "JAVATEXT";
-  }
+      .contact-link-item a {
+        font-size: clamp(0.95rem, 1vw, 1rem);
+        color: #0099cc;
+        text-decoration: none;
+        word-break: break-all;
+      }
 
-  .contact-link-item strong {
-    font-size: clamp(1rem, 1vw, 1.05rem);
-    color: #111;
-    font-family: "Overload Burn";
-  }
+      .contact-link-item a:hover {
+        text-decoration: underline;
+      }
 
-  .contact-link-item a {
-    font-size: clamp(0.95rem, 1vw, 1rem);
-    color: #0099cc;
-    text-decoration: none;
-    word-break: break-all;
-  }
+      .contact-link-item span {
+        font-size: clamp(0.85rem, 1vw, 0.95rem);
+        color: #333;
+        line-height: 1.5;
+        font-family: "JAVATEXT";
+      }
 
-  .contact-link-item a:hover {
-    text-decoration: underline;
-  }
+      footer {
+        position: relative;
+        z-index: 2;
+      }
+      @keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-  .contact-link-item span {
-    font-size: clamp(0.85rem, 1vw, 0.95rem);
-    color: #333;
-    line-height: 1.5;
-    font-family: "JAVATEXT";
-  }
+      @media (max-width: 1024px) {
+        .contact-wrap {
+          width: min(920px, 90vw);
+          padding: clamp(3.5rem, 8vw, 5rem) 1rem clamp(4rem, 8vw, 6rem);
+          transform: translateX(0.5rem);
+        }
+      }
 
-  footer {
-    position: relative;
-    z-index: 2;
-  }
+      @media (max-width: 768px) {
+        .contact-wrap {
+          width: min(92vw, 680px);
+          padding: 3.5rem 1.25rem 4.5rem;
+          transform: translateX(0);
+        }
 
-  @media (max-width: 1024px) {
-    .contact-wrap {
-      width: min(920px, 90vw);
-      padding: clamp(3.5rem, 8vw, 5rem) 1rem clamp(4rem, 8vw, 6rem);
-      transform: translateX(0.5rem);
-    }
-  }
+        .page-title {
+          left: 2vw;
+          font-size: clamp(3rem, 12vw, 4.2rem);
+        }
 
-  @media (max-width: 768px) {
-    .contact-wrap {
-      width: min(92vw, 680px);
-      padding: 3.5rem 1.25rem 4.5rem;
-      transform: translateX(0);
-    }
+        .contact-columns {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
 
-    .page-title {
-      left: 2vw;
-      font-size: clamp(3rem, 12vw, 4.2rem);
-    }
+        .contact-divider { display: none; }
+      }
 
-    .contact-columns {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
+      @media (max-width: 480px) {
+        .contact-wrap {
+          padding: 3rem 0.85rem 3.5rem;
+        }
 
-    .contact-divider { display: none; }
-  }
+        .page-title {
+          left: 1rem;
+        }
 
-  @media (max-width: 480px) {
-    .contact-wrap {
-      padding: 3rem 0.85rem 3.5rem;
-    }
+        .contact-section-title,
+        .contact-subtitle,
+        .contact-col p.body,
+        .contact-link-item strong,
+        .contact-link-item a,
+        .contact-link-item span {
+          line-height: 1.4;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <div class="page-transition-content">
+        <div class="contact-page">
+          <video class="contact-video-bg" autoplay muted loop playsinline preload="metadata">
+            <source src="/contactani.webm" type="video/webm" />
+          </video>
 
-    .page-title {
-      left: 1rem;
-    }
+          <div class="contact-wrap">
+            <h1 class="page-title">CONTACT</h1>
 
-    .contact-section-title,
-    .contact-subtitle,
-    .contact-col p.body,
-    .contact-link-item strong,
-    .contact-link-item a,
-    .contact-link-item span {
-      line-height: 1.4;
-    }
-  }
-</style>
+            <div class="contact-animbox">
+              <img class="contact-animbox-bg" src="/box animation slow1.webp" alt="" aria-hidden="true" />
 
-<video class="contact-video-bg" autoplay muted loop playsinline preload="metadata">
-  <source src="/contactani.webm" type="video/webm" />
-</video>
+              <div class="contact-columns">
 
-<div class="contact-page">
-  <div class="contact-wrap">
+                <!-- LEFT -->
+                <div class="contact-col">
+                  <h2 class="contact-name">Get In<br/>Touch</h2>
 
-    <h1 class="page-title">CONTACT</h1>
+                  <p class="contact-subtitle">
+                    Jacob Gordillo<br/>
+                    Designer &amp; Editorial Illustrator<br/>
+                    Indianapolis, Indiana
+                  </p>
 
-    <div class="contact-animbox">
-      <img class="contact-animbox-bg" src="/box animation slow1.webp" alt="" aria-hidden="true" />
+                  <hr class="contact-rule" />
+                  <p class="contact-section-title">Let's Work Together</p>
 
-      <div class="contact-columns">
+                  <p class="body">
+                    I'm currently available for freelance work, commissions, or full-time positions.
+                    Whether you need editorial illustration, branding, political advertising, or concept
+                    art, I'd love to hear from you and I'm excited to put my passion behind a project I believe in!
+                  </p>
+                  <p class="body">
+                    I'm also open to opportunities involving campaign work and political communication.
+                    If you think my skills could be a good fit for your team or project, don't hesitate
+                    to reach out!
+                  </p>
 
-        <!-- LEFT -->
-        <div class="contact-col">
-          <h2 class="contact-name">Get In<br/>Touch</h2>
+                  <hr class="contact-rule" />
+                </div>
 
-          <p class="contact-subtitle">
-            Jacob Gordillo<br/>
-            Designer &amp; Editorial Illustrator<br/>
-            Indianapolis, Indiana
-          </p>
+                <!-- DIVIDER -->
+                <div class="contact-divider"></div>
 
-          <hr class="contact-rule" />
-          <p class="contact-section-title">Let's Work Together</p>
+                <!-- RIGHT -->
+                <div class="contact-col" style="padding-top: 1rem;">
+                  <p class="contact-section-title">Contact</p>
 
-          <p class="body">
-            I'm currently available for freelance work, commissions, or full-time positions.
-            Whether you need editorial illustration, branding, political advertising, or concept
-            art, I'd love to hear from you and I'm excited to put my passion behind a project I believe in!
-          </p>
-          <p class="body">
-            I'm also open to opportunities involving campaign work and political communication.
-            If you think my skills could be a good fit for your team or project, don't hesitate
-            to reach out!
-          </p>
+                  <div class="contact-link-item">
+                    <strong>Email</strong>
+                    <a href="mailto:Jacobfgordillo@gmail.com">Jacobfgordillo@gmail.com</a>
+                  </div>
 
-          <hr class="contact-rule" />
+                  <div class="contact-link-item">
+                    <strong>Phone</strong>
+                    <span>812-361-3942</span>
+                  </div>
+
+                  <div class="contact-link-item">
+                    <strong>Location</strong>
+                    <span>Indianapolis, Indiana</span>
+                  </div>
+
+                  <div class="contact-link-item">
+                    <strong>Portfolio</strong>
+                    <a href="/portfolio">art-jacobg.com/portfolio</a>
+                  </div>
+
+                  <hr class="contact-rule" />
+                  <p class="contact-section-title">Availability</p>
+
+                  <div class="contact-link-item">
+                    <strong>Freelance &amp; Commissions</strong>
+                    <span>Open — reach out any time</span>
+                  </div>
+
+                  <div class="contact-link-item">
+                    <strong>Full-time / Contract</strong>
+                    <span>Available — design, illustration, campaign work</span>
+                  </div>
+
+                  <div class="contact-link-item">
+                    <strong>Response Time</strong>
+                    <span>Usually within 24–48 hours</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
         </div>
-
-        <!-- DIVIDER -->
-        <div class="contact-divider"></div>
-
-        <!-- RIGHT -->
-        <div class="contact-col" style="padding-top: 1rem;">
-          <p class="contact-section-title">Contact</p>
-
-          <div class="contact-link-item">
-            <strong>Email</strong>
-            <a href="mailto:Jacobfgordillo@gmail.com">Jacobfgordillo@gmail.com</a>
-          </div>
-
-          <div class="contact-link-item">
-            <strong>Phone</strong>
-            <span>812-361-3942</span>
-          </div>
-
-          <div class="contact-link-item">
-            <strong>Location</strong>
-            <span>Indianapolis, Indiana</span>
-          </div>
-
-          <div class="contact-link-item">
-            <strong>Portfolio</strong>
-            <a href="/portfolio">art-jacobg.com/portfolio</a>
-          </div>
-
-          <hr class="contact-rule" />
-          <p class="contact-section-title">Availability</p>
-
-          <div class="contact-link-item">
-            <strong>Freelance &amp; Commissions</strong>
-            <span>Open — reach out any time</span>
-          </div>
-
-          <div class="contact-link-item">
-            <strong>Full-time / Contract</strong>
-            <span>Available — design, illustration, campaign work</span>
-          </div>
-
-          <div class="contact-link-item">
-            <strong>Response Time</strong>
-            <span>Usually within 24–48 hours</span>
-          </div>
-        </div>
-
       </div>
-    </div>
-  </div>
-</div>
-
-</Layout>
+    </main>
+    <Footer />
+  </body>
+</html>

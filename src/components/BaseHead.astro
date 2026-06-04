@@ -1,6 +1,4 @@
 ---
-// Import the global.css file here so that it is included on
-// all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
 
 interface Props {
@@ -10,7 +8,6 @@ interface Props {
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-
 const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 ---
 
@@ -18,7 +15,6 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
-<meta name="astro-view-transitions-enabled" content="true" />
 
 <!-- Font preloads -->
 <link rel="preload" href="/fonts/Overload Burn.otf" as="font" type="font/otf" crossorigin />
@@ -46,3 +42,77 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+<style is:inline>
+  body { opacity: 0; }
+
+  @keyframes slide-out-left {
+    0%   { transform: translateX(0); opacity: 1; filter: brightness(1) blur(0px); }
+    60%  { transform: translateX(-30px); opacity: 0.6; filter: brightness(1.4) blur(0px); }
+    100% { transform: translateX(-60px); opacity: 0; filter: brightness(2) blur(6px); }
+  }
+  @keyframes slide-out-right {
+    0%   { transform: translateX(0); opacity: 1; filter: brightness(1) blur(0px); }
+    60%  { transform: translateX(30px); opacity: 0.6; filter: brightness(1.4) blur(0px); }
+    100% { transform: translateX(60px); opacity: 0; filter: brightness(2) blur(6px); }
+  }
+  @keyframes slide-in-left {
+    0%   { transform: translateX(-60px); opacity: 0; filter: brightness(2) blur(6px); }
+    40%  { transform: translateX(-30px); opacity: 0.6; filter: brightness(1.4) blur(0px); }
+    100% { transform: translateX(0); opacity: 1; filter: brightness(1) blur(0px); }
+  }
+  @keyframes slide-in-right {
+    0%   { transform: translateX(60px); opacity: 0; filter: brightness(2) blur(6px); }
+    40%  { transform: translateX(30px); opacity: 0.6; filter: brightness(1.4) blur(0px); }
+    100% { transform: translateX(0); opacity: 1; filter: brightness(1) blur(0px); }
+  }
+</style>
+
+<script>
+  const pageOrder: Record<string, number> = {
+    '/': 0,
+    '/portfolio': 1,
+    '/about': 2,
+    '/contact': 3,
+  };
+
+  const normalizePath = (href: string) => {
+    const url = new URL(href, location.origin);
+    const pathname = url.pathname.replace(/\/$/, '');
+    return pathname === '' ? '/' : pathname;
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const direction = sessionStorage.getItem('slideDirection') ?? 'forward';
+    sessionStorage.removeItem('slideDirection');
+
+    document.body.style.animation = direction === 'forward'
+      ? 'slide-in-right 200ms ease-out both'
+      : 'slide-in-left 200ms ease-out both';
+
+    document.addEventListener('click', async (e) => {
+      const link = (e.target as HTMLElement).closest('a[href]');
+      if (!link) return;
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto')) return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+
+      const current = normalizePath(location.pathname);
+      const target = normalizePath(href);
+      const currentIndex = pageOrder[current] ?? 0;
+      const targetIndex = pageOrder[target] ?? 0;
+      const goingForward = targetIndex > currentIndex;
+
+      sessionStorage.setItem('slideDirection', goingForward ? 'forward' : 'backward');
+
+      document.body.style.animation = goingForward
+        ? 'slide-out-left 200ms ease-in both'
+        : 'slide-out-right 200ms ease-in both';
+
+      await new Promise(r => setTimeout(r, 400));
+      window.location.href = href;
+    }, true);
+  });
+</script>
+

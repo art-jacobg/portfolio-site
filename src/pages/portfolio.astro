@@ -14,11 +14,12 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
     <style>
       *, *::before, *::after { box-sizing: border-box; }
 
+
       body {
         margin: 0;
         padding: 0 !important;
         overflow-x: hidden;
-        background: #fff;
+        
       }
 
       main {
@@ -34,7 +35,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         width: 100%;
         min-height: 100vh;
         overflow: hidden;
-        background: #fff;
+       
       }
 
       .hero-video {
@@ -48,6 +49,8 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         z-index: 0;
         pointer-events: none;
       }
+    
+      
 
       .page-title {
         font-family: "Superglue";
@@ -55,7 +58,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         color: white;
         position: absolute;
         top: 1rem;
-        left: clamp(-8rem, -6vw, -4rem);
+        left: clamp(-12rem, -8vw, -4rem);
         margin: 0;
         z-index: 20;
         pointer-events: none;
@@ -73,7 +76,10 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         box-sizing: border-box;
         max-width: 1400px;
         margin: 0 auto;
+       animation: fadeIn 500ms ease 200ms forwards;
+  opacity: 0;
       }
+      
 
       .portfolio-section {
         display: flex;
@@ -320,8 +326,8 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
   </head>
 
   <body>
-    <Header />
-
+  <Header />
+  <main>
     <div class="page-transition-content">
       <div class="hero-container">
         <video class="hero-video" autoplay muted loop playsinline preload="metadata">
@@ -398,13 +404,14 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
               <video src="/button contact slow.webm" class="btn-fast" muted autoplay loop playsinline preload="metadata"></video>
               <video src="/button contact fast.webm" class="btn-slow" muted autoplay loop playsinline preload="metadata"></video>
               <span class="portfolio-btn-text">See More</span>
-            </div>
-          </a>
-        </section>
+           </div>
+        </a>
+      </section>
 
-      </div>
-    </div>
-
-    <Footer />
-  </body>
+      </div><!-- end portfolio-overlay -->
+    </div><!-- end hero-container -->
+  </div><!-- end page-transition-content -->
+  </main>
+  <Footer />
+</body>
 </html>

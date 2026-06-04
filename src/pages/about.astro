@@ -1,407 +1,397 @@
 ---
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 ---
 
-<Layout
-  title="About"
-  description="The artist in question"
-  pubDate={new Date('2026-02-18')}
-  pageTitle="ABOUT"
-  overlayText={true}
-  heroImage="/about page banner.webp"
-  heroBackground={true}
->
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title="About | Jacob Gordillo" description="The artist in question" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
 
-<style is:global>
-  *, *::before, *::after { box-sizing: border-box; }
+      body {
+        margin: 0;
+        padding: 0 !important;
+        overflow-x: hidden;
+      }
+      .page-title {
+        font-family: "Superglue";
+        font-size: 6rem;
+        color: white;
+        position: absolute;
+        top: 1rem;
+        left: clamp(-23.3rem, -21.3vw, -20.3rem);
+        margin: 0;
+        z-index: 20;
+        pointer-events: none;
+      }
+      main {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
 
-  body {
-    margin: 0;
-    padding: 0 !important;
-    overflow-x: hidden;
-    background: #fff;
-  }
-  .page-title {
-    font-family: "Superglue";
-    font-size: 6rem;
-    color: white;
-    position: absolute;
-    top: 1rem;
-    left: clamp(-23.3rem, -21.3vw, -20.3rem);
-    margin: 0;
-    z-index: 20;
-    pointer-events: none;
-  }
-  main {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
+      .about-hero {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        overflow: hidden;
+      }
 
-  .title { display: none; }
-  .date { display: none; }
-  hr { display: none; }
+      .about-bg-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+        z-index: 0;
+        pointer-events: none;
+        min-height: 100%;
+      }
 
-  /* ── HERO (exact illustrative structure) ── */
- .about-hero {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  overflow: hidden;
-  background: #fff;
+      .about-bg-overlay {
+        display: none;
+      }
+
+      .about-wrap {
+        position: relative;
+        z-index: 2;
+        width: min(1000px, 75vw);
+        margin: 0 auto;
+        padding-top: 90px;
+        padding-bottom: 450px;
+      animation: fadeIn 500ms ease 200ms forwards;
+  opacity: 0;
 }
 
-.about-bg-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  z-index: 0;
-  pointer-events: none;
-  min-height: 100%;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-  .about-bg-overlay {
-  display: none;
-}
+      .about-animbox {
+        position: relative;
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        display: grid;
+        padding: 4rem 2.5rem 3.5rem;
+        overflow: visible;
+        margin-top: 3rem;
+      }
 
-  /* ── CONTENT WRAP (exact illustrative margins) ── */
-  .about-wrap {
-  position: relative;
-  z-index: 2;
-  width: min(1000px, 75vw);
-  margin: 0 auto;
-  padding-top: 90px;
-  padding-bottom: 450px;
-}
+      .about-animbox-bg {
+        position: absolute;
+        top: 0;
+        left: -1.5%;
+        right: -1.5%;
+        bottom: -1rem;
+        width: 103%;
+        max-width: 104%;
+        height: 105%;
+        object-fit: fill;
+        z-index: 0;
+        border-radius: 10px;
+        pointer-events: none;
+        transform: scaleX(1.28) scaleY(1.55);
+        transform-origin: center;
+      }
 
-  /* ── ANIMATION BOX ── */
-  .about-animbox {
-  position: relative;
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
-  display: grid;
-  padding: 4rem 2.5rem 3.5rem;
-  overflow: visible;
-  margin-top: 3rem;
-}
+      .about-columns {
+        position: relative;
+        z-index: 1;
+        margin-top: 6rem;
+        display: grid;
+        grid-template-columns: 1fr 2px 1fr;
+        gap: 0 2.5rem;
+        align-items: stretch;
+      }
 
-  .about-animbox-bg {
-  position: absolute;
-  top: 0;
-  left: -1.5%;
-  right: -1.5%;
-  bottom: -1rem;
-  width: 103%;
-  max-width: 104%;
-  height: 105%;
-  object-fit: fill;  /* fill instead of contain so it covers the whole box */
-  z-index: 0;
-  border-radius: 10px;
-  pointer-events: none;
-  transform: scaleX(1.28) scaleY(1.55);
-  transform-origin: center;
-}
+      .about-divider {
+        background: rgba(0, 0, 0, 0.2);
+        align-self: stretch;
+        border-radius: 2px;
+      }
 
-  /* ── TWO COLUMN LAYOUT ── */
-  .about-columns {
-    position: relative;
-    z-index: 1;
-    margin-top: 3.75rem;
-    display: grid;
-    grid-template-columns: 1fr 2px 1fr;
-    gap: 0 2.5rem;
-    align-items: stretch;
-  }
+      .about-col {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
 
-  .about-divider {
-    background: rgba(0, 0, 0, 0.2);
-    align-self: stretch;
-    border-radius: 2px;
-  }
+      .about-section-title {
+        font-family: "Superglue";
+        font-size: 1.3rem;
+        letter-spacing: 0.12em;
+        color: #0e3947;
+        margin: 0 1 0.4rem;
+        text-transform: uppercase;
+      }
 
-  .about-col {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
+      .about-dots {
+        display: flex;
+        gap: 0.4rem;
+      }
 
-  .about-section-title {
-    font-family: "Superglue";
-    font-size: 1.3rem;
-    letter-spacing: 0.12em;
-    color: #0e3947;
-    margin: 0 0 0.4rem;
-    text-transform: uppercase;
-    
-  }
+      .about-name {
+        font-family: "Superglue", sans-serif;
+        font-size: clamp(1.4rem, 2.2vw, 2.2rem);
+        color: #111;
+        margin: 0;
+        line-height: 1.1;
+      }
 
-  .about-dots {
-    display: flex;
-    gap: 0.4rem;
-  }
+      .about-subtitle {
+        font-size: clamp(0.72rem, 0.95vw, 1.5rem);
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        border-left: 3px solid #0099cc;
+        padding-left: 0.75rem;
+        font-family: "Overload Burn";
+      }
 
-  .about-name {
-    font-family: "Superglue", sans-serif;
-    font-size: clamp(1.4rem, 2.2vw, 2.2rem);
-    color: #111;
-    margin: 0;
-    line-height: 1.1;
-  }
+      .about-col p.body {
+        margin: 0;
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #222;
+        font-family: "JAVATEXT";
+      }
 
-  .about-subtitle {
-    font-size: clamp(0.72rem, 0.95vw, 0.95rem);
-    color: #333;
-    line-height: 1.6;
-    margin: 0;
-    border-left: 3px solid #0099cc;
-    padding-left: 0.75rem;
-    font-family: "Overload Burn";
-  }
+      .about-rule {
+        border: none;
+        border-top: 1px solid rgba(0,0,0,0.12);
+        margin: 0.25rem 0;
+        display: block !important;
+      }
 
-  .about-col p.body {
-    margin: 0;
-    font-size: 1rem;
-    line-height: 1.8;
-    color: #222;
-    font-family: "JAVATEXT";
-  }
+      .about-skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-family: "Overload Burn";
+      }
 
-  .about-rule {
-    border: none;
-    border-top: 1px solid rgba(0,0,0,0.12);
-    margin: 0.25rem 0;
-    display: block !important;
-  }
+      .about-skills li {
+        font-size: 1.1rem;
+        background: rgba(0, 153, 204, 0.12);
+        border: 1px solid rgba(0, 153, 204, 0.35);
+        border-radius: 3px;
+        padding: 0.25rem 0.15rem;
+        color: #111;
+      }
 
-  .about-skills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.3rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    font-family: "Overload Burn";
-    
-  }
+      .about-education {
+        font-size: clamp(0.68rem, 0.85vw, 0.88rem);
+        color: #333;
+        line-height: 1.55;
+        margin: 0;
+        font-family: "JAVATEXT";
+        border-left: 2px solid rgba(0,153,204,0.4);
+        padding-left: 0.85rem;
+      }
 
-  .about-skills li {
-    font-size: 1.1rem;
-    background: rgba(0, 153, 204, 0.12);
-    border: 1px solid rgba(0, 153, 204, 0.35);
-    border-radius: 3px;
-    padding: 0.25rem 0.15rem;
-    color: #111;
-    
-  }
+      .about-education strong {
+        display: block;
+        color: #111;
+        font-size: 1rem;
+        font-family: "Overload Burn";
+      }
 
-  .about-education {
-    font-size: clamp(0.68rem, 0.85vw, 0.78rem);
-    color: #333;
-    line-height: 1.55;
-    margin: 0;
-    font-family: "JAVATEXT";
-    border-left: 2px solid rgba(0,153,204,0.4);
-    padding-left: 0.85rem;
-  }
+      .about-experience-item {
+        border-left: 2px solid rgba(0,153,204,0.4);
+        padding-left: 0.85rem;
+        margin: 0;
+        font-family: "JAVATEXT";
+      }
 
-  .about-education strong {
-    display: block;
-    color: #111;
-    font-size: 1rem;
-    font-family: "Overload Burn";
-  }
+      .about-experience-item strong {
+        display: block;
+        font-size: 1rem;
+        color: #111;
+        margin-bottom: 0.15rem;
+        font-family: "Overload Burn";
+      }
 
-  .about-experience-item {
-    border-left: 2px solid rgba(0,153,204,0.4);
-    padding-left: 0.85rem;
-    margin: 0;
-    font-family: "JAVATEXT";
-  }
+      .about-experience-item span {
+        font-size: 0.85rem;
+        color: #666;
+        display: block;
+        margin-bottom: 0.25rem;
+        font-family: "Overload Burn";
+      }
 
-  .about-experience-item strong {
-    display: block;
-    font-size: 1rem;
-    color: #111;
-    margin-bottom: 0.15rem;
-    font-family: "Overload Burn";
-  }
+      .about-experience-item p {
+        font-size: 0.88rem !important;
+        color: #333;
+        margin: 0;
+        line-height: 1.6;
+      }
 
-  .about-experience-item span {
-    font-size: 0.85rem;
-    color: #666;
-    display: block;
-    margin-bottom: 0.25rem;
-    font-family: "Overload Burn";
-  }
+      footer {
+        position: relative;
+        z-index: 10;
+      }
 
-  .about-experience-item p {
-    font-size: 0.88rem !important;
-    color: #333;
-    margin: 0;
-    line-height: 1.6;
-  }
+      @media (max-width: 768px) {
+        .about-wrap { padding-top: 60px; }
 
-  footer {
-    position: relative;
-    z-index: 10;
-  }
+        .about-animbox {
+          padding: 2rem 1.25rem;
+          isolation: isolate;
+        }
 
-  @media (max-width: 768px) {
-    .about-wrap { padding-top: 60px; }
+        .about-animbox-bg {
+          width: 135%;
+          height: 135%;
+        }
 
-    .about-animbox {
-      padding: 2rem 1.25rem;
-      isolation: isolate;
-    }
+        .about-columns {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
 
-    .about-animbox-bg {
-      width: 135%;
-      height: 135%;
-    }
+        .about-divider { display: none; }
+        .about-name { font-size: 1.8rem; }
 
-    .about-columns {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
+        .about-subtitle,
+        .about-col p.body,
+        .about-education,
+        .about-experience-item p {
+          font-size: 0.8rem !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <div class="page-transition-content">
+        <div class="about-hero">
 
-    .about-divider { display: none; }
-    .about-name { font-size: 1.8rem; }
+          <video class="about-bg-video" autoplay muted loop playsinline preload="metadata">
+            <source src="/aboutbackround.webm" type="video/webm" />
+          </video>
 
-    .about-subtitle,
-    .about-col p.body,
-    .about-education,
-    .about-experience-item p {
-      font-size: 0.8rem !important;
-    }
-  }
-</style>
+          <div class="about-wrap">
+            <h1 class="page-title">ABOUT</h1>
 
-<div class="about-hero">
+            <div class="about-animbox">
+              <img class="about-animbox-bg" src="/box animation slow1.webp" alt="" aria-hidden="true" />
 
-  <video class="about-bg-video" autoplay muted loop playsinline preload="metadata">
-    <source src="/aboutbackround.webm" type="video/webm" />
-  </video>
+              <div class="about-columns">
 
+                <!-- LEFT COLUMN -->
+                <div class="about-col">
+                  <div class="about-dots">
+                    <span></span><span></span><span></span>
+                  </div>
 
-  <div class="about-wrap">
-  <h1 class="page-title">ABOUT</h1>
+                  <h2 class="about-name">Jacob<br/>Gordillo</h2>
 
-  <div class="about-animbox">
+                  <p class="about-subtitle">
+                    Designer &amp; Editorial Illustrator<br/>
+                    Herron School of Art &amp; Design<br/>
+                    Indianapolis, Indiana
+                  </p>
 
-      <img
-        class="about-animbox-bg"
-        src="/box animation slow1.webp"
-        alt=""
-        aria-hidden="true"
-      />
+                  <hr class="about-rule" />
+                  <p class="about-section-title">Artist Statement</p>
 
-      <div class="about-columns">
+                  <p class="body">
+                    Hi, I'm Jacob, a designer who graduated from the Herron School of Art
+                    and Design with a bachelor's in Design and Illustration. I'm passionate about visual
+                    storytelling, branding, and communication, with proficency in a variety of professional design tools and mediums with an understanding of how to tailor designs and construct compelling narratives for specific audiences. I love bringing stories to life!
+                  </p>
 
-        <!-- LEFT COLUMN -->
-        <div class="about-col">
-          <div class="about-dots">
-            <span></span><span></span><span></span>
-          </div>
+                  <p class="body">
+                    Over the past eight years, as I've become more politically active, I've realized the
+                    importance of furthering democratic ideals. Seeing the opposition trample on the
+                    foundational ideas of Western liberalism has only fueled my passion for political action. I've done volunteer canvassing and doorknocking and I'm eager to engange in further activism and professional work!
+                    I believe design is one of the most powerful tools we have to connect with and
+                    communicate our values to voters and the broader populace.
+                  </p>
 
-          <h2 class="about-name">Jacob<br/>Gordillo</h2>
+                  <hr class="about-rule" />
+                </div>
 
-          <p class="about-subtitle">
-            Designer &amp; Editorial Illustrator<br/>
-            Herron School of Art &amp; Design<br/>
-            Indianapolis, Indiana
-          </p>
+                <!-- DIVIDER -->
+                <div class="about-divider"></div>
 
-          <hr class="about-rule" />
-          <p class="about-section-title">Artist Statement</p>
+                <!-- RIGHT COLUMN -->
+                <div class="about-col">
+                  <div>
+                    <p class="about-section-title">Education</p>
 
-          <p class="body">
-            Hi, I'm Jacob, a designer who graduated from the Herron School of Art
-            and Design with a bachelor's in Design and Illustration. I'm passionate about visual
-            storytelling, branding, and communication, with proficency in a variety of professional design tools and mediums with an understanding of how to tailor designs and construct compelling narratives for specific audiences. I love bringing stories to life!
-          </p>
+                    <p class="about-education">
+                      <strong>BFA — Drawing &amp; Illustration</strong>
+                      Herron School of Art and Design,<br/>
+                      IU Indianapolis — 2025
+                    </p>
 
-          <p class="body">
-            Over the past eight years, as I've become more politically active, I've realized the
-            importance of furthering democratic ideals. Seeing the opposition trample on the
-            foundational ideas of Western liberalism has only fueled my passion for political action. I've done volunteer canvassing and doorknocking and I'm eager to engange in further activism and professional work!
-            I believe design is one of the most powerful tools we have to connect with and
-            communicate our values to voters and the broader populace.
-          </p>
+                    <p class="about-education" style="margin-top:0.5rem">
+                      <strong>AS — General Studies</strong>
+                      Ivytech Community College,<br/>
+                      Bloomington, IN — 2022
+                    </p>
+                  </div>
 
-          <hr class="about-rule" />
-        </div>
+                  <hr class="about-rule" />
+                  <p class="about-section-title">Experience</p>
 
-        <!-- DIVIDER -->
-        <div class="about-divider"></div>
+                  <div class="about-experience-item">
+                    <strong>Progressive Victory — Cincinnati, OH</strong>
+                    <span>Political Canvassing &amp; Voter Registration · Feb 2024</span>
+                    <p>
+                      Door knocking, canvassing, and voter registration. Developed communication skills and
+                      hands-on experience working directly with voters and organizers.
+                    </p>
+                  </div>
 
-        <!-- RIGHT COLUMN -->
-        <div class="about-col">
-          <div>
-            <p class="about-section-title">Education</p>
+                  <div class="about-experience-item">
+                    <strong>Progressive Victory — Milwaukee, WI</strong>
+                    <span>Political Canvassing &amp; Door Knocking · Oct 2024</span>
+                    <p>
+                      More experience working with voters and organizers, managing my own workload and accomplishing tasks
+                      efficiently and independently.
+                    </p>
+                  </div>
 
-            <p class="about-education">
-              <strong>BFA — Drawing &amp; Illustration</strong>
-              Herron School of Art and Design,<br/>
-              IU Indianapolis — 2025
-            </p>
+                  <hr class="about-rule" />
 
-            <p class="about-education" style="margin-top:0.5rem">
-              <strong>AS — General Studies</strong>
-              Ivytech Community College,<br/>
-              Bloomington, IN — 2022
-            </p>
-          </div>
+                  <div>
+                    <p class="about-section-title">Skills</p>
+                    <ul class="about-skills">
+                      <li>Adobe Illustrator</li>
+                      <li>Photoshop</li>
+                      <li>InDesign</li>
+                      <li>Vegas Movie Studio</li>
+                      <li>Clip Studio Paint</li>
+                      <li>Microsoft Office</li>
+                      <li>Branding</li>
+                      <li>Character Design</li>
+                      <li>Editorial Illustration</li>
+                      <li>Political Advertising</li>
+                      <li>Narrative storytelling</li>
+                    </ul>
+                  </div>
+                </div>
 
-          <hr class="about-rule" />
-          <p class="about-section-title">Experience</p>
-
-          <div class="about-experience-item">
-            <strong>Progressive Victory — Cincinnati, OH</strong>
-            <span>Political Canvassing &amp; Voter Registration · Feb 2024</span>
-            <p>
-              Door knocking, canvassing, and voter registration. Developed communication skills and
-              hands-on experience working directly with voters and organizers.
-            </p>
-          </div>
-
-          <div class="about-experience-item">
-            <strong>Progressive Victory — Milwaukee, WI</strong>
-            <span>Political Canvassing &amp; Door Knocking · Oct 2024</span>
-            <p>
-              More experience working with voters and organizers, managing my own workload and accomplishing tasks
-              efficiently and independently.
-            </p>
-          </div>
-
-          <hr class="about-rule" />
-
-          <div>
-            <p class="about-section-title">Skills</p>
-            <ul class="about-skills">
-              <li>Adobe Illustrator</li>
-              <li>Photoshop</li>
-              <li>InDesign</li>
-              <li>Vegas Movie Studio</li>
-              <li>Clip Studio Paint</li>
-              <li>Microsoft Office</li>
-              <li>Branding</li>
-              <li>Character Design</li>
-              <li>Editorial Illustration</li>
-              <li>Political Advertising</li>
-              <li>Narrative storytelling</li>
-            </ul>
+              </div>
+            </div>
           </div>
         </div>
-
       </div>
-    </div>
-  </div>
-</div>
-
-</Layout>
+    </main>
+    <Footer />
+  </body>
+</html>

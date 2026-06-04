@@ -2,28 +2,25 @@
 import { SITE_TITLE } from '../consts';
 ---
 
-
-
 <style>
   header {
-  margin: 0;
-  padding: 0;
-  background: white;
-  box-shadow: 0 2px 8px rgba(var(--black), 5%);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  width: 100%;
-  line-height: 0;        /* removes inline spacing */
-}
+    margin: 0;
+    padding: 0;
+    background: white;
+    box-shadow: 0 2px 8px rgba(var(--black), 5%);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    line-height: 0;
+  }
 
   nav {
     width: 100%;
     overflow: hidden;
   }
 
-
-.nav-inner {
+  .nav-inner {
     width: 100%;
     max-width: 100%;
     margin: 0 auto;
@@ -70,8 +67,8 @@ import { SITE_TITLE } from '../consts';
     padding: 0 8px;
     box-sizing: border-box;
     margin-top: 0px;
-    opacity: 0;
-    transform: translateY(6px);
+    opacity: 1;
+    transform: none;
     animation: btnShow 0.5s cubic-bezier(.2,.9,.2,1) forwards;
   }
 
@@ -146,23 +143,10 @@ import { SITE_TITLE } from '../consts';
     background-color: transparent;
   }
 
-  .gif.base {
-    opacity: 1;
-    z-index: 1;
-  }
-
-  .gif.hover {
-    opacity: 0;
-    z-index: 2;
-  }
-
-  .gif-wrapper:hover .gif.hover {
-    opacity: 1;
-  }
-
-  .gif-wrapper:hover .gif.base {
-    opacity: 1;
-  }
+  .gif.base { opacity: 1; z-index: 1; }
+  .gif.hover { opacity: 0; z-index: 2; }
+  .gif-wrapper:hover .gif.hover { opacity: 1; }
+  .gif-wrapper:hover .gif.base { opacity: 1; }
 
   @media (max-width: 1024px) {
     .nav-button-wrapper { height: 78px; min-width: 108px; padding: 0 6px; }
@@ -203,7 +187,8 @@ import { SITE_TITLE } from '../consts';
     .gif-wrapper { width: 52px; height: 48px; }
   }
 </style>
-<header>
+
+<header transition:persist>
   <nav>
     <div class="nav-inner">
       <div class="nav-links">
