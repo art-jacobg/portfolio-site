@@ -8,7 +8,7 @@ const illustrativeWorkGroups = [
   {
     id: 'concept-art',
     title: 'Concept Art',
-    description: 'Conceptual and fantasy character illustrations with creature and world-building studies.',
+    description: 'Here is a selection of some of my work!',
     works: [
       { src: '/portfolio/illustrative/concept art1.webp', alt: 'Concept art 1' },
       { src: '/portfolio/illustrative/concept art2.webp', alt: 'Concept art 2' },
@@ -54,8 +54,8 @@ const illustrativeWorkGroups = [
       { src: '/portfolio/illustrative/lucy plushi.webp', alt: 'Lucy plushie' },
       { src: '/portfolio/illustrative/pen plushi.webp', alt: 'Pen plushie' },
       { src: '/portfolio/illustrative/vi plushi.webp', alt: 'Vi plushie' },
-            { src: '/portfolio/illustrative/gloria portrait.webp', alt: 'Gloria portrait' },
-            { src: '/portfolio/illustrative/sticker1.webp', alt: 'Commissioned Sticker' }, 
+      { src: '/portfolio/illustrative/gloria portrait.webp', alt: 'Gloria portrait' },
+      { src: '/portfolio/illustrative/sticker1.webp', alt: 'Commissioned Sticker' },
     ],
   },
 ];
@@ -72,7 +72,6 @@ const illustrativeWorkGroups = [
       body {
         margin: 0;
         padding: 0 !important;
-        overflow-x: hidden;
         background: #f5f5f5;
         font-size: 16px;
       }
@@ -82,79 +81,62 @@ const illustrativeWorkGroups = [
         max-width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
+        overflow-x: hidden;
       }
 
       /* ── HERO ── */
       .ilw-hero {
-  position: relative;
-  width: 100%;
-  min-height: 100%;   /* was 100vh — now grows with content */
-  overflow: hidden;
-  background: #fff;
-}
+        position: relative;
+        width: 100%;
+        min-height: 100%;
+        background: #fff;
+      }
 
-    /* ── VIDEO BACKGROUND ── */
-
-.ilw-hero {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  overflow: hidden;
-  background: #fff;
-}
-
-.ilw-bg-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  z-index: 0;
-  pointer-events: none;
-}
-
-
-/* keep content above video */
-.ilw-wrap {
-  position: relative;
-  z-index: 2;
-}
+      /* ── VIDEO BACKGROUND ── */
+      .ilw-bg-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+        z-index: 0;
+        pointer-events: none;
+      }
 
       /* ── CONTENT SHELL ── */
-     .ilw-wrap {
-  position: relative;
-  z-index: 2;
-  width: min(1050px, 90vw);
-  margin: 0 auto;
-  padding: clamp(4rem, 8vw, 7rem) 1rem;
-  padding-bottom: clamp(4.5rem, 10vw, 8rem);
-}
+      .ilw-wrap {
+        position: relative;
+        z-index: 2;
+        width: min(1050px, 90vw);
+        margin: 0 auto;
+        padding: clamp(4rem, 8vw, 7rem) 1rem clamp(4.5rem, 10vw, 8rem);
+      }
 
       /* ── PAGE TITLE ── */
-   .ilw-title {
-  font-family: "Superglue", sans-serif;
-  font-size: clamp(3rem, 5.2vw, 82px);
-  line-height: 0.9;
-  color: white;
-  margin: 0 0 clamp(3rem, 4vw, 6rem) 0;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: -0.04em;
-  text-shadow: 0 0 50px rgba(0,0,0,0.35);
-}
+      .ilw-title {
+        font-family: "Superglue", sans-serif;
+        font-size: clamp(3rem, 5.2vw, 82px);
+        line-height: 0.9;
+        color: white;
+        margin: 0 0 clamp(3rem, 4vw, 6rem) 0;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: -0.04em;
+        text-shadow: 0 0 50px rgba(0,0,0,0.35);
+      }
 
       /* ── INTRO BOX ── */
       .ilw-intro {
-  position: relative;
-  width: min(680px, 100%);
-  margin: 0 auto clamp(2rem, 4vw, 3.5rem) auto;
-  border-radius: 18px;
-  overflow: visible;
-  padding: clamp(2rem, 4vw, 3.5rem);
-  box-shadow: 0 28px 80px rgba(0,0,0,0.28);
-}
+        position: relative;
+        width: min(680px, 100%);
+        margin: 0 auto clamp(2rem, 4vw, 3.5rem) auto;
+        border-radius: 18px;
+        overflow: visible;
+        padding: clamp(2rem, 4vw, 3.5rem);
+        box-shadow: 0 28px 80px rgba(0,0,0,0.28);
+      }
 
       .ilw-intro-bg {
         position: absolute;
@@ -205,7 +187,6 @@ const illustrativeWorkGroups = [
         color: #333;
         border-left: 4px solid #00bfff;
         padding-left: clamp(0.85rem, 1vw, 1.1rem);
-        max-width: 100%;
       }
 
       .ilw-intro-divider {
@@ -230,7 +211,6 @@ const illustrativeWorkGroups = [
         font-size: clamp(0.95rem, 1vw, 1rem);
         line-height: 1.9;
         color: #1d1d1d;
-        max-width: 100%;
       }
 
       /* ── CATEGORY BAR ── */
@@ -238,11 +218,8 @@ const illustrativeWorkGroups = [
         display: flex;
         flex-wrap: wrap;
         gap: clamp(0.75rem, 1.5vw, 1.25rem);
-        margin-top: clamp(4rem, 8vw, 6rem);
-        margin-bottom: clamp(2rem, 4vw, 3rem);
+        margin: clamp(4rem, 8vw, 6rem) auto clamp(2rem, 4vw, 3rem);
         width: min(720px, 100%);
-        margin-left: auto;
-        margin-right: auto;
         justify-content: center;
       }
 
@@ -291,11 +268,11 @@ const illustrativeWorkGroups = [
       }
 
       /* ── GRID ── */
-     .ilw-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
+      .ilw-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
 
       .ilw-item {
         position: relative;
@@ -335,25 +312,24 @@ const illustrativeWorkGroups = [
       }
 
       /* ── MODAL ── */
-      .ilw-modal {
-        position: fixed;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(0,0,0,0.88);
-        z-index: 9999;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s;
-      }
+     .ilw-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.88);
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
 
       .ilw-modal.active {
         opacity: 1;
         pointer-events: auto;
       }
 
-      /* image wrapper so nav buttons sit outside the image */
       .ilw-modal-inner {
         position: relative;
         display: flex;
@@ -428,10 +404,7 @@ const illustrativeWorkGroups = [
         .ilw-wrap { padding-top: 60px; }
         .ilw-intro, .ilw-catbar { width: 100%; }
         .ilw-intro { padding: 28px 24px; }
-        .ilw-grid {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 12px;
-        }
+        .ilw-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
         .ilw-modal-img { max-width: 92vw; }
         .ilw-nav { width: 40px; height: 40px; font-size: 20px; }
       }
@@ -459,29 +432,16 @@ const illustrativeWorkGroups = [
     <Header />
 
     <main>
-     <div class="ilw-hero">
+      <div class="ilw-hero">
 
-  <!-- VIDEO BACKGROUND -->
-  <video
-    class="ilw-bg-video"
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="metadata"
-  >
-    <source src="/portfoliobannerani.webm" type="video/webm" />
-  </video>
+        <video class="ilw-bg-video" autoplay muted loop playsinline preload="metadata">
+          <source src="/portfoliobannerani.webm" type="video/webm" />
+        </video>
 
-  <!-- DARK OVERLAY -->
-  <div class="ilw-bg-overlay"></div>
+        <div class="ilw-wrap">
 
-  <div class="ilw-wrap">
-
-          <!-- TITLE -->
           <h1 class="ilw-title">ILLUSTRATIVE<br />WORKS</h1>
 
-          <!-- INTRO BOX -->
           <div class="ilw-intro">
             <img class="ilw-intro-bg" src="/box animation slow1.webp" alt="" aria-hidden="true" />
             <div class="ilw-intro-inner">
@@ -489,25 +449,25 @@ const illustrativeWorkGroups = [
                 <p class="ilw-intro-kicker">Illustration Archive</p>
                 <h2 class="ilw-intro-heading">Visual<br />Storytelling</h2>
                 <p class="ilw-intro-sub">
-                  Character illustration, fantasy artwork, plushie concepts,
-                  editorial visuals, and experimental visual development.
+                Character illustration, concept art, commissioned works.
                 </p>
               </div>
               <div class="ilw-intro-divider"></div>
               <div class="ilw-intro-bottom">
                 <p class="ilw-intro-label">About This Collection</p>
                 <p class="ilw-intro-body">
-                  This archive brings together a wide range of illustrative work
-                  spanning concept art, creature design, fantasy illustration,
-                  commissioned projects, and stylized visual storytelling.
-                  Each category explores a different approach to character,
-                  atmosphere, and narrative design.
+                  This is a collection of my illustrative works
+                  spanning concept art, creature design, fantasy illustrations,
+                  commissioned projects, all which display my passion for visual storytelling.
+                  </p>
+<div style="page-break-after: always;"></div>
+<p class="ilw-intro-body">
+              I love telling a story with my art and I firmly beleive that anything that is designed has the ability to tell a complex narrative without a single word.
                 </p>
               </div>
             </div>
           </div>
 
-          <!-- CATEGORY BAR -->
           <div class="ilw-catbar">
             {illustrativeWorkGroups.map((group, i) => (
               <button
@@ -519,7 +479,6 @@ const illustrativeWorkGroups = [
             ))}
           </div>
 
-          <!-- WORK GROUPS -->
           {illustrativeWorkGroups.map((group, i) => (
             <div
               class={`ilw-group${i === 0 ? ' visible' : ''}`}
@@ -549,7 +508,6 @@ const illustrativeWorkGroups = [
       </div>
     </main>
 
-    <!-- MODAL -->
     <div id="ilwModal" class="ilw-modal">
       <div class="ilw-modal-inner">
         <button id="ilwPrev" class="ilw-nav" aria-label="Previous">&#8592;</button>
@@ -572,30 +530,26 @@ const illustrativeWorkGroups = [
       let currentIndex = 0;
 
       function showImage(index) {
-        modalImg.classList.add('fade');
-        setTimeout(() => {
-          currentIndex = index;
-          modalImg.src = currentGroup[currentIndex].src;
-          modalImg.alt = currentGroup[currentIndex].alt;
-          counter.textContent = `${currentIndex + 1} / ${currentGroup.length}`;
-          prevBtn.disabled = currentIndex === 0;
-          nextBtn.disabled = currentIndex === currentGroup.length - 1;
-          modalImg.classList.remove('fade');
-        }, 180);
-      }
+  currentIndex = index;
+  modalImg.src = currentGroup[currentIndex].src;
+  modalImg.alt = currentGroup[currentIndex].alt;
+  counter.textContent = `${currentIndex + 1} / ${currentGroup.length}`;
+  prevBtn.disabled = currentIndex === 0;
+  nextBtn.disabled = currentIndex === currentGroup.length - 1;
+}
 
-      function openModal(group, index) {
-        currentGroup = group;
-        showImage(index);
-        modal.classList.add('active');
-      }
 
-      function closeModal() {
-        modal.classList.remove('active');
-        setTimeout(() => { modalImg.src = ''; }, 300);
-      }
+     function openModal(group, index) {
+  currentGroup = group;
+  showImage(index);
+  modal.classList.add('active');
+}
 
-      // category switching
+function closeModal() {
+  modal.classList.remove('active');
+  setTimeout(() => { modalImg.src = ''; }, 300);
+}
+
       document.querySelectorAll('.ilw-catbtn').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('.ilw-catbtn').forEach(b => b.classList.remove('active'));
@@ -607,11 +561,9 @@ const illustrativeWorkGroups = [
         });
       });
 
-      // open modal — collect all items from the same group
       document.querySelectorAll('.ilw-group').forEach(group => {
         const items = Array.from(group.querySelectorAll('.ilw-item'));
         const groupData = items.map(el => ({ src: el.dataset.src, alt: el.dataset.alt }));
-
         items.forEach((item, index) => {
           item.addEventListener('click', () => openModal(groupData, index));
         });
@@ -625,12 +577,10 @@ const illustrativeWorkGroups = [
         if (currentIndex < currentGroup.length - 1) showImage(currentIndex + 1);
       });
 
-      // close on backdrop click
       modal.addEventListener('click', e => {
         if (e.target === modal) closeModal();
       });
 
-      // keyboard nav
       document.addEventListener('keydown', e => {
         if (!modal.classList.contains('active')) return;
         if (e.key === 'Escape') closeModal();

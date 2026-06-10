@@ -3,8 +3,6 @@ import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
-
-const nonIllustrativeWorks = Array.from({ length: 8 }, (_, i) => i);
 ---
 
 <!doctype html>
@@ -18,9 +16,9 @@ const nonIllustrativeWorks = Array.from({ length: 8 }, (_, i) => i);
       body {
         margin: 0;
         padding: 0 !important;
-        overflow-x: hidden;
         background: #f5f5f5;
         font-size: 16px;
+        overflow-x: hidden;
       }
 
       main {
@@ -28,47 +26,46 @@ const nonIllustrativeWorks = Array.from({ length: 8 }, (_, i) => i);
         max-width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
+        overflow-x: hidden;
       }
 
       /* ── HERO ── */
-      .hero {
+      .ilw-hero {
         position: relative;
         width: 100%;
         min-height: 100%;
-        overflow: hidden;
-        background: #f4f4f4;
+        background: #fff;
       }
 
-      /* ── IMAGE BACKGROUND ── */
-      .hero-bg-img {
+      /* ── VIDEO BACKGROUND ── */
+      .ilw-bg-video {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
-        object-position: center;
+        object-position: center center;
         z-index: 0;
         pointer-events: none;
       }
 
       /* ── CONTENT SHELL ── */
-      .wrap {
+      .ilw-wrap {
         position: relative;
         z-index: 2;
         width: min(1050px, 90vw);
         margin: 0 auto;
-        padding: clamp(4rem, 8vw, 7rem) 1rem;
-        padding-bottom: clamp(4rem, 8vw, 7rem);
+        padding: clamp(4rem, 8vw, 7rem) 1rem clamp(4.5rem, 10vw, 8rem);
       }
 
       /* ── PAGE TITLE ── */
-      .page-title {
+      .ilw-title {
         font-family: "Superglue", sans-serif;
-        font-size: clamp(40px, 5.2vw, 82px);
+        font-size: clamp(3rem, 5.2vw, 82px);
         line-height: 0.9;
         color: white;
-        margin: 0 0 110px 0;
+        margin: 0 0 clamp(3rem, 4vw, 6rem) 0;
         text-align: center;
         text-transform: uppercase;
         letter-spacing: -0.04em;
@@ -76,7 +73,7 @@ const nonIllustrativeWorks = Array.from({ length: 8 }, (_, i) => i);
       }
 
       /* ── INTRO BOX ── */
-      .intro {
+      .ilw-intro {
         position: relative;
         width: min(680px, 100%);
         margin: 0 auto clamp(2rem, 4vw, 3.5rem) auto;
@@ -86,12 +83,10 @@ const nonIllustrativeWorks = Array.from({ length: 8 }, (_, i) => i);
         box-shadow: 0 28px 80px rgba(0,0,0,0.28);
       }
 
-      .intro-bg {
+      .ilw-intro-bg {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 100%;
-        height: 100%;
+        top: 50%; left: 50%;
+        width: 100%; height: 100%;
         transform: translate(-50%, -50%) scale(1.7);
         object-fit: fill;
         z-index: 0;
@@ -99,7 +94,7 @@ const nonIllustrativeWorks = Array.from({ length: 8 }, (_, i) => i);
         pointer-events: none;
       }
 
-      .intro-inner {
+      .ilw-intro-inner {
         position: relative;
         z-index: 2;
         width: 100%;
@@ -108,9 +103,9 @@ const nonIllustrativeWorks = Array.from({ length: 8 }, (_, i) => i);
         gap: 32px;
       }
 
-      .intro-top { display: flex; flex-direction: column; }
+      .ilw-intro-top { display: flex; flex-direction: column; }
 
-      .intro-kicker {
+      .ilw-intro-kicker {
         font-family: "Superglue", sans-serif;
         font-size: 11px;
         color: #00b7ff;
@@ -119,7 +114,7 @@ const nonIllustrativeWorks = Array.from({ length: 8 }, (_, i) => i);
         margin: 0 0 12px 0;
       }
 
-      .intro-heading {
+      .ilw-intro-heading {
         font-family: "Superglue", sans-serif;
         font-size: clamp(22px, 2.8vw, 38px);
         line-height: 0.88;
@@ -128,189 +123,116 @@ const nonIllustrativeWorks = Array.from({ length: 8 }, (_, i) => i);
         margin: 0 0 20px 0;
       }
 
-      .intro-sub {
+      .ilw-intro-sub {
         margin: 0;
         font-size: clamp(0.85rem, 1vw, 1rem);
         line-height: 1.85;
         color: #333;
         border-left: 4px solid #00bfff;
         padding-left: clamp(0.85rem, 1vw, 1.1rem);
-        max-width: 100%;
       }
 
-      .intro-divider {
+      .ilw-intro-divider {
         width: 100%;
         height: 1px;
         background: rgba(0,0,0,0.12);
       }
 
-      .intro-bottom { display: flex; flex-direction: column; gap: 10px; }
+      .ilw-intro-bottom { display: flex; flex-direction: column; gap: 10px; }
 
-      .intro-label {
+      .ilw-intro-label {
         font-family: "Superglue", sans-serif;
-        font-size: 11px;
+        font-size: clamp(0.75rem, 1vw, 0.95rem);
         letter-spacing: 0.14em;
         color: #008bb8;
         text-transform: uppercase;
         margin: 0;
       }
 
-      .intro-body {
+      .ilw-intro-body {
         margin: 0;
         font-size: clamp(0.95rem, 1vw, 1rem);
         line-height: 1.9;
         color: #1d1d1d;
-        max-width: 100%;
       }
 
-      /* ── WORKS HEADER ── */
-      .works-header {
+      /* ── MEDIA COLUMN ── */
+      .media-column {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: clamp(1rem, 2vw, 2rem);
-        margin-top: clamp(4rem, 8vw, 6rem);
-        margin-bottom: clamp(1.5rem, 3vw, 2rem);
-      }
-
-      .works-title {
-        font-family: "Superglue", sans-serif;
-        font-size: clamp(24px, 3vw, 44px);
-        color: white;
-        text-transform: uppercase;
-        margin: 0;
-      }
-
-      .works-count {
-        color: rgba(255,255,255,0.8);
-        font-size: 0.9rem;
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-      }
-
-      /* ── GRID ── */
-      .works-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: clamp(1rem, 2vw, 1.5rem);
-      }
-
-      .work-item {
-        position: relative;
-        aspect-ratio: 3 / 4;
-        border-radius: 12px;
-        overflow: hidden;
-        cursor: pointer;
-        transition: transform 0.3s, box-shadow 0.3s;
-      }
-
-      .work-item:hover {
-        transform: translateY(-8px) scale(1.02);
-        box-shadow: 0 24px 48px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.15);
-      }
-
-      .work-item img {
+        flex-direction: column;
+        gap: clamp(1.5rem, 3vw, 2.5rem);
+        margin-top: clamp(3rem, 6vw, 5rem);
         width: 100%;
-        height: 100%;
-        object-fit: cover;
+      }
+
+      /* Each row: gif on left, video on right */
+      .media-row {
+        display: grid;
+        grid-template-columns: 1fr 1.6fr;
+        gap: clamp(1.5rem, 3vw, 2.5rem);
+        align-items: center;
+      }
+
+      /* ── GIF / PLACEHOLDER shared sizing ── */
+      .media-gif,
+      .media-placeholder {
+        width: 100%;
+        border-radius: 14px;
         display: block;
       }
 
-      .work-overlay {
-        position: absolute;
-        inset: 0;
-        display: flex;
-        align-items: flex-end;
-        padding: 16px;
-        background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 45%, transparent 70%);
+      .media-gif {
       }
 
-      .work-label {
-        font-family: "Superglue", sans-serif;
-        color: white;
-        font-size: 13px;
-        text-transform: uppercase;
-      }
-
-      /* ── MODAL ── */
-      .modal {
-        position: fixed;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(0,0,0,0.88);
-        z-index: 9999;
-        opacity: 0;
+      /* invisible placeholder — same dimensions as the gif slot */
+      .media-placeholder {
+        aspect-ratio: 1 / 1; /* adjust if you know the gif's exact ratio */
+        background: transparent;
         pointer-events: none;
-        transition: opacity 0.3s;
       }
 
-      .modal.active {
-        opacity: 1;
-        pointer-events: auto;
+      /* ── VIDEO EMBED ── */
+      .media-embed {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.4);
       }
 
-      .modal-card {
-        width: min(520px, 90vw);
-        height: min(900px, 88vh);
-        perspective: 1600px;
-        transform: scale(0.92);
-        transition: transform 0.35s ease;
-      }
-
-      .modal.active .modal-card {
-        transform: scale(1);
-      }
-
-      .modal-inner {
+      .media-embed iframe {
         width: 100%;
         height: 100%;
-        position: relative;
-        transform-style: preserve-3d;
-        transition: transform 0.8s ease;
+        border: none;
+        display: block;
       }
 
-      .modal-card:hover .modal-inner {
-        transform: rotateY(180deg);
-      }
-
-      .modal-front,
-      .modal-back {
-        position: absolute;
-        inset: 0;
-        backface-visibility: hidden;
-      }
-
-      .modal-back { transform: rotateY(180deg); }
-
-      .modal-front img,
-      .modal-back img {
+      /* invisible embed placeholder */
+      .media-embed-placeholder {
         width: 100%;
-        height: 100%;
-        object-fit: contain;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 0 80px rgba(0,0,0,0.75);
+        aspect-ratio: 16 / 9;
+        border-radius: 14px;
+        background: transparent;
+        pointer-events: none;
       }
 
-      /* ── MOBILE ── */
+      /* ── TABLET ── */
       @media (max-width: 1024px) {
-        .wrap { padding-top: 60px; }
-        .intro, .works-header { width: 100%; }
-        .intro { padding: 28px 24px; width: 100%; }
-        .works-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        .modal-card { width: 92vw; }
+        .ilw-wrap { padding-top: 60px; }
+        .ilw-intro { width: 100%; padding: 28px 24px; }
+        .media-row { grid-template-columns: 1fr; }
       }
 
       @media (max-width: 768px) {
-        .wrap { padding: 40px 1rem; }
-        .works-header { flex-direction: column; align-items: flex-start; }
-        .works-grid { grid-template-columns: 1fr; gap: 12px; }
+        .ilw-wrap { padding: 40px 1rem; }
+        .ilw-title { font-size: clamp(2.8rem, 10vw, 4.5rem); }
+        .ilw-intro { padding: 24px 18px; }
       }
 
       @media (max-width: 480px) {
-        .wrap { padding: 28px 0.75rem; }
+        .ilw-wrap { padding: 30px 0.75rem; }
+        .ilw-title { font-size: clamp(2.4rem, 12vw, 4rem); }
+        .ilw-intro { padding: 20px 16px; }
       }
     </style>
   </head>
@@ -319,119 +241,82 @@ const nonIllustrativeWorks = Array.from({ length: 8 }, (_, i) => i);
     <Header />
 
     <main>
-      <div class="hero">
+      <div class="ilw-hero">
 
-        <!-- BACKGROUND IMAGE -->
-        <img
-          class="hero-bg-img"
-          src="/portfolio banner 2.webp"
-          alt=""
-          aria-hidden="true"
-        />
+        <video class="ilw-bg-video" autoplay muted loop playsinline preload="metadata">
+          <source src="/portfoliobannerani.webm" type="video/webm" />
+        </video>
 
-        <div class="wrap">
+        <div class="ilw-wrap">
 
-          <!-- TITLE -->
-          <h1 class="page-title">NON-ILLUSTRATIVE<br />WORKS</h1>
+          <h1 class="ilw-title">NON-ILLUSTRATIVE<br />WORKS</h1>
 
           <!-- INTRO BOX -->
-          <div class="intro">
-            <img class="intro-bg" src="/box animation slow1.webp" alt="" aria-hidden="true" />
-            <div class="intro-inner">
-              <div class="intro-top">
-                <p class="intro-kicker">Design Collection</p>
-                <h2 class="intro-heading">Non-Illustrative<br />Works</h2>
-                <p class="intro-sub">
-                  Branding systems, motion concepts,
-                  layout-driven projects, and visual
-                  communication work beyond illustration.
+          <div class="ilw-intro">
+            <img class="ilw-intro-bg" src="/box animation slow1.webp" alt="" aria-hidden="true" />
+            <div class="ilw-intro-inner">
+              <div class="ilw-intro-top">
+                <p class="ilw-intro-kicker">Design Collection</p>
+                <h2 class="ilw-intro-heading">Beyond<br />Illustration</h2>
+                <p class="ilw-intro-sub">
+                  Branding systems, motion concepts, layout-driven projects, and visual communication work beyond illustration.
                 </p>
               </div>
-              <div class="intro-divider"></div>
-              <div class="intro-bottom">
-                <p class="intro-label">About This Collection</p>
-                <p class="intro-body">
-                  This collection focuses on structure,
-                  communication, motion, typography,
-                  branding, and experimental layout systems.
-                  These projects explore how visual identity
-                  and composition can create meaning across
-                  digital and physical formats.
+              <div class="ilw-intro-divider"></div>
+              <div class="ilw-intro-bottom">
+                <p class="ilw-intro-label">About This Collection</p>
+                <p class="ilw-intro-body">
+                  This collection focuses on structure, communication, motion, typography, branding, and experimental layout systems. These projects explore how visual identity and composition can create meaning across digital and physical formats.
                 </p>
               </div>
             </div>
           </div>
 
-          <!-- WORKS GRID -->
-          <div class="works-header">
-            <h2 class="works-title">Project Gallery</h2>
-            <div class="works-count">08 Selected Works</div>
-          </div>
+          <!-- MEDIA COLUMN -->
+          <div class="media-column">
 
-          <div class="works-grid">
-            {nonIllustrativeWorks.map((i) => (
-              <div
-                class="work-item"
-                data-front={`/portfolio/non-illustrative/${i}.webp`}
-                data-back={`/portfolio/non-illustrative/${i} back.webp`}
-              >
-                <img
-                  src={`/portfolio/non-illustrative/${i}.webp`}
-                  alt={`Non-illustrative work ${i + 1}`}
-                  loading="lazy"
-                />
-                <div class="work-overlay">
-                  <span class="work-label">Work {i + 1}</span>
-                </div>
+            <!-- ROW 1: Wizard Juice gif + YouTube embed -->
+            <div class="media-row">
+              <img
+                class="media-gif"
+                src="/wizardjuice.gif"
+                alt="Wizard Juice animation"
+              />
+              <div class="media-embed">
+                <iframe
+                  src="https://www.youtube.com/embed/jTkYjbenrzo?si=tuZyY7iSfbkIBztg"
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen
+                ></iframe>
               </div>
-            ))}
+            </div>
+
+            <!-- ROW 2: placeholder gif slot + placeholder embed slot -->
+            <div class="media-row">
+              <div class="media-placeholder"></div>
+              <div class="media-embed-placeholder"></div>
+            </div>
+
+            <!-- ROW 3: placeholder gif slot + placeholder embed slot -->
+            <div class="media-row">
+              <div class="media-placeholder"></div>
+              <div class="media-embed-placeholder"></div>
+            </div>
+
+            <!-- ROW 4: placeholder gif slot + placeholder embed slot -->
+            <div class="media-row">
+              <div class="media-placeholder"></div>
+              <div class="media-embed-placeholder"></div>
+            </div>
+
           </div>
 
         </div>
       </div>
     </main>
-
-    <!-- MODAL -->
-    <div id="modal" class="modal">
-      <div class="modal-card">
-        <div class="modal-inner">
-          <div class="modal-front">
-            <img id="modalFront" src="" alt="" />
-          </div>
-          <div class="modal-back">
-            <img id="modalBack" src="" alt="" />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      const modal = document.getElementById('modal');
-      const modalFront = document.getElementById('modalFront');
-      const modalBack = document.getElementById('modalBack');
-
-      document.querySelectorAll('.work-item').forEach((item) => {
-        item.addEventListener('click', () => {
-          modalFront.src = item.dataset.front;
-          modalBack.src = item.dataset.back || '';
-          modal.classList.add('active');
-        });
-      });
-
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          modal.classList.remove('active');
-          setTimeout(() => {
-            modalFront.src = '';
-            modalBack.src = '';
-          }, 300);
-        }
-      });
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') modal.classList.remove('active');
-      });
-    </script>
 
     <Footer />
   </body>
