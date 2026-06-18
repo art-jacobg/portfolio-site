@@ -1,0 +1,711 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={`Portfolio | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+    <link rel="preload" href="/portfoliobannerani.webm" as="video" fetchpriority="high" />
+
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        padding: 0 !important;
+        overflow-x: hidden;
+      }
+
+      main {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      /* ── HERO ── */
+      .hero-container {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        overflow: hidden;
+      }
+      .page-transition-content,
+main,
+body,
+html {
+  overflow-y: auto !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
+      .hero-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .hero-video.desktop { display: block; }
+      .hero-video.mobile { display: none; }
+
+      .page-title {
+        font-family: "Superglue";
+        font-size: clamp(4rem, 7vw, 6rem);
+        color: white;
+        position: absolute;
+        top: 1rem;
+        left: clamp(-12rem, -8vw, -4rem);
+        margin: 0;
+        z-index: 20;
+        pointer-events: none;
+      }
+
+      /* ── OVERLAY GRID ── */
+      .portfolio-overlay {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 2.5fr 1fr;
+        grid-template-rows: repeat(3, minmax(220px, 260px));
+        gap: clamp(0.5rem, 1vw, 1rem);
+        padding: clamp(4rem, 6vw, 8rem) 1rem 3rem;
+        box-sizing: border-box;
+        max-width: 1400px;
+        margin: 0 auto;
+        animation: fadeIn 500ms ease 100ms forwards;
+        opacity: 0;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      .portfolio-section {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        overflow: hidden;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        padding: clamp(2.5rem, 4vw, 4rem);
+        box-sizing: border-box;
+        border-radius: 4px;
+      }
+
+      .card--tarot {
+        grid-column: 1;
+        grid-row: 1 / 4;
+        background-image: url('/box animation slow1.webp');
+        flex-direction: row;
+        align-items: center;
+        gap: clamp(1.5rem, 2vw, 2rem);
+        padding: clamp(4rem, 5vw, 8.5rem);
+        padding-top: clamp(5rem, 6vw, 10rem);
+      }
+
+      .card--tarot .card-image { flex-shrink: 0; }
+
+      .card--tarot .card-image img {
+        width: auto;
+        max-width: min(220px, 35vw);
+        max-height: calc(3 * 260px - 5rem);
+        height: auto;
+        display: block;
+        object-fit: contain;
+      }
+
+      .card--tarot .card-text { flex: 1; min-width: 0; }
+
+      .card--tarot .card-text h2 {
+        font-size: clamp(1.8rem, 3vw, 3.4rem);
+        line-height: 1.1;
+        margin: 0 0 0.45rem;
+      }
+
+      .portfolio-btn--tarot {
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 0.1rem;
+        align-self: flex-start;
+      }
+
+      .portfolio-btn--tarot .portfolio-btn-wrapper {
+        width: min(440px, 70vw);
+        height: clamp(68px, 7vw, 82px);
+      }
+
+      .portfolio-btn--tarot .portfolio-btn-text { font-size: clamp(0.75rem, 1.1vw, 0.8rem); }
+
+      .card--illustrative {
+        grid-column: 2;
+        grid-row: 1;
+        background-image: url('/box animation slow2.webp');
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+        padding-bottom: clamp(5rem, 6vw, 6.5rem);
+      }
+
+      .card--non-illustrative {
+        grid-column: 2;
+        grid-row: 2;
+        background-image: url('/box animation slow4.webp');
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+        left: 3.75rem;
+        padding-bottom: clamp(5rem, 6vw, 6.5rem);
+      }
+
+      .card--upcoming {
+        grid-column: 2;
+        grid-row: 3;
+        background-image: url('/box animation slow3.webp');
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+        left: 0rem;
+        padding-bottom: clamp(5rem, 6vw, 6.5rem);
+      }
+
+      .portfolio-btn--small {
+        text-decoration: none;
+        display: inline-block;
+        position: absolute;
+        bottom: 1rem;
+        right: -6rem;
+      }
+
+      .card--illustrative,
+      .card--non-illustrative,
+      .card--upcoming { position: relative; }
+
+      .card--illustrative .card-image img,
+      .card--non-illustrative .card-image img,
+      .card--upcoming .card-image img {
+        transform: none;
+        position: absolute;
+        width: auto;
+        object-fit: cover;
+      }
+
+      .card--illustrative .card-image img {
+        bottom: 3.7rem;
+        left: 3.7rem;
+        height: 50%;
+      }
+
+      .card--non-illustrative .card-image img {
+        bottom: 3rem;
+        left: 3.2rem;
+        height: 60%;
+      }
+
+      .card--upcoming .card-image img {
+        bottom: 3.7rem;
+        left: 3.7rem;
+        height: 50%;
+      }
+
+      .card-text {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        min-width: 0;
+      }
+
+      .card--illustrative .card-text {
+        transform: translateY(-0.2rem) translateX(5.6rem);
+        padding-right: 5.2rem;
+      }
+
+      .card--non-illustrative .card-text {
+        transform: translateY(-0.05rem) translateX(5rem);
+        padding-right: 4.5rem;
+      }
+
+      .card--upcoming .card-text {
+        transform: translateY(0rem) translateX(6rem);
+        padding-right: 6rem;
+      }
+
+      .card-text h2 {
+        margin: 0;
+        font-size: 0.9rem;
+        line-height: 1;
+        font-family: "Superglue";
+      }
+
+      .card-text p {
+        font-size: 0.9rem;
+        line-height: 1.45;
+        color: #444;
+        margin: 0;
+      }
+
+      .portfolio-btn--tarot,
+      .portfolio-btn--small {
+        position: relative;
+        z-index: 50;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0.15);
+      }
+
+      .portfolio-btn-wrapper {
+        position: relative;
+        width: 160px;
+        height: 42px;
+        border-radius: 4px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s ease;
+        z-index: 50;
+      }
+
+      .portfolio-btn-wrapper video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+        pointer-events: none;
+      }
+
+      .btn-fast { opacity: 1; z-index: 1; }
+      .btn-slow { opacity: 0; z-index: 2; transition: opacity 0.25s ease; }
+
+      /* Hover-only effects — scoped so touch devices don't need a "double tap"
+         (first tap would otherwise just trigger :hover instead of navigating) */
+      @media (hover: hover) and (pointer: fine) {
+        .portfolio-btn-wrapper:hover { transform: scale(1.05); }
+        .portfolio-btn-wrapper:hover .btn-slow { opacity: 1; }
+      }
+
+      .portfolio-btn-text {
+        position: relative;
+        z-index: 3;
+        display: inline-block;
+        transform: scaleY(1.7) translateY(2px);
+        color: white;
+        font-size: 0.55rem;
+        font-family: "Superglue";
+      }
+
+      /* ── BREAKPOINTS ── */
+
+      @media (max-width: 1024px) {
+        .portfolio-overlay {
+          grid-template-columns: 1fr;
+          grid-template-rows: unset;
+          padding: 6rem 1rem 2rem;
+        }
+
+        .card--tarot,
+        .card--illustrative,
+        .card--non-illustrative,
+        .card--upcoming {
+          grid-column: unset;
+          grid-row: unset;
+          width: 100%;
+          flex-direction: column;
+          align-items: flex-start;
+          min-height: auto;
+        }
+
+        .card--non-illustrative { left: 0; }
+
+        .card--illustrative .card-image img,
+        .card--non-illustrative .card-image img,
+        .card--upcoming .card-image img { height: 80px; }
+      }
+
+      @media (max-width: 768px) {
+
+  .hero-container {
+    position: relative;
+    height: auto;
+    overflow: hidden;
+  }
+
+  .hero-video.desktop { display: none; }
+
+  .hero-video.mobile {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 96svh;
+    max-height: 100svh;
+    object-fit: cover;
+    object-position: center top;
+    z-index: 0;
+  }
+
+  .page-title {
+    position: absolute;
+    top: 3rem;
+    left: 1rem;
+    right: 1rem;
+    font-size: clamp(2.2rem, 9vw, 3.2rem);
+    line-height: 1;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    z-index: 20;
+    pointer-events: none;
+  }
+
+  .portfolio-overlay {
+    position: relative;
+    z-index: 1;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0;
+    padding: 5rem 0.75rem 1rem; 
+    max-width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    opacity: 0;
+    animation: fadeIn 500ms ease 100ms forwards;
+  }
+
+  .portfolio-section {
+    width: 100% !important;
+    box-sizing: border-box;
+    border-radius: 8px;
+    overflow: visible !important;
+    background-size: 100% calc(100% + 2rem);
+    background-position: center;
+    background-repeat: no-repeat;
+    grid-column: unset !important;
+    grid-row: unset !important;
+    position: relative;
+    margin-bottom: -0.5rem;
+  }
+
+  .portfolio-section:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ── TAROT ── */
+  .card--tarot {
+  display: block !important;    /* switch from flex to block like small cards */
+  position: relative;
+  min-height: 200px;
+  padding: 0;
+  z-index: 4;
+}
+
+  .card--tarot .card-image {
+  position: absolute;
+  bottom: 2.3rem;
+  left: 3.6rem;
+  z-index: 1;
+}
+
+  .card--tarot .card-image img {
+  width: auto;
+  max-width: 66px;
+  height: auto;
+  max-height: 115px;
+  display: block;
+  object-fit: contain;
+  
+}
+
+  .card--tarot .card-text {
+  position: absolute;
+  top: 3.3rem;
+  left: 8rem;
+  right: 3rem;
+  transform: none !important;
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+  .card--tarot .card-text h2 {
+  font-size: clamp(0.7rem, 2.8vw, 0.9rem);
+  line-height: 1.1;
+  margin: 0;
+  
+}
+
+  .card--tarot .card-text p {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+  .portfolio-btn--tarot {
+  position: absolute;
+  bottom: -2.4rem;
+  right: 0.3rem;
+  display: inline-block;
+  text-decoration: none;
+  margin: 0;
+  align-self: unset;
+  z-index: 50;
+}
+
+  .portfolio-btn--tarot .portfolio-btn-wrapper {
+  width: 180px;
+  height: 40px;
+}
+
+.portfolio-btn--tarot .portfolio-btn-text {
+  font-size: 0.40rem;
+}
+
+  /* ── SMALL CARDS — narrower via side margins ── */
+  .card--illustrative,
+  .card--non-illustrative,
+  .card--upcoming {
+    display: block !important;
+    position: relative;
+   height: 180px;  
+    padding: 0;
+    left: 0 !important;
+    width: 92% !important;          /* narrower than full width */
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.20rem;
+    margin-bottom: -0.5rem;
+  }
+
+  .card--illustrative { margin-top: 0.50rem; z-index: 3; }
+  .card--non-illustrative { z-index: 2; }
+  .card--upcoming { z-index: 1; margin-bottom: 0; }
+
+  .card--illustrative .card-image img,
+.card--non-illustrative .card-image img,
+.card--upcoming .card-image img {
+  position: absolute !important;
+  bottom: 2.2rem;
+  left: 3rem;
+  width: auto;
+  height: 55%;        /* taller, like desktop */
+  object-fit: contain;
+  border-radius: 3px;
+  z-index: 1;
+}
+
+.card--illustrative .card-text,
+.card--non-illustrative .card-text,
+.card--upcoming .card-text {
+  position: absolute;
+  top: 2.79rem;
+  left: 7.5rem;      /* start from left edge, not offset right of image */
+  right: 3rem;
+  transform: none !important;
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.card--illustrative .card-text h2,
+.card--non-illustrative .card-text h2,
+.card--upcoming .card-text h2 {
+  font-size: clamp(0.8rem, 2.8vw, 0.85rem);
+  line-height: 1.1;
+  margin: 0;
+  word-break: break-word;
+}
+
+.card--illustrative .card-text p,
+.card--non-illustrative .card-text p,
+.card--upcoming .card-text p {
+  font-size: 0.58rem;
+  line-height: 1.3;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.portfolio-btn--small {
+  position: absolute !important;
+  bottom: 2rem;
+  right: 3rem;
+  text-decoration: none;
+  display: inline-block;
+  z-index: 50;
+}
+
+  .portfolio-btn--small .portfolio-btn-wrapper {
+    width: 128px;
+    height: 28px;
+  }
+
+  .portfolio-btn--small .portfolio-btn-text {
+    font-size: 0.42rem;
+  }
+
+  .portfolio-btn-wrapper {
+    border-radius: 4px;
+    overflow: hidden;
+  }
+}
+    </style>
+  </head>
+
+  <body>
+  <Header />
+  <main>
+    <div class="page-transition-content">
+      <div class="hero-container">
+        <video class="hero-video desktop" autoplay muted loop playsinline preload="metadata">
+          <source src="/portfoliobannerani.webm" type="video/webm" />
+        </video>
+        <video class="hero-video mobile" autoplay muted loop playsinline preload="metadata">
+          <source src="/portfoliomobile.webm" type="video/webm" />
+        </video>
+
+        <div class="portfolio-overlay">
+          <h1 class="page-title">PORTFOLIO</h1>
+
+          <section class="portfolio-section card--tarot">
+            <div class="card-image">
+              <img src="/portfolio/tarot/0.webp" alt="Tarot card preview" decoding="async" />
+            </div>
+            <div class="card-text">
+              <h2>January 6th Tarot Cards</h2>
+              <p>
+                My goal was to narrativize the events surrounding January 6th to effectively convey that it wasn't just a riot, but
+                Donald Trump's genuine attempt to subvert our democracy. Including the full collection both front and back.
+              </p>
+              <a href="/tarot" class="portfolio-btn--tarot">
+                <div class="portfolio-btn-wrapper">
+                  <video src="/button portfolio slow.webm" class="btn-fast" muted autoplay loop playsinline preload="metadata"></video>
+                  <video src="/button portfolio fast.webm" class="btn-slow" muted loop playsinline preload="none"></video>
+                  <span class="portfolio-btn-text">See Collection</span>
+                </div>
+              </a>
+            </div>
+          </section>
+
+          <section class="portfolio-section card--illustrative">
+            <div class="card-image">
+              <img src="/portfolio/illustrative/concept art5.webp" alt="Illustrative work preview" loading="lazy" decoding="async" />
+            </div>
+            <div class="card-text">
+              <h2>Illustrative Works</h2>
+              <p>Character art, commissioned works, and branding.</p>
+            </div>
+            <a href="/portfolio/illustrative" class="portfolio-btn--small">
+              <div class="portfolio-btn-wrapper">
+                <video src="/button home slow.webm" class="btn-fast" muted autoplay loop playsinline preload="metadata"></video>
+                <video src="/button home fast.webm" class="btn-slow" muted loop playsinline preload="none"></video>
+                <span class="portfolio-btn-text">Explore</span>
+              </div>
+            </a>
+          </section>
+
+          <section class="portfolio-section card--non-illustrative">
+            <div class="card-image">
+              <img src="/wizardjuice.gif" alt="Non-illustrative work preview" loading="lazy" decoding="async" />
+            </div>
+            <div class="card-text">
+              <h2>Non-Illustrative Works</h2>
+              <p>3D works including animation and ceramics.</p>
+            </div>
+            <a href="/portfolio/non-illustrative" class="portfolio-btn--small">
+              <div class="portfolio-btn-wrapper">
+                <video src="/button about slow.webm" class="btn-fast" muted autoplay loop playsinline preload="metadata"></video>
+                <video src="/button about fast.webm" class="btn-slow" muted loop playsinline preload="none"></video>
+                <span class="portfolio-btn-text">See Work</span>
+              </div>
+            </a>
+          </section>
+
+          <section class="portfolio-section card--upcoming">
+            <div class="card-image">
+              <img src="/portfolio/upcoming/swordcomps.webp" alt="Upcoming project preview" loading="lazy" decoding="async" />
+            </div>
+            <div class="card-text">
+              <h2>Upcoming Projects</h2>
+              <p>Sneak peeks at projects in progress.</p>
+            </div>
+            <a href="/portfolio/upcoming" class="portfolio-btn--small">
+              <div class="portfolio-btn-wrapper">
+                <video src="/button contact slow.webm" class="btn-fast" muted autoplay loop playsinline preload="metadata"></video>
+                <video src="/button contact fast.webm" class="btn-slow" muted loop playsinline preload="none"></video>
+                <span class="portfolio-btn-text">See More</span>
+              </div>
+            </a>
+          </section>
+
+        </div><!-- end portfolio-overlay -->
+      </div><!-- end hero-container -->
+    </div><!-- end page-transition-content -->
+  </main>
+  <Footer />
+
+  <script>
+    document.querySelectorAll('.portfolio-btn-wrapper').forEach((wrapper) => {
+      const slow = wrapper.querySelector('.btn-slow');
+      if (!slow) return;
+
+      wrapper.addEventListener('mouseenter', () => {
+        slow.currentTime = 0;
+        slow.play().catch(() => {});
+      });
+
+      wrapper.addEventListener('mouseleave', () => {
+        slow.pause();
+      });
+    });
+
+    const observedVideos = document.querySelectorAll('.hero-video, .btn-fast');
+
+    const videoObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target;
+          if (entry.isIntersecting) {
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observedVideos.forEach((video) => videoObserver.observe(video));
+
+    document.addEventListener('visibilitychange', () => {
+      const allVideos = document.querySelectorAll('.hero-video, .btn-fast, .btn-slow');
+      if (document.hidden) {
+        allVideos.forEach((v) => v.pause());
+      } else {
+        allVideos.forEach((v) => {
+          if (!v.classList.contains('btn-slow')) v.play().catch(() => {});
+        });
+      }
+    });
+  </script>
+</body>
+</html>

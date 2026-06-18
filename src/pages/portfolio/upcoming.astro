@@ -1,0 +1,715 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={`Upcoming Projects | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+
+      html, body {
+        margin: 0;
+        padding: 0;
+        font-size: 16px;
+        overflow-x: hidden;
+      }
+
+      body {
+        padding: 0 !important;
+      }
+
+      main {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow-x: hidden;
+      }
+
+      /* ── HERO ── */
+      .ilw-hero {
+        position: relative;
+        width: 100%;
+        height: auto;
+        overflow: clip;
+      }
+
+      /* ── VIDEO BACKGROUND ── */
+      .ilw-bg-video {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        object-fit: cover;
+        object-position: center center;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      /* ── CONTENT SHELL ── */
+      .ilw-wrap {
+        position: relative;
+        z-index: 2;
+        width: min(1050px, 90vw);
+        margin: 0 auto;
+        padding: clamp(3rem, 6vw, 5rem) 1rem clamp(3rem, 6vw, 5rem);
+      }
+
+      /* ── PAGE TITLE ── */
+      .ilw-title {
+        font-family: "Superglue", sans-serif;
+        font-size: clamp(2rem, 3.8vw, 58px);
+        line-height: 0.9;
+        color: white;
+        margin: 0 0 clamp(1.25rem, 2vw, 2.5rem) 0;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: -0.04em;
+        text-shadow: 0 0 50px rgba(0,0,0,0.35);
+      }
+
+      /* ── INTRO BOX ── */
+      .ilw-intro {
+        position: relative;
+        width: min(580px, 100%);
+        margin: 0 auto clamp(1.25rem, 2.5vw, 2.5rem) auto;
+        border-radius: 18px;
+        overflow: visible;
+        padding: clamp(1.25rem, 2.5vw, 2.5rem);
+        box-shadow: 0 28px 80px rgba(0,0,0,0.28);
+      }
+
+      .ilw-intro-bg {
+        position: absolute;
+        top: 50%; left: 50%;
+        width: 100%; height: 100%;
+        transform: translate(-50%, -50%) scale(1.7);
+        object-fit: fill;
+        z-index: 0;
+        opacity: 0.96;
+        pointer-events: none;
+      }
+
+      .ilw-intro-inner {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+      }
+
+      .ilw-intro-top { display: flex; flex-direction: column; }
+
+      .ilw-intro-kicker {
+        font-family: "Superglue", sans-serif;
+        font-size: 11px;
+        color: #00b7ff;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        margin: 0 0 12px 0;
+      }
+
+      .ilw-intro-heading {
+        font-family: "Superglue", sans-serif;
+        font-size: clamp(22px, 2.8vw, 38px);
+        line-height: 0.88;
+        color: #111;
+        text-transform: uppercase;
+        margin: 0 0 20px 0;
+      }
+
+      .ilw-intro-sub {
+        margin: 0;
+        font-size: clamp(0.85rem, 1vw, 1rem);
+        line-height: 1.85;
+        color: #333;
+        border-left: 4px solid #00bfff;
+        padding-left: clamp(0.85rem, 1vw, 1.1rem);
+      }
+
+      .ilw-intro-divider {
+        width: 100%;
+        height: 1px;
+        background: rgba(0,0,0,0.12);
+      }
+
+      .ilw-intro-bottom { display: flex; flex-direction: column; gap: 10px; }
+
+      .ilw-intro-label {
+        font-family: "Superglue", sans-serif;
+        font-size: clamp(0.75rem, 1vw, 0.95rem);
+        letter-spacing: 0.14em;
+        color: #008bb8;
+        text-transform: uppercase;
+        margin: 0;
+      }
+
+      .ilw-intro-body {
+        margin: 0;
+        font-size: clamp(0.95rem, 1vw, 1rem);
+        line-height: 1.9;
+        color: #1d1d1d;
+      }
+
+      /* ── SECTION HEADER ── */
+      .works-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: clamp(1rem, 2vw, 2rem);
+        margin-top: clamp(5rem, 8vw, 9rem);
+        margin-bottom: clamp(1rem, 2vw, 1.5rem);
+      }
+
+      .works-title {
+        font-family: "Superglue", sans-serif;
+        font-size: clamp(24px, 3vw, 44px);
+        color: white;
+        text-transform: uppercase;
+        margin: 0;
+      }
+
+      .works-count {
+        color: rgba(255,255,255,0.8);
+        font-size: 0.9rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      /* ── PROJECT CARD ── */
+      .project-card {
+        position: relative;
+        border-radius: 18px;
+        overflow: visible;
+        padding: clamp(1rem, 2vw, 1.75rem);
+        padding-bottom: clamp(2rem, 3vw, 2.5rem);
+        width: 100%;
+      }
+
+      .project-card-bg {
+        position: absolute;
+        top: 50%; left: 50%;
+        width: 100%; height: 100%;
+        transform: translate(-50%, -50%) scale(1.7);
+        object-fit: fill;
+        z-index: 0;
+        opacity: 0.96;
+        pointer-events: none;
+      }
+
+      .project-card-inner {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: minmax(0, 300px) 1fr;
+        gap: clamp(1rem, 2vw, 1.75rem);
+        align-items: center;
+      }
+
+      /* ── IMAGE SIDE ── */
+      .project-img-clip {
+        width: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+        z-index: 2;
+        margin-top: 50px;
+      }
+
+      .project-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        cursor: pointer;
+        transition: transform 0.25s, box-shadow 0.25s;
+      }
+
+      .project-img:hover {
+        transform: scale(1.02);
+      }
+
+      .project-img-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        min-width: 0;
+      }
+
+      .project-img-hint {
+        font-family: "Superglue", sans-serif;
+        font-size: 9px;
+        color: rgba(0,0,0,0.4);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        text-align: center;
+        margin: 0;
+      }
+
+      /* ── TEXT SIDE ── */
+      .project-info {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .project-kicker {
+        font-family: "Superglue", sans-serif;
+        font-size: 11px;
+        color: #00b7ff;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        margin: 0;
+      }
+
+      .project-title {
+        font-family: "Superglue", sans-serif;
+        font-size: clamp(20px, 2.5vw, 34px);
+        line-height: 0.9;
+        color: #111;
+        text-transform: uppercase;
+        margin: 0;
+      }
+
+      .project-divider {
+        width: 100%;
+        height: 1px;
+        background: rgba(0,0,0,0.12);
+      }
+
+      .project-body {
+        margin: 0;
+        font-size: clamp(0.85rem, 1vw, 1rem);
+        line-height: 1.85;
+        color: #333;
+        border-left: 4px solid #00bfff;
+        padding-left: clamp(0.85rem, 1vw, 1.1rem);
+      }
+
+      .project-label {
+        font-family: "Superglue", sans-serif;
+        font-size: clamp(0.75rem, 1vw, 0.95rem);
+        letter-spacing: 0.14em;
+        color: #008bb8;
+        text-transform: uppercase;
+        margin: 0;
+      }
+
+      .project-note {
+        margin: 0;
+        font-size: clamp(0.85rem, 1vw, 0.95rem);
+        line-height: 1.9;
+        color: #1d1d1d;
+      }
+
+      /* ── LIGHTBOX ── */
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.92);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+        overflow: hidden;
+      }
+
+      .lightbox.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .lightbox img {
+        max-width: 90vw;
+        max-height: 90vh;
+        width: auto;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 0 80px rgba(0,0,0,0.75);
+        transform-origin: center center;
+        transform: translate(0,0) scale(1);
+        transition: transform 0.15s ease;
+        cursor: default;
+        user-select: none;
+        -webkit-user-drag: none;
+      }
+
+      .lightbox-hint {
+        position: fixed;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: "Superglue", sans-serif;
+        font-size: 10px;
+        color: rgba(255,255,255,0.45);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .lightbox.active .lightbox-hint {
+        opacity: 1;
+      }
+
+      /* ── TABLET ── */
+      @media (max-width: 1024px) {
+        .ilw-wrap { padding-top: 60px; }
+
+        .ilw-intro {
+          width: 100%;
+          padding: 28px 24px;
+        }
+
+        .project-card-inner {
+          grid-template-columns: 1fr;
+        }
+
+        .works-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+
+      /* ── MOBILE ── */
+      @media (max-width: 768px) {
+
+        html, body,
+        .page-transition-content,
+        main {
+          overflow-y: auto !important;
+          height: auto !important;
+          max-height: none !important;
+        }
+
+        .ilw-hero {
+          height: auto;
+          overflow: clip;
+        }
+
+        .ilw-wrap {
+          padding: 40px 1rem;
+        }
+
+        .ilw-title {
+          font-family: "Superglue", sans-serif;
+          font-size: clamp(1.8rem, 8.2vw, 3.2rem);
+          line-height: 0.9;
+          color: white;
+          margin: 0 0 2rem -1.5rem;
+          padding: 0;
+          text-align: left;
+          text-transform: uppercase;
+          letter-spacing: -0.04em;
+          text-shadow: 0 0 50px rgba(0,0,0,0.35);
+        }
+
+        .ilw-intro {
+          width: 100%;
+          margin-left: auto;
+          margin-right: auto;
+          padding: 24px 18px;
+        }
+
+        .ilw-intro-bg {
+          top: 45%;
+          width: 80%;
+        }
+
+        /* bigger gap between the two boxes on mobile */
+        .works-header {
+          flex-direction: column;
+          align-items: flex-start;
+          margin-top: clamp(5rem, 12vw, 7rem);
+          margin-bottom: 0.75rem;
+        }
+
+        .works-title {
+          font-size: clamp(20px, 6vw, 32px);
+        }
+
+        .project-card-inner {
+          grid-template-columns: 1fr;
+          align-items: start;
+          gap: 12px;
+        }
+
+        /* image: shorter on mobile */
+        .project-img-clip {
+          margin-top: 0;
+          max-height: 42vw;
+          overflow: hidden;
+        }
+
+        .project-img-hint {
+          font-size: 8px;
+          margin-top: 4px;
+        }
+
+        /* tighten text side */
+        .project-info {
+          gap: 10px;
+        }
+
+        .project-kicker {
+          font-size: 9px;
+        }
+
+        .project-title {
+          font-size: clamp(16px, 5vw, 22px);
+          line-height: 1;
+        }
+
+        .project-body {
+          font-size: 0.78rem;
+          line-height: 1.6;
+        }
+
+        .project-label {
+          font-size: 0.7rem;
+        }
+
+        .project-note {
+          font-size: 0.78rem;
+          line-height: 1.6;
+        }
+
+        /* card itself: tighter padding */
+        .project-card {
+          padding: 14px 14px 20px 14px;
+        }
+
+        .project-card-bg {
+          top: 45%;
+          width: 80%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .ilw-wrap {
+          padding: 28px 0.75rem;
+        }
+
+        .ilw-intro {
+          padding: 20px 16px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <div class="ilw-hero">
+
+        <video class="ilw-bg-video" autoplay muted loop playsinline preload="metadata">
+          <source src="/portfoliobannerani.webm" type="video/webm" />
+        </video>
+
+        <div class="ilw-wrap">
+
+          <h1 class="ilw-title">UPCOMING<br />PROJECTS</h1>
+
+          <!-- INTRO BOX -->
+          <div class="ilw-intro">
+            <img class="ilw-intro-bg" src="/box%20animation%20slow3.webp" alt="" aria-hidden="true" />
+            <div class="ilw-intro-inner">
+              <div class="ilw-intro-top">
+                <p class="ilw-intro-kicker">In Development</p>
+                <h2 class="ilw-intro-heading">Future Works</h2>
+                <p class="ilw-intro-sub">
+                  Sneak peeks at projects currently in progress.
+                </p>
+              </div>
+              <div class="ilw-intro-divider"></div>
+              <div class="ilw-intro-bottom">
+                <p class="ilw-intro-label">About This Collection</p>
+                <p class="ilw-intro-body">
+                  Updates and previews on my solo or group projects.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION HEADER -->
+          <div class="works-header">
+            <h2 class="works-title">Preview Gallery</h2>
+          </div>
+
+          <!-- PROJECT CARD -->
+          <div class="project-card">
+            <img class="project-card-bg" src="/box%20animation%20slow1.webp" alt="" aria-hidden="true" />
+            <div class="project-card-inner">
+
+              <!-- IMAGE SIDE -->
+              <div class="project-img-wrap">
+                <div class="project-img-clip">
+                  <img
+                    class="project-img"
+                    src="/portfolio/upcoming/swordcomps.webp"
+                    alt="Sword Compositions — Future Terraria Mod"
+                    id="swordImg"
+                  />
+                </div>
+                <p class="project-img-hint">↑ Click to enlarge</p>
+              </div>
+
+              <!-- TEXT SIDE -->
+              <div class="project-info">
+                <p class="project-kicker">In Development</p>
+                <h3 class="project-title">Future Terraria Mod: Project Nadir</h3>
+                <div class="project-divider"></div>
+                <p class="project-body">
+                  Collaberative effort between me and 2 other talented artists and developers. This mod will add the Sun Sword Nadir as a fully animated boss encounter with custom assets, animations and music. Can you tame it?
+                </p>
+                <p class="project-label">Status</p>
+                <p class="project-note">
+                  Currently in early development. More details coming soon.
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+      <img src="/portfolio/upcoming/swordcomps.webp" alt="Sword Compositions — Future Terraria Mod" />
+      <p class="lightbox-hint">Scroll to zoom · Drag to pan · Double-click to reset · Click outside to close</p>
+    </div>
+
+    <script>
+      const img = document.getElementById('swordImg');
+      const lightbox = document.getElementById('lightbox');
+      const lbImg = lightbox.querySelector('img');
+
+      let scale = 1;
+      let originX = 0;
+      let originY = 0;
+      let isDragging = false;
+      let startX, startY;
+
+      function applyTransform() {
+        lbImg.style.transform = `translate(${originX}px, ${originY}px) scale(${scale})`;
+      }
+
+      function resetZoom() {
+        scale = 1;
+        originX = 0;
+        originY = 0;
+        applyTransform();
+      }
+
+      // Open
+      img.addEventListener('click', () => {
+        resetZoom();
+        lightbox.classList.add('active');
+      });
+
+      // Close on background click (not on image drag)
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+          lightbox.classList.remove('active');
+          resetZoom();
+        }
+      });
+
+      // Close on Escape
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+          lightbox.classList.remove('active');
+          resetZoom();
+        }
+      });
+
+      // Scroll to zoom
+      lightbox.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? -0.15 : 0.15;
+        scale = Math.min(Math.max(scale + delta, 1), 6);
+
+        // If zoomed back to 1, re-center
+        if (scale === 1) { originX = 0; originY = 0; }
+        applyTransform();
+      }, { passive: false });
+
+      // Drag to pan
+      lbImg.addEventListener('mousedown', (e) => {
+        if (scale <= 1) return;
+        isDragging = true;
+        startX = e.clientX - originX;
+        startY = e.clientY - originY;
+        lbImg.style.cursor = 'grabbing';
+        e.preventDefault();
+      });
+
+      document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        originX = e.clientX - startX;
+        originY = e.clientY - startY;
+        applyTransform();
+      });
+
+      document.addEventListener('mouseup', () => {
+        isDragging = false;
+        lbImg.style.cursor = scale > 1 ? 'grab' : 'default';
+      });
+
+      // Double-click to reset zoom
+      lbImg.addEventListener('dblclick', () => {
+        resetZoom();
+      });
+
+      // Update cursor based on zoom level
+      lightbox.addEventListener('wheel', () => {
+        lbImg.style.cursor = scale > 1 ? 'grab' : 'default';
+      });
+
+      // Touch pinch-to-zoom
+      let lastTouchDist = null;
+      lightbox.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 2) {
+          lastTouchDist = Math.hypot(
+            e.touches[0].clientX - e.touches[1].clientX,
+            e.touches[0].clientY - e.touches[1].clientY
+          );
+        }
+      }, { passive: true });
+
+      lightbox.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 2) {
+          const dist = Math.hypot(
+            e.touches[0].clientX - e.touches[1].clientX,
+            e.touches[0].clientY - e.touches[1].clientY
+          );
+          if (lastTouchDist) {
+            const delta = (dist - lastTouchDist) * 0.01;
+            scale = Math.min(Math.max(scale + delta, 1), 6);
+            if (scale === 1) { originX = 0; originY = 0; }
+            applyTransform();
+          }
+          lastTouchDist = dist;
+        }
+      }, { passive: true });
+
+      lightbox.addEventListener('touchend', () => {
+        lastTouchDist = null;
+      });
+    </script>
+
+    <Footer />
+  </body>
+</html>

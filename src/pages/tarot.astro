@@ -1,0 +1,518 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+const cardCount = 22;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={`Portfolio Tarot | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+
+      html { font-size: 16px; }
+
+      body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        background: #f5f5f5;
+      }
+
+      main {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      /* ── HERO ── */
+      .ilw-hero {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        overflow: hidden;
+        background: transparent;
+      }
+
+      /* ── VIDEO ── */
+      .ilw-bg-video {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        object-fit: cover;
+        object-position: center;
+        z-index: 0;
+        pointer-events: none;
+        filter:
+          sepia(1)
+          saturate(2.4)
+          hue-rotate(5deg)
+          brightness(0.85)
+          contrast(1.1);
+      }
+
+      /* ── CONTENT WRAP ── */
+      .ilw-wrap {
+        position: relative;
+        z-index: 2;
+        width: min(1050px, 90vw);
+        margin: 0 auto;
+        padding: clamp(4rem, 8vw, 7rem) 1rem clamp(4rem, 8vw, 7rem);
+      }
+
+      /* ── TITLE ── */
+      .ilw-title {
+        font-family: "JAVATEXT";
+       font-size: clamp(60px, 7.5vw, 130px);
+        line-height: 0.9;
+        color: white;
+        margin: 0 0 clamp(4rem, 7vw, 9rem) 0;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: -0.04em;
+        text-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+      }
+
+      .ilw-intro {
+  position: relative;
+  width: min(680px, 100%);
+  margin: 0 auto clamp(2rem, 4vw, 3.5rem) auto;
+  border-radius: 18px;
+  overflow: visible;
+  padding: clamp(2rem, 4vw, 3.5rem);
+ 
+}
+
+      /* ── INTRO BOX BACKGROUND ── */
+.ilw-intro-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  height: 110%;
+  transform: translate(-50%, -50%) scale(1.7);
+  object-fit: fill;
+  z-index: -1;
+  opacity: 0.96;
+  pointer-events: none;
+}
+
+      .ilw-intro-inner {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        padding-top: 2rem;
+      }
+
+      .ilw-intro-top { display: flex; flex-direction: column; }
+
+      .ilw-intro-kicker {
+        font-family: "JAVATEXT";
+        font-size: 11px;
+        color: #00b7ff;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        margin: 0 0 12px 0;
+      }
+
+      .ilw-intro-heading {
+        font-family: "JAVATEXT";
+        font-size: clamp(22px, 2.8vw, 38px);
+        line-height: 0.88;
+        color: #111;
+        text-transform: uppercase;
+        margin: 0 0 20px 0;
+      }
+
+      .ilw-intro-sub {
+        margin: 0;
+        font-size: clamp(1rem, 1.2vw, 1.2rem);
+        line-height: 1.85;
+        color: #333;
+        border-left: 4px solid #00bfff;
+        padding-left: clamp(0.85rem, 1vw, 1.1rem);
+        font-family: "JAVATEXT";
+      }
+
+      .ilw-intro-divider {
+        width: 100%;
+        height: 1px;
+        background: rgba(0,0,0,0.12);
+      }
+
+      .ilw-intro-bottom { display: flex; flex-direction: column; gap: 10px; }
+
+      .ilw-intro-label {
+        font-family: "JAVATEXT";
+        font-size: clamp(0.85rem, 1.2vw, 1rem);
+        letter-spacing: 0.14em;
+        color: #008bb8;
+        text-transform: uppercase;
+        margin: 0;
+      }
+
+      .ilw-intro-body {
+        margin: 0;
+        font-size: clamp(1.05rem, 1.2vw, 1.15rem);
+        line-height: 1.9;
+        color: #1d1d1d;
+        font-family: "JAVATEXT";
+      }
+
+      /* ── GRID ── */
+      .tarot-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: clamp(1rem, 2vw, 2.5rem);
+        margin-top: clamp(3rem, 6vw, 5rem);
+      }
+
+      .tarot-card {
+        width: 100%;
+        aspect-ratio: 3 / 5;
+        cursor: pointer;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .tarot-card:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+      }
+
+      .tarot-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 14px;
+        background: white;
+        display: block;
+      }
+
+      /* ── MODAL ── */
+      .modal {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        background: rgba(0, 0, 0, 0.88);
+      }
+
+      .modal.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .modal-inner {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
+
+      /* flip card wrapper */
+      .modal-card {
+        width: min(420px, 82vw);
+        height: min(700px, 82vh);
+        perspective: 1400px;
+        transform: scale(0.92);
+        transition: transform 0.35s ease;
+        flex-shrink: 0;
+      }
+
+      .modal.active .modal-card {
+        transform: scale(1);
+      }
+
+      .modal-flipper {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.75s ease;
+      }
+
+      .modal-card:hover .modal-flipper {
+        transform: rotateY(180deg);
+      }
+
+      .modal-front,
+      .modal-back {
+        position: absolute;
+        inset: 0;
+        backface-visibility: hidden;
+      }
+
+      .modal-back { transform: rotateY(180deg); }
+
+      .modal-front img,
+      .modal-back img {
+        width: 100%; height: 100%;
+        object-fit: contain;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 0 80px rgba(0,0,0,0.75);
+      }
+
+      /* nav arrows */
+      .modal-nav {
+        background: rgba(255,255,255,0.12);
+        border: none;
+        color: white;
+        font-size: 28px;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: background 0.2s, transform 0.2s;
+        backdrop-filter: blur(8px);
+      }
+
+      .modal-nav:hover {
+        background: rgba(255,255,255,0.28);
+        transform: scale(1.1);
+      }
+
+      .modal-nav:disabled {
+        opacity: 0.2;
+        cursor: default;
+        transform: none;
+      }
+
+      /* counter + hint */
+      .modal-counter {
+        position: absolute;
+        bottom: -36px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: "JAVATEXT";
+        font-size: 12px;
+        color: rgba(255,255,255,0.5);
+        letter-spacing: 0.12em;
+        white-space: nowrap;
+        text-align: center;
+        line-height: 1.6;
+      }
+
+      /* ── TABLET ── */
+      @media (max-width: 1024px) {
+        .ilw-wrap { padding-top: 60px; }
+        .tarot-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        .modal-nav { width: 40px; height: 40px; font-size: 20px; }
+      }
+
+      /* ── MOBILE ── */
+@media (max-width: 768px) {
+
+  html, body,
+  .page-transition-content,
+  main {
+    overflow-y: auto !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  .ilw-hero {
+    min-height: 100svh;
+    height: auto;
+    overflow: visible;
+  }
+
+  .ilw-wrap {
+    padding: 40px 1rem;
+  }
+
+  .ilw-title {
+    font-size: clamp(2.8rem, 12vw, 4.5rem);
+  }
+
+  .tarot-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .modal-card {
+    width: min(320px, 82vw);
+    height: min(540px, 78vh);
+  }
+
+  .modal-nav {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+}
+
+      @media (max-width: 480px) {
+        .ilw-wrap { padding: 28px 0.75rem; }
+        .ilw-title { font-size: clamp(2.4rem, 14vw, 3.8rem); }
+        .tarot-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <div class="ilw-hero">
+
+        <video class="ilw-bg-video" autoplay muted loop playsinline preload="metadata">
+          <source src="/portfoliobannerani.webm" type="video/webm" />
+        </video>
+
+        <div class="ilw-wrap">
+
+          <h1 class="ilw-title">
+            The Jan 6th<br />Tarot
+          </h1>
+
+          <!-- INTRO BOX matching illustrative page -->
+          <div class="ilw-intro">
+            <img class="ilw-intro-bg" src="/box animation slow1.webp" alt="" aria-hidden="true" />
+            <div class="ilw-intro-inner">
+
+              <div class="ilw-intro-top">
+                <p class="ilw-intro-kicker">Senior Capstone Project</p>
+                <h2 class="ilw-intro-heading">Visual<br />Retelling</h2>
+                <p class="ilw-intro-sub">
+                  A retelling of January 6th though the medium of Tarot.
+                </p>
+              </div>
+
+              <div class="ilw-intro-divider"></div>
+
+              <div class="ilw-intro-bottom">
+                <p class="ilw-intro-label">About This Project</p>
+                <p class="ilw-intro-body">
+                  Made for my senior capstone for my bachelors of design and illustration, this project is a visual retelling of the events of and leading up to January 6th using the medium of tarot.
+                </p>
+                <p class="ilw-intro-body">
+                  January 6th is a long and complex subject, but once you understand what happened its impossible to come to any conclusion other than that Donald Trump and his allies attempted to subvert the will of the people and overthrow democracy through intentionally illegal means.
+                </p>
+                <p class="ilw-intro-label" style="margin-top: 6px;">Hover a card to reveal its back</p>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- GRID -->
+          <div class="tarot-grid">
+            {Array.from({ length: cardCount }, (_, i) => (
+              <div
+                class="tarot-card"
+                data-front={`/portfolio/tarot/${i}.webp`}
+                data-back={`/portfolio/tarot/${i} back.webp`}
+                data-index={i}
+              >
+                <img src={`/portfolio/tarot/${i}.webp`} alt={`Tarot card ${i}`} loading="lazy" />
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+    <!-- MODAL -->
+    <div id="modal" class="modal">
+      <div class="modal-inner">
+        <button id="modalPrev" class="modal-nav" aria-label="Previous card">&#8592;</button>
+
+        <div style="position: relative;">
+          <div class="modal-card">
+            <div class="modal-flipper">
+              <div class="modal-front">
+                <img id="modalFront" src="" alt="" />
+              </div>
+              <div class="modal-back">
+                <img id="modalBack" src="" alt="" />
+              </div>
+            </div>
+          </div>
+          <span id="modalCounter" class="modal-counter"></span>
+        </div>
+
+        <button id="modalNext" class="modal-nav" aria-label="Next card">&#8594;</button>
+      </div>
+    </div>
+
+    <script>
+      const modal       = document.getElementById('modal');
+      const modalFront  = document.getElementById('modalFront');
+      const modalBack   = document.getElementById('modalBack');
+      const modalPrev   = document.getElementById('modalPrev');
+      const modalNext   = document.getElementById('modalNext');
+      const modalCounter = document.getElementById('modalCounter');
+
+      const cardEls = Array.from(document.querySelectorAll('.tarot-card'));
+      const cardData = cardEls.map(el => ({
+        front: el.dataset.front,
+        back:  el.dataset.back,
+      }));
+
+      let currentIndex = 0;
+
+      function showCard(index) {
+        currentIndex = index;
+        modalFront.src = cardData[currentIndex].front;
+        modalBack.src  = cardData[currentIndex].back;
+        modalCounter.textContent = `${currentIndex + 1} / ${cardData.length}  ·  hover to flip`;
+        modalPrev.disabled = currentIndex === 0;
+        modalNext.disabled = currentIndex === cardData.length - 1;
+      }
+
+      function openModal(index) {
+        showCard(index);
+        modal.classList.add('active');
+      }
+
+      function closeModal() {
+        modal.classList.remove('active');
+        setTimeout(() => { modalFront.src = ''; modalBack.src = ''; }, 300);
+      }
+
+      cardEls.forEach((card, index) => {
+        card.addEventListener('click', () => openModal(index));
+      });
+
+      modalPrev.addEventListener('click', () => {
+        if (currentIndex > 0) showCard(currentIndex - 1);
+      });
+
+      modalNext.addEventListener('click', () => {
+        if (currentIndex < cardData.length - 1) showCard(currentIndex + 1);
+      });
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('active')) return;
+        if (e.key === 'Escape')      closeModal();
+        if (e.key === 'ArrowLeft'  && currentIndex > 0)                    showCard(currentIndex - 1);
+        if (e.key === 'ArrowRight' && currentIndex < cardData.length - 1)  showCard(currentIndex + 1);
+      });
+    </script>
+
+    <Footer />
+  </body>
+</html>
