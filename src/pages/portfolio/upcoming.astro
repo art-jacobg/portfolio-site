@@ -73,6 +73,100 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
         text-shadow: 0 0 50px rgba(0,0,0,0.35);
       }
 
+      /* ── PAGE SWITCHER DROPDOWN ── */
+      .ilw-page-switcher {
+        position: relative;
+        width: fit-content;
+        margin: 0 0 clamp(1rem, 2vw, 1.5rem) 0;
+        z-index: 5;
+      }
+
+      .ilw-page-switch-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "Superglue", sans-serif;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        border: 1.5px solid rgba(255,255,255,0.3);
+        padding: 7px 14px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.12);
+        backdrop-filter: blur(10px);
+        color: white;
+        cursor: pointer;
+        transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+      }
+
+      .ilw-page-switch-btn:hover {
+        background: rgba(255,255,255,0.22);
+      }
+
+      .ilw-page-switch-caret {
+        font-size: 9px;
+        line-height: 1;
+        transition: transform 0.2s;
+        font-style: normal;
+      }
+
+      .ilw-page-switcher.open .ilw-page-switch-btn {
+        background: #00bfff;
+        box-shadow: 0 0 24px rgba(0,191,255,0.5);
+      }
+
+      .ilw-page-switcher.open .ilw-page-switch-caret {
+        transform: rotate(180deg);
+      }
+
+      .ilw-page-switch-menu {
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 0;
+        transform: translateY(-8px);
+        list-style: none;
+        margin: 0;
+        padding: 8px;
+        min-width: 220px;
+        border-radius: 14px;
+        background: rgba(15,15,18,0.92);
+        backdrop-filter: blur(14px);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s, transform 0.2s;
+        z-index: 20;
+      }
+
+      .ilw-page-switcher.open .ilw-page-switch-menu {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .ilw-page-switch-menu li {
+        font-family: "Superglue", sans-serif;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: rgba(255,255,255,0.85);
+        padding: 10px 14px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.15s, color 0.15s;
+        list-style: none;
+      }
+
+      .ilw-page-switch-menu li:hover {
+        background: rgba(255,255,255,0.12);
+        color: white;
+      }
+
+      .ilw-page-switch-menu li.active {
+        background: #00bfff;
+        color: white;
+      }
+
       /* ── INTRO BOX ── */
       .ilw-intro {
         position: relative;
@@ -87,12 +181,13 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
       .ilw-intro-bg {
         position: absolute;
         top: 50%; left: 50%;
-        width: 100%; height: 100%;
+        width: 80%; height: 110%;
         transform: translate(-50%, -50%) scale(1.7);
         object-fit: fill;
         z-index: 0;
         opacity: 0.96;
         pointer-events: none;
+        border-radius: 18px;
       }
 
       .ilw-intro-inner {
@@ -195,12 +290,13 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
       .project-card-bg {
         position: absolute;
         top: 50%; left: 50%;
-        width: 100%; height: 100%;
+        width: 80%; height: 110%;
         transform: translate(-50%, -50%) scale(1.7);
         object-fit: fill;
         z-index: 0;
         opacity: 0.96;
         pointer-events: none;
+        border-radius: 18px;
       }
 
       .project-card-inner {
@@ -361,6 +457,37 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
         opacity: 1;
       }
 
+      .lightbox-close {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        background: rgba(255,255,255,0.15);
+        border: none;
+        color: white;
+        font-size: 16px;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(8px);
+        transition: background 0.2s, transform 0.2s;
+        z-index: 10001;
+      }
+
+      .lightbox-close:hover {
+        background: rgba(255,255,255,0.3);
+        transform: scale(1.1);
+      }
+
+      .project-img.clicking {
+        transform: scale(1.07);
+        transition: transform 0.1s ease !important;
+        box-shadow: 0 0 0 2px rgba(255,255,255,0.4), 0 24px 48px rgba(0,0,0,0.4);
+      }
+
       /* ── TABLET ── */
       @media (max-width: 1024px) {
         .ilw-wrap { padding-top: 60px; }
@@ -397,20 +524,27 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
         }
 
         .ilw-wrap {
-          padding: 40px 1rem;
+          padding: 72px 1rem 40px;
         }
 
+        /* hide title on mobile — dropdown takes its place */
         .ilw-title {
-          font-family: "Superglue", sans-serif;
-          font-size: clamp(1.8rem, 8.2vw, 3.2rem);
-          line-height: 0.9;
-          color: white;
-          margin: 0 0 2rem -1.5rem;
-          padding: 0;
-          text-align: left;
-          text-transform: uppercase;
-          letter-spacing: -0.04em;
-          text-shadow: 0 0 50px rgba(0,0,0,0.35);
+          display: none;
+        }
+
+        /* dropdown acts as the page title on mobile — bigger + more breathing room */
+        .ilw-page-switcher {
+          margin: 0 0 2.5rem 0;
+        }
+
+        .ilw-page-switch-btn {
+          font-size: 1.25rem;
+          padding: 10px 18px;
+          gap: 10px;
+        }
+
+        .ilw-page-switch-caret {
+          font-size: 11px;
         }
 
         .ilw-intro {
@@ -418,14 +552,18 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
           margin-left: auto;
           margin-right: auto;
           padding: 24px 18px;
+          overflow: visible;
+          clip-path: inset(-20px -100vw -100vw -100vw);
+          box-shadow: 0 28px 80px rgba(0,0,0,0.35);
         }
 
         .ilw-intro-bg {
-          top: 45%;
           width: 80%;
+          height: 110%;
+          transform: translate(-50%, -50%) scale(1.7);
+          border-radius: 18px;
         }
 
-        /* bigger gap between the two boxes on mobile */
         .works-header {
           flex-direction: column;
           align-items: flex-start;
@@ -443,7 +581,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
           gap: 12px;
         }
 
-        /* image: shorter on mobile */
         .project-img-clip {
           margin-top: 0;
           max-height: 42vw;
@@ -455,7 +592,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
           margin-top: 4px;
         }
 
-        /* tighten text side */
         .project-info {
           gap: 10px;
         }
@@ -483,7 +619,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
           line-height: 1.6;
         }
 
-        /* card itself: tighter padding */
         .project-card {
           padding: 14px 14px 20px 14px;
         }
@@ -517,6 +652,20 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
         </video>
 
         <div class="ilw-wrap">
+
+          <!-- PAGE SWITCHER DROPDOWN -->
+          <div class="ilw-page-switcher">
+            <button id="ilwPageSwitchBtn" class="ilw-page-switch-btn" aria-haspopup="listbox" aria-expanded="false">
+              <span id="ilwPageSwitchLabel">Upcoming Projects</span>
+              <span class="ilw-page-switch-caret">▼</span>
+            </button>
+            <ul id="ilwPageSwitchMenu" class="ilw-page-switch-menu" role="listbox">
+              <li role="option" data-href="/portfolio/illustrative">Illustrative</li>
+              <li role="option" data-href="/portfolio/non-illustrative">Non-Illustrative</li>
+              <li role="option" data-href="/tarot">Tarot</li>
+              <li role="option" data-href="/portfolio/upcoming" class="active">Upcoming</li>
+            </ul>
+          </div>
 
           <h1 class="ilw-title">UPCOMING<br />PROJECTS</h1>
 
@@ -587,67 +736,73 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 
     <!-- LIGHTBOX -->
     <div class="lightbox" id="lightbox">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close">&#x2715;</button>
       <img src="/portfolio/upcoming/swordcomps.webp" alt="Sword Compositions — Future Terraria Mod" />
       <p class="lightbox-hint">Scroll to zoom · Drag to pan · Double-click to reset · Click outside to close</p>
     </div>
 
     <script>
-      const img = document.getElementById('swordImg');
-      const lightbox = document.getElementById('lightbox');
-      const lbImg = lightbox.querySelector('img');
+      const img = document.getElementById('swordImg') as HTMLImageElement;
+      const lightbox = document.getElementById('lightbox') as HTMLElement;
+      const lbImg = lightbox.querySelector('img') as HTMLImageElement;
+      const closeBtn = document.getElementById('lightboxClose') as HTMLButtonElement;
 
       let scale = 1;
       let originX = 0;
       let originY = 0;
       let isDragging = false;
-      let startX, startY;
+      let startX: number = 0;
+      let startY: number = 0;
+      let lastTouchDist: number | null = null;
 
-      function applyTransform() {
+      function applyTransform(): void {
         lbImg.style.transform = `translate(${originX}px, ${originY}px) scale(${scale})`;
       }
 
-      function resetZoom() {
+      function resetZoom(): void {
         scale = 1;
         originX = 0;
         originY = 0;
         applyTransform();
       }
 
-      // Open
-      img.addEventListener('click', () => {
+      function openLightbox(): void {
         resetZoom();
         lightbox.classList.add('active');
+      }
+
+      function closeLightbox(): void {
+        lightbox.classList.remove('active');
+        resetZoom();
+      }
+
+      img.addEventListener('click', () => {
+        img.classList.add('clicking');
+        setTimeout(() => {
+          img.classList.remove('clicking');
+          openLightbox();
+        }, 120);
       });
 
-      // Close on background click (not on image drag)
-      lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) {
-          lightbox.classList.remove('active');
-          resetZoom();
-        }
+      closeBtn.addEventListener('click', closeLightbox);
+
+      lightbox.addEventListener('click', (e: MouseEvent) => {
+        if (e.target === lightbox) closeLightbox();
       });
 
-      // Close on Escape
-      document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') {
-          lightbox.classList.remove('active');
-          resetZoom();
-        }
+      document.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Escape') closeLightbox();
       });
 
-      // Scroll to zoom
-      lightbox.addEventListener('wheel', (e) => {
+      lightbox.addEventListener('wheel', (e: WheelEvent) => {
         e.preventDefault();
         const delta = e.deltaY > 0 ? -0.15 : 0.15;
         scale = Math.min(Math.max(scale + delta, 1), 6);
-
-        // If zoomed back to 1, re-center
         if (scale === 1) { originX = 0; originY = 0; }
         applyTransform();
       }, { passive: false });
 
-      // Drag to pan
-      lbImg.addEventListener('mousedown', (e) => {
+      lbImg.addEventListener('mousedown', (e: MouseEvent) => {
         if (scale <= 1) return;
         isDragging = true;
         startX = e.clientX - originX;
@@ -656,7 +811,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
         e.preventDefault();
       });
 
-      document.addEventListener('mousemove', (e) => {
+      document.addEventListener('mousemove', (e: MouseEvent) => {
         if (!isDragging) return;
         originX = e.clientX - startX;
         originY = e.clientY - startY;
@@ -668,19 +823,15 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
         lbImg.style.cursor = scale > 1 ? 'grab' : 'default';
       });
 
-      // Double-click to reset zoom
       lbImg.addEventListener('dblclick', () => {
         resetZoom();
       });
 
-      // Update cursor based on zoom level
       lightbox.addEventListener('wheel', () => {
         lbImg.style.cursor = scale > 1 ? 'grab' : 'default';
       });
 
-      // Touch pinch-to-zoom
-      let lastTouchDist = null;
-      lightbox.addEventListener('touchstart', (e) => {
+      lightbox.addEventListener('touchstart', (e: TouchEvent) => {
         if (e.touches.length === 2) {
           lastTouchDist = Math.hypot(
             e.touches[0].clientX - e.touches[1].clientX,
@@ -689,13 +840,13 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
         }
       }, { passive: true });
 
-      lightbox.addEventListener('touchmove', (e) => {
+      lightbox.addEventListener('touchmove', (e: TouchEvent) => {
         if (e.touches.length === 2) {
           const dist = Math.hypot(
             e.touches[0].clientX - e.touches[1].clientX,
             e.touches[0].clientY - e.touches[1].clientY
           );
-          if (lastTouchDist) {
+          if (lastTouchDist !== null) {
             const delta = (dist - lastTouchDist) * 0.01;
             scale = Math.min(Math.max(scale + delta, 1), 6);
             if (scale === 1) { originX = 0; originY = 0; }
@@ -707,6 +858,39 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 
       lightbox.addEventListener('touchend', () => {
         lastTouchDist = null;
+      });
+    </script>
+
+    <!-- PAGE SWITCHER SCRIPT -->
+    <script>
+      const pageSwitcher   = document.querySelector('.ilw-page-switcher') as HTMLElement;
+      const pageSwitchBtn  = document.getElementById('ilwPageSwitchBtn') as HTMLButtonElement;
+      const pageSwitchMenu = document.getElementById('ilwPageSwitchMenu') as HTMLElement;
+
+      function closePageSwitcher(): void {
+        pageSwitcher.classList.remove('open');
+        pageSwitchBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      pageSwitchBtn.addEventListener('click', (e: MouseEvent) => {
+        e.stopPropagation();
+        const isOpen = pageSwitcher.classList.toggle('open');
+        pageSwitchBtn.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      pageSwitchMenu.querySelectorAll<HTMLElement>('li').forEach(li => {
+        li.addEventListener('click', () => {
+          const href = li.dataset.href;
+          if (href) window.location.href = href;
+        });
+      });
+
+      document.addEventListener('click', (e: MouseEvent) => {
+        if (!pageSwitcher.contains(e.target as Node)) closePageSwitcher();
+      });
+
+      document.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Escape') closePageSwitcher();
       });
     </script>
 

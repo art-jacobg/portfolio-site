@@ -334,22 +334,21 @@ html {
       }
 
       @media (max-width: 768px) {
-
   .hero-container {
     position: relative;
+    min-height: 106svh;
     height: auto;
-    overflow: hidden;
+    overflow: hidden;  /* back to hidden so it clips the video properly */
   }
 
   .hero-video.desktop { display: none; }
 
   .hero-video.mobile {
     display: block;
-    position: absolute;
+    position: absolute;  /* back to absolute, contained within hero-container */
     inset: 0;
     width: 100%;
-    height: 96svh;
-    max-height: 100svh;
+    height: 100%;
     object-fit: cover;
     object-position: center top;
     z-index: 0;
@@ -598,7 +597,7 @@ html {
               </p>
               <a href="/tarot" class="portfolio-btn--tarot">
                 <div class="portfolio-btn-wrapper">
-                  <video src="/button portfolio slow.webm" class="btn-fast" muted autoplay loop playsinline preload="metadata"></video>
+                  <video src="/button portfolio slow.webm" class="btn-fast" muted autoplay loop playsinline preload="none"></video>
                   <video src="/button portfolio fast.webm" class="btn-slow" muted loop playsinline preload="none"></video>
                   <span class="portfolio-btn-text">See Collection</span>
                 </div>
@@ -616,7 +615,7 @@ html {
             </div>
             <a href="/portfolio/illustrative" class="portfolio-btn--small">
               <div class="portfolio-btn-wrapper">
-                <video src="/button home slow.webm" class="btn-fast" muted autoplay loop playsinline preload="metadata"></video>
+                <video src="/button home slow.webm" class="btn-fast" muted autoplay loop playsinline preload="none"></video>
                 <video src="/button home fast.webm" class="btn-slow" muted loop playsinline preload="none"></video>
                 <span class="portfolio-btn-text">Explore</span>
               </div>
@@ -633,7 +632,7 @@ html {
             </div>
             <a href="/portfolio/non-illustrative" class="portfolio-btn--small">
               <div class="portfolio-btn-wrapper">
-                <video src="/button about slow.webm" class="btn-fast" muted autoplay loop playsinline preload="metadata"></video>
+                <video src="/button about slow.webm" class="btn-fast" muted autoplay loop playsinline preload="none"></video>
                 <video src="/button about fast.webm" class="btn-slow" muted loop playsinline preload="none"></video>
                 <span class="portfolio-btn-text">See Work</span>
               </div>
@@ -650,7 +649,7 @@ html {
             </div>
             <a href="/portfolio/upcoming" class="portfolio-btn--small">
               <div class="portfolio-btn-wrapper">
-                <video src="/button contact slow.webm" class="btn-fast" muted autoplay loop playsinline preload="metadata"></video>
+                <video src="/button contact slow.webm" class="btn-fast" muted autoplay loop playsinline preload="none"></video>
                 <video src="/button contact fast.webm" class="btn-slow" muted loop playsinline preload="none"></video>
                 <span class="portfolio-btn-text">See More</span>
               </div>
@@ -664,48 +663,56 @@ html {
   <Footer />
 
   <script>
-    document.querySelectorAll('.portfolio-btn-wrapper').forEach((wrapper) => {
-      const slow = wrapper.querySelector('.btn-slow');
-      if (!slow) return;
+  let playingBeforeHide = new Set<HTMLVideoElement>();
 
-      wrapper.addEventListener('mouseenter', () => {
-        slow.currentTime = 0;
-        slow.play().catch(() => {});
-      });
+  document.querySelectorAll('.portfolio-btn-wrapper').forEach((wrapper) => {
+    const slow = wrapper.querySelector<HTMLVideoElement>('.btn-slow');
+    if (!slow) return;
 
-      wrapper.addEventListener('mouseleave', () => {
-        slow.pause();
-      });
+    wrapper.addEventListener('mouseenter', () => {
+      slow.currentTime = 0;
+      slow.play().catch((e: unknown) => console.warn('Video play failed:', e));
     });
 
-    const observedVideos = document.querySelectorAll('.hero-video, .btn-fast');
+    wrapper.addEventListener('mouseleave', () => {
+      slow.pause();
+    });
+  });
 
-    const videoObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const video = entry.target;
-          if (entry.isIntersecting) {
-            video.play().catch(() => {});
-          } else {
-            video.pause();
+  const observedVideos = document.querySelectorAll<HTMLVideoElement>('.hero-video, .btn-fast, .btn-slow');
+
+  const videoObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target as HTMLVideoElement;
+        if (entry.isIntersecting) {
+          if (!video.classList.contains('btn-slow')) {
+            video.play().catch((e: unknown) => console.warn('Video play failed:', e));
           }
-        });
-      },
-      { threshold: 0.1 }
-    );
+        } else {
+          video.pause();
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
 
-    observedVideos.forEach((video) => videoObserver.observe(video));
+  observedVideos.forEach((video) => videoObserver.observe(video));
 
-    document.addEventListener('visibilitychange', () => {
-      const allVideos = document.querySelectorAll('.hero-video, .btn-fast, .btn-slow');
-      if (document.hidden) {
-        allVideos.forEach((v) => v.pause());
-      } else {
-        allVideos.forEach((v) => {
-          if (!v.classList.contains('btn-slow')) v.play().catch(() => {});
-        });
-      }
-    });
-  </script>
+  document.addEventListener('visibilitychange', () => {
+    const allVideos = [...document.querySelectorAll<HTMLVideoElement>('.hero-video, .btn-fast, .btn-slow')];
+    if (document.hidden) {
+      playingBeforeHide = new Set(allVideos.filter(v => !v.paused));
+      allVideos.forEach(v => v.pause());
+    } else {
+      allVideos.forEach(v => {
+        if (playingBeforeHide.has(v)) {
+          v.play().catch((e: unknown) => console.warn('Video play failed:', e));
+        }
+      });
+      playingBeforeHide.clear();
+    }
+  });
+</script>
 </body>
 </html>
