@@ -69,7 +69,7 @@ const cardCount = 22;
       /* ── TITLE ── */
       .ilw-title {
         font-family: "JAVATEXT";
-       font-size: clamp(60px, 7.5vw, 130px);
+        font-size: clamp(60px, 7.5vw, 130px);
         line-height: 0.9;
         color: white;
         margin: 0 0 clamp(4rem, 7vw, 9rem) 0;
@@ -79,29 +79,123 @@ const cardCount = 22;
         text-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
       }
 
-      .ilw-intro {
-  position: relative;
-  width: min(680px, 100%);
-  margin: 0 auto clamp(2rem, 4vw, 3.5rem) auto;
-  border-radius: 18px;
-  overflow: visible;
-  padding: clamp(2rem, 4vw, 3.5rem);
- 
-}
+      /* ── PAGE SWITCHER DROPDOWN ── */
+      .ilw-page-switcher {
+        position: relative;
+        width: fit-content;
+        margin: 0 0 clamp(1rem, 2vw, 1.5rem) 0;
+        z-index: 5;
+      }
 
-      /* ── INTRO BOX BACKGROUND ── */
-.ilw-intro-bg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 80%;
-  height: 110%;
-  transform: translate(-50%, -50%) scale(1.7);
-  object-fit: fill;
-  z-index: -1;
-  opacity: 0.96;
-  pointer-events: none;
-}
+      .ilw-page-switch-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "Superglue", sans-serif;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        border: 1.5px solid rgba(255,255,255,0.3);
+        padding: 7px 14px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.12);
+        backdrop-filter: blur(10px);
+        color: white;
+        cursor: pointer;
+        transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+      }
+
+      .ilw-page-switch-btn:hover {
+        background: rgba(255,255,255,0.22);
+      }
+
+      .ilw-page-switch-caret {
+        font-size: 9px;
+        line-height: 1;
+        transition: transform 0.2s;
+        font-style: normal;
+      }
+
+      .ilw-page-switcher.open .ilw-page-switch-btn {
+        background: #00bfff;
+        box-shadow: 0 0 24px rgba(0,191,255,0.5);
+      }
+
+      .ilw-page-switcher.open .ilw-page-switch-caret {
+        transform: rotate(180deg);
+      }
+
+      .ilw-page-switch-menu {
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 0;
+        transform: translateY(-8px);
+        list-style: none;
+        margin: 0;
+        padding: 8px;
+        min-width: 220px;
+        border-radius: 14px;
+        background: rgba(15,15,18,0.92);
+        backdrop-filter: blur(14px);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s, transform 0.2s;
+        z-index: 20;
+      }
+
+      .ilw-page-switcher.open .ilw-page-switch-menu {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .ilw-page-switch-menu li {
+        font-family: "Superglue", sans-serif;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: rgba(255,255,255,0.85);
+        padding: 10px 14px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.15s, color 0.15s;
+        list-style: none;
+      }
+
+      .ilw-page-switch-menu li:hover {
+        background: rgba(255,255,255,0.12);
+        color: white;
+      }
+
+      .ilw-page-switch-menu li.active {
+        background: #00bfff;
+        color: white;
+      }
+
+      /* ── INTRO BOX ── */
+      .ilw-intro {
+        position: relative;
+        width: min(680px, 100%);
+        margin: 0 auto clamp(2rem, 4vw, 3.5rem) auto;
+        border-radius: 18px;
+        overflow: visible;
+        padding: clamp(2rem, 4vw, 3.5rem);
+      }
+
+      .ilw-intro-bg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 80%;
+        height: 110%;
+        transform: translate(-50%, -50%) scale(1.7);
+        object-fit: fill;
+        z-index: -1;
+        opacity: 0.96;
+        pointer-events: none;
+        border-radius: 18px;
+      }
 
       .ilw-intro-inner {
         position: relative;
@@ -173,7 +267,7 @@ const cardCount = 22;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: clamp(1rem, 2vw, 2.5rem);
-        margin-top: clamp(3rem, 6vw, 5rem);
+        margin-top: clamp(6rem, 11vw, 9rem);
       }
 
       .tarot-card {
@@ -223,18 +317,31 @@ const cardCount = 22;
         gap: 24px;
       }
 
-      /* flip card wrapper */
-      .modal-card {
+      .modal-stage {
+        position: relative;
         width: min(420px, 82vw);
         height: min(700px, 82vh);
-        perspective: 1400px;
-        transform: scale(0.92);
-        transition: transform 0.35s ease;
-        flex-shrink: 0;
       }
 
-      .modal.active .modal-card {
-        transform: scale(1);
+      .modal-card {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        perspective: 1400px;
+        transform: scale(0.92) translateX(0);
+        transition: transform 0.35s ease;
+        flex-shrink: 0;
+        opacity: 0;
+      }
+
+      .modal-card.is-current {
+        opacity: 1;
+      }
+
+      .modal.active .modal-card.is-current {
+        transform: scale(1) translateX(0);
       }
 
       .modal-flipper {
@@ -245,7 +352,7 @@ const cardCount = 22;
         transition: transform 0.75s ease;
       }
 
-      .modal-card:hover .modal-flipper {
+      .modal-card.is-current:hover .modal-flipper {
         transform: rotateY(180deg);
       }
 
@@ -267,14 +374,13 @@ const cardCount = 22;
         box-shadow: 0 0 80px rgba(0,0,0,0.75);
       }
 
-      /* nav arrows */
       .modal-nav {
         background: rgba(255,255,255,0.12);
         border: none;
         color: white;
-        font-size: 28px;
-        width: 52px;
-        height: 52px;
+        font-size: 18px;
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
         cursor: pointer;
         display: flex;
@@ -296,7 +402,6 @@ const cardCount = 22;
         transform: none;
       }
 
-      /* counter + hint */
       .modal-counter {
         position: absolute;
         bottom: -36px;
@@ -311,6 +416,37 @@ const cardCount = 22;
         line-height: 1.6;
       }
 
+      .modal-close {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        background: rgba(255,255,255,0.15);
+        border: none;
+        color: white;
+        font-size: 16px;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(8px);
+        transition: background 0.2s, transform 0.2s;
+        z-index: 10001;
+      }
+
+      .modal-close:hover {
+        background: rgba(255,255,255,0.3);
+        transform: scale(1.1);
+      }
+
+      .tarot-card.clicking {
+        transform: scale(1.07) translateY(-4px);
+        transition: transform 0.1s ease !important;
+        box-shadow: 0 0 0 2px rgba(255,255,255,0.4), 0 24px 48px rgba(0,0,0,0.4);
+      }
+
       /* ── TABLET ── */
       @media (max-width: 1024px) {
         .ilw-wrap { padding-top: 60px; }
@@ -319,46 +455,72 @@ const cardCount = 22;
       }
 
       /* ── MOBILE ── */
-@media (max-width: 768px) {
+      @media (max-width: 768px) {
 
-  html, body,
-  .page-transition-content,
-  main {
-    overflow-y: auto !important;
-    height: auto !important;
-    max-height: none !important;
-  }
+        html, body,
+        .page-transition-content,
+        main {
+          overflow-y: auto !important;
+          height: auto !important;
+          max-height: none !important;
+        }
 
-  .ilw-hero {
-    min-height: 100svh;
-    height: auto;
-    overflow: visible;
-  }
+        .ilw-hero {
+          min-height: 100svh;
+          height: auto;
+          overflow: visible;
+        }
 
-  .ilw-wrap {
-    padding: 40px 1rem;
-  }
+        .ilw-wrap {
+          padding: 72px 1rem 40px;
+        }
 
-  .ilw-title {
-    font-size: clamp(2.8rem, 12vw, 4.5rem);
-  }
+        /* hide title on mobile — dropdown takes its place */
+        .ilw-title {
+          display: none;
+        }
 
-  .tarot-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
-  }
+        /* dropdown acts as the page title on mobile — bigger + more breathing room */
+        .ilw-page-switcher {
+          margin: 0 0 2.5rem 0;
+        }
 
-  .modal-card {
-    width: min(320px, 82vw);
-    height: min(540px, 78vh);
-  }
+        .ilw-page-switch-btn {
+          font-size: 1.45rem;
+          padding: 12px 20px;
+          gap: 10px;
+        }
 
-  .modal-nav {
-    width: 36px;
-    height: 36px;
-    font-size: 18px;
-  }
-}
+        .ilw-page-switch-caret {
+          font-size: 11px;
+        }
+
+        /* fix z-index so clip-path doesn't swallow the bg, add top crop + shadow */
+        .ilw-intro {
+          overflow: visible;
+          clip-path: inset(-20px -100vw -100vw -100vw);
+          box-shadow: 0 28px 80px rgba(0,0,0,0.35);
+        }
+
+        .ilw-intro-bg {
+          z-index: 0;
+        }
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.75rem;
+        }
+
+        .modal-stage {
+          width: min(320px, 82vw);
+          height: min(540px, 78vh);
+        }
+
+        .modal-nav { display: none; }
+
+        .modal-stage {
+          width: min(320px, 88vw);
+          height: min(540px, 78vh);
+        }
+      }
 
       @media (max-width: 480px) {
         .ilw-wrap { padding: 28px 0.75rem; }
@@ -379,6 +541,20 @@ const cardCount = 22;
         </video>
 
         <div class="ilw-wrap">
+
+          <!-- PAGE SWITCHER DROPDOWN -->
+          <div class="ilw-page-switcher">
+            <button id="ilwPageSwitchBtn" class="ilw-page-switch-btn" aria-haspopup="listbox" aria-expanded="false">
+              <span id="ilwPageSwitchLabel">The January 6th Tarot</span>
+              <span class="ilw-page-switch-caret">▼</span>
+            </button>
+            <ul id="ilwPageSwitchMenu" class="ilw-page-switch-menu" role="listbox">
+              <li role="option" data-href="/portfolio/illustrative">Illustrative</li>
+              <li role="option" data-href="/portfolio/non-illustrative">Non-Illustrative</li>
+              <li role="option" data-href="/portfolio/tarot" class="active">Tarot</li>
+              <li role="option" data-href="/portfolio/upcoming">Upcoming</li>
+            </ul>
+          </div>
 
           <h1 class="ilw-title">
             The Jan 6th<br />Tarot
@@ -433,83 +609,300 @@ const cardCount = 22;
 
     <!-- MODAL -->
     <div id="modal" class="modal">
-      <div class="modal-inner">
-        <button id="modalPrev" class="modal-nav" aria-label="Previous card">&#8592;</button>
+      <button id="modalClose" class="modal-close" aria-label="Close">&#x2715;</button>
+      <div class="modal-inner" style="flex-direction: column; gap: 20px;">
 
         <div style="position: relative;">
-          <div class="modal-card">
-            <div class="modal-flipper">
-              <div class="modal-front">
-                <img id="modalFront" src="" alt="" />
+          <div class="modal-stage">
+            <div id="modalCardA" class="modal-card">
+              <div class="modal-flipper">
+                <div class="modal-front">
+                  <img class="modal-front-img" src="" alt="" />
+                </div>
+                <div class="modal-back">
+                  <img class="modal-back-img" src="" alt="" />
+                </div>
               </div>
-              <div class="modal-back">
-                <img id="modalBack" src="" alt="" />
+            </div>
+            <div id="modalCardB" class="modal-card">
+              <div class="modal-flipper">
+                <div class="modal-front">
+                  <img class="modal-front-img" src="" alt="" />
+                </div>
+                <div class="modal-back">
+                  <img class="modal-back-img" src="" alt="" />
+                </div>
               </div>
             </div>
           </div>
-          <span id="modalCounter" class="modal-counter"></span>
         </div>
 
-        <button id="modalNext" class="modal-nav" aria-label="Next card">&#8594;</button>
+        <div style="display: flex; align-items: center; gap: 20px; justify-content: center;">
+          <button id="modalPrev" class="modal-nav" aria-label="Previous card">&#8592;</button>
+          <span id="modalCounter" class="modal-counter" style="position: static; transform: none; bottom: auto; left: auto;"></span>
+          <button id="modalNext" class="modal-nav" aria-label="Next card">&#8594;</button>
+        </div>
+
       </div>
     </div>
 
     <script>
-      const modal       = document.getElementById('modal');
-      const modalFront  = document.getElementById('modalFront');
-      const modalBack   = document.getElementById('modalBack');
-      const modalPrev   = document.getElementById('modalPrev');
-      const modalNext   = document.getElementById('modalNext');
-      const modalCounter = document.getElementById('modalCounter');
+      const modal        = document.getElementById('modal') as HTMLElement;
+      const cardA        = document.getElementById('modalCardA') as HTMLElement;
+      const cardB        = document.getElementById('modalCardB') as HTMLElement;
+      const modalPrev    = document.getElementById('modalPrev') as HTMLButtonElement;
+      const modalNext    = document.getElementById('modalNext') as HTMLButtonElement;
+      const modalCounter = document.getElementById('modalCounter') as HTMLElement;
+      const modalClose   = document.getElementById('modalClose') as HTMLButtonElement;
 
-      const cardEls = Array.from(document.querySelectorAll('.tarot-card'));
-      const cardData = cardEls.map(el => ({
+      interface CardData {
+        front: string | undefined;
+        back: string | undefined;
+      }
+
+      const cardEls = Array.from(document.querySelectorAll<HTMLElement>('.tarot-card'));
+      const cardData: CardData[] = cardEls.map(el => ({
         front: el.dataset.front,
         back:  el.dataset.back,
       }));
 
       let currentIndex = 0;
+      let isAnimating = false;
+      let didSwipe = false;
 
-      function showCard(index) {
+      let frontCard = cardA;
+      let backCard = cardB;
+
+      const imageCache = new Map<string, HTMLImageElement>();
+
+      function preload(src: string | undefined): Promise<void> {
+        if (!src) return Promise.resolve();
+        if (imageCache.has(src)) return Promise.resolve();
+        return new Promise((resolve) => {
+          const im = new Image();
+          im.onload = () => resolve();
+          im.onerror = () => resolve();
+          im.src = src;
+          imageCache.set(src, im);
+        });
+      }
+
+      function preloadCard(index: number): Promise<void[]> {
+        const data = cardData[index];
+        if (!data) return Promise.resolve([]);
+        return Promise.all([preload(data.front), preload(data.back)]);
+      }
+
+      function preloadAround(index: number): Promise<void[][]> {
+        return Promise.all([
+          preloadCard(index - 1),
+          preloadCard(index),
+          preloadCard(index + 1),
+        ]);
+      }
+
+      function setCardFaces(cardEl: HTMLElement, data: CardData): void {
+        const frontImg = cardEl.querySelector('.modal-front-img') as HTMLImageElement;
+        const backImg  = cardEl.querySelector('.modal-back-img') as HTMLImageElement;
+        frontImg.src = data?.front ?? '';
+        backImg.src  = data?.back ?? '';
+        const flipper = cardEl.querySelector('.modal-flipper') as HTMLElement;
+        flipper.style.transition = 'none';
+        flipper.style.transform = 'rotateY(0deg)';
+        requestAnimationFrame(() => {
+          flipper.style.transition = '';
+        });
+      }
+
+      function showCard(index: number): void {
         currentIndex = index;
-        modalFront.src = cardData[currentIndex].front;
-        modalBack.src  = cardData[currentIndex].back;
+        const data = cardData[currentIndex];
+
+        setCardFaces(frontCard, data);
+        frontCard.style.transition = 'none';
+        frontCard.style.transform = 'translateX(0) scale(1)';
+        frontCard.classList.add('is-current');
+
+        backCard.classList.remove('is-current');
+        backCard.style.transition = 'none';
+
         modalCounter.textContent = `${currentIndex + 1} / ${cardData.length}  ·  hover to flip`;
         modalPrev.disabled = currentIndex === 0;
         modalNext.disabled = currentIndex === cardData.length - 1;
+
+        preloadAround(currentIndex);
       }
 
-      function openModal(index) {
-        showCard(index);
-        modal.classList.add('active');
+      function navigateWithSlide(newIndex: number, direction: 'left' | 'right'): void {
+        if (isAnimating) return;
+        const data = cardData[newIndex];
+        if (!data) return;
+
+        isAnimating = true;
+
+        preloadCard(newIndex).then(() => {
+          const enterFrom = direction === 'left' ? '100%' : '-100%';
+          const exitTo = direction === 'left' ? '-100%' : '100%';
+
+          setCardFaces(backCard, data);
+          backCard.style.transition = 'none';
+          backCard.style.transform = `translateX(${enterFrom}) scale(1)`;
+          backCard.classList.add('is-current');
+
+          void backCard.offsetWidth;
+
+          requestAnimationFrame(() => {
+            frontCard.style.transition = 'transform 0.2s ease-out, opacity 0.2s ease-out';
+            backCard.style.transition = 'transform 0.2s ease-out';
+            frontCard.style.transform = `translateX(${exitTo}) scale(1)`;
+            backCard.style.transform = 'translateX(0) scale(1)';
+
+            setTimeout(() => {
+              frontCard.classList.remove('is-current');
+              currentIndex = newIndex;
+              modalCounter.textContent = `${currentIndex + 1} / ${cardData.length}  ·  hover to flip`;
+              modalPrev.disabled = currentIndex === 0;
+              modalNext.disabled = currentIndex === cardData.length - 1;
+              preloadAround(currentIndex);
+
+              const tmp = frontCard;
+              frontCard = backCard;
+              backCard = tmp;
+
+              isAnimating = false;
+            }, 200);
+          });
+        });
       }
 
-      function closeModal() {
+      function openModal(index: number): void {
+        preloadAround(index).then(() => {
+          showCard(index);
+          modal.classList.add('active');
+        });
+      }
+
+      function closeModal(): void {
         modal.classList.remove('active');
-        setTimeout(() => { modalFront.src = ''; modalBack.src = ''; }, 300);
+        setTimeout(() => {
+          [cardA, cardB].forEach(cardEl => {
+            const frontImg = cardEl.querySelector('.modal-front-img') as HTMLImageElement;
+            const backImg  = cardEl.querySelector('.modal-back-img') as HTMLImageElement;
+            frontImg.src = '';
+            backImg.src = '';
+            cardEl.classList.remove('is-current');
+          });
+          frontCard = cardA;
+          backCard = cardB;
+        }, 300);
       }
 
       cardEls.forEach((card, index) => {
-        card.addEventListener('click', () => openModal(index));
+        card.addEventListener('click', () => {
+          card.classList.add('clicking');
+          setTimeout(() => {
+            card.classList.remove('clicking');
+            openModal(index);
+          }, 120);
+        });
       });
 
       modalPrev.addEventListener('click', () => {
-        if (currentIndex > 0) showCard(currentIndex - 1);
+        if (currentIndex > 0) navigateWithSlide(currentIndex - 1, 'right');
       });
 
       modalNext.addEventListener('click', () => {
-        if (currentIndex < cardData.length - 1) showCard(currentIndex + 1);
+        if (currentIndex < cardData.length - 1) navigateWithSlide(currentIndex + 1, 'left');
       });
 
-      modal.addEventListener('click', (e) => {
+      modalClose.addEventListener('click', closeModal);
+
+      modal.addEventListener('click', (e: MouseEvent) => {
+        if (didSwipe) { didSwipe = false; return; }
         if (e.target === modal) closeModal();
       });
 
-      document.addEventListener('keydown', (e) => {
+      document.addEventListener('keydown', (e: KeyboardEvent) => {
         if (!modal.classList.contains('active')) return;
-        if (e.key === 'Escape')      closeModal();
-        if (e.key === 'ArrowLeft'  && currentIndex > 0)                    showCard(currentIndex - 1);
-        if (e.key === 'ArrowRight' && currentIndex < cardData.length - 1)  showCard(currentIndex + 1);
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowLeft'  && currentIndex > 0)                   navigateWithSlide(currentIndex - 1, 'right');
+        if (e.key === 'ArrowRight' && currentIndex < cardData.length - 1) navigateWithSlide(currentIndex + 1, 'left');
+      });
+
+      let touchStartX = 0;
+      let touchCurrentX = 0;
+      let isSwiping = false;
+
+      modal.addEventListener('touchstart', (e: TouchEvent) => {
+        if (isAnimating) return;
+        touchStartX = e.touches[0].clientX;
+        touchCurrentX = touchStartX;
+        isSwiping = true;
+        frontCard.style.transition = 'none';
+      }, { passive: true });
+
+      modal.addEventListener('touchmove', (e: TouchEvent) => {
+        if (!isSwiping) return;
+        touchCurrentX = e.touches[0].clientX;
+        const diff = touchCurrentX - touchStartX;
+
+        const atStart = currentIndex === 0 && diff > 0;
+        const atEnd   = currentIndex === cardData.length - 1 && diff < 0;
+        const resistedDiff = (atStart || atEnd) ? diff * 0.15 : diff;
+
+        frontCard.style.transform = `translateX(${resistedDiff}px) scale(1)`;
+      }, { passive: true });
+
+      modal.addEventListener('touchend', () => {
+        if (!isSwiping) return;
+        isSwiping = false;
+
+        const diff = touchCurrentX - touchStartX;
+        const threshold = window.innerWidth * 0.25;
+
+        if (Math.abs(diff) > 15) didSwipe = true;
+
+        if (diff < -threshold && currentIndex < cardData.length - 1) {
+          navigateWithSlide(currentIndex + 1, 'left');
+        } else if (diff > threshold && currentIndex > 0) {
+          navigateWithSlide(currentIndex - 1, 'right');
+        } else {
+          frontCard.style.transition = 'transform 0.25s ease';
+          frontCard.style.transform = 'translateX(0) scale(1)';
+        }
+      });
+    </script>
+
+    <!-- PAGE SWITCHER SCRIPT -->
+    <script>
+      const pageSwitcher   = document.querySelector('.ilw-page-switcher') as HTMLElement;
+      const pageSwitchBtn  = document.getElementById('ilwPageSwitchBtn') as HTMLButtonElement;
+      const pageSwitchMenu = document.getElementById('ilwPageSwitchMenu') as HTMLElement;
+
+      function closePageSwitcher(): void {
+        pageSwitcher.classList.remove('open');
+        pageSwitchBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      pageSwitchBtn.addEventListener('click', (e: MouseEvent) => {
+        e.stopPropagation();
+        const isOpen = pageSwitcher.classList.toggle('open');
+        pageSwitchBtn.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      pageSwitchMenu.querySelectorAll<HTMLElement>('li').forEach(li => {
+        li.addEventListener('click', () => {
+          const href = li.dataset.href;
+          if (href) window.location.href = href;
+        });
+      });
+
+      document.addEventListener('click', (e: MouseEvent) => {
+        if (!pageSwitcher.contains(e.target as Node)) closePageSwitcher();
+      });
+
+      document.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Escape') closePageSwitcher();
       });
     </script>
 

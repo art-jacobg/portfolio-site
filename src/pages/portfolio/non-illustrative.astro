@@ -84,6 +84,100 @@ const ceramicsWorks = [
         text-shadow: 0 0 50px rgba(0,0,0,0.35);
       }
 
+      /* ── PAGE SWITCHER DROPDOWN ── */
+      .ilw-page-switcher {
+        position: relative;
+        width: fit-content;
+        margin: 0 0 clamp(1rem, 2vw, 1.5rem) 0;
+        z-index: 5;
+      }
+
+      .ilw-page-switch-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "Superglue", sans-serif;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        border: 1.5px solid rgba(255,255,255,0.3);
+        padding: 7px 14px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.12);
+        backdrop-filter: blur(10px);
+        color: white;
+        cursor: pointer;
+        transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+      }
+
+      .ilw-page-switch-btn:hover {
+        background: rgba(255,255,255,0.22);
+      }
+
+      .ilw-page-switch-caret {
+        font-size: 9px;
+        line-height: 1;
+        transition: transform 0.2s;
+        font-style: normal;
+      }
+
+      .ilw-page-switcher.open .ilw-page-switch-btn {
+        background: #00bfff;
+        box-shadow: 0 0 24px rgba(0,191,255,0.5);
+      }
+
+      .ilw-page-switcher.open .ilw-page-switch-caret {
+        transform: rotate(180deg);
+      }
+
+      .ilw-page-switch-menu {
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 0;
+        transform: translateY(-8px);
+        list-style: none;
+        margin: 0;
+        padding: 8px;
+        min-width: 220px;
+        border-radius: 14px;
+        background: rgba(15,15,18,0.92);
+        backdrop-filter: blur(14px);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s, transform 0.2s;
+        z-index: 20;
+      }
+
+      .ilw-page-switcher.open .ilw-page-switch-menu {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .ilw-page-switch-menu li {
+        font-family: "Superglue", sans-serif;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: rgba(255,255,255,0.85);
+        padding: 10px 14px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.15s, color 0.15s;
+        list-style: none;
+      }
+
+      .ilw-page-switch-menu li:hover {
+        background: rgba(255,255,255,0.12);
+        color: white;
+      }
+
+      .ilw-page-switch-menu li.active {
+        background: #00bfff;
+        color: white;
+      }
+
       /* ── INTRO BOX ── */
       .ilw-intro {
         position: relative;
@@ -95,28 +189,19 @@ const ceramicsWorks = [
         box-shadow: 0 28px 80px rgba(0,0,0,0.28);
       }
 
-      .ilw-intro {
-        position: relative;
-        width: min(680px, 100%);
-        margin: 0 auto clamp(2rem, 4vw, 3.5rem) auto;
-        border-radius: 18px;
-        overflow: visible;
-        padding: clamp(2rem, 4vw, 3.5rem);
-        box-shadow: 0 28px 80px rgba(0,0,0,0.28);
-      }
-
       .ilw-intro-bg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 80%;
-  height: 110%;
-  transform: translate(-50%, -50%) scale(1.7);
-  object-fit: fill;
-  z-index: 0;
-  opacity: 0.96;
-  pointer-events: none;
-}
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 80%;
+        height: 110%;
+        transform: translate(-50%, -50%) scale(1.7);
+        object-fit: fill;
+        z-index: 0;
+        opacity: 0.96;
+        pointer-events: none;
+        border-radius: 18px;
+      }
 
       .ilw-intro-inner {
         position: relative;
@@ -193,6 +278,25 @@ const ceramicsWorks = [
         grid-template-columns: 1fr 1.6fr;
         gap: clamp(1.5rem, 3vw, 2.5rem);
         align-items: center;
+      }
+
+      .media-gif-wrap {
+        position: relative;
+        width: 100%;
+        cursor: zoom-in;
+        border-radius: 14px;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .media-gif-wrap:hover {
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: 0 20px 48px rgba(0,0,0,0.4);
+      }
+
+      .media-gif-wrap.clicking {
+        transform: scale(1.05);
+        transition: transform 0.1s ease !important;
       }
 
       .media-gif,
@@ -341,6 +445,7 @@ const ceramicsWorks = [
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.3s;
+        overflow: hidden;
       }
 
       .ilw-modal.active {
@@ -348,31 +453,72 @@ const ceramicsWorks = [
         pointer-events: auto;
       }
 
+      body.ilw-modal-open {
+        overflow: hidden;
+      }
+
+      body.ilw-modal-open main {
+        display: none;
+      }
+
       .ilw-modal-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        width: 100%;
+        height: 100%;
+        padding: 24px 0;
+      }
+
+      .ilw-modal-stage {
         position: relative;
+        width: 100%;
+        flex: 1 1 auto;
+        min-height: 0;
         display: flex;
         align-items: center;
-        gap: 24px;
+        justify-content: center;
+        overflow: hidden;
       }
 
       .ilw-modal-img {
-        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         max-width: 80vw;
-        max-height: 88vh;
+        max-height: 78vh;
         width: auto;
         height: auto;
         border-radius: 10px;
         box-shadow: 0 0 80px rgba(0,0,0,0.75);
-        transform: scale(0.92);
-        transition: transform 0.35s, opacity 0.2s;
-      }
-
-      .ilw-modal.active .ilw-modal-img {
-        transform: scale(1);
-      }
-
-      .ilw-modal-img.fade {
+        user-select: none;
+        -webkit-user-drag: none;
+        touch-action: pan-y;
         opacity: 0;
+      }
+
+      .ilw-modal-img.is-current {
+        opacity: 1;
+      }
+
+      .ilw-modal-controls {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-shrink: 0;
+      }
+
+      .ilw-modal-counter {
+        font-family: "Superglue", sans-serif;
+        font-size: 12px;
+        color: rgba(255,255,255,0.55);
+        letter-spacing: 0.1em;
+        white-space: nowrap;
+        min-width: 60px;
+        text-align: center;
       }
 
       .ilw-nav {
@@ -403,16 +549,35 @@ const ceramicsWorks = [
         transform: none;
       }
 
-      .ilw-modal-counter {
+      .ilw-close {
         position: absolute;
-        bottom: -32px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-family: "Superglue", sans-serif;
-        font-size: 12px;
-        color: rgba(255,255,255,0.55);
-        letter-spacing: 0.1em;
-        white-space: nowrap;
+        top: 18px;
+        right: 18px;
+        background: rgba(255,255,255,0.15);
+        border: none;
+        color: white;
+        font-size: 16px;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(8px);
+        transition: background 0.2s, transform 0.2s;
+        z-index: 10001;
+      }
+
+      .ilw-close:hover {
+        background: rgba(255,255,255,0.3);
+        transform: scale(1.1);
+      }
+
+      .ilw-item.clicking {
+        transform: scale(1.07);
+        transition: transform 0.1s ease !important;
+        box-shadow: 0 0 0 2px rgba(255,255,255,0.4), 0 24px 48px rgba(0,0,0,0.4);
       }
 
       /* ── TABLET ── */
@@ -426,64 +591,95 @@ const ceramicsWorks = [
         .ilw-nav { width: 40px; height: 40px; font-size: 20px; }
       }
 
-     /* ── MOBILE ── */
-@media (max-width: 768px) {
+      /* ── MOBILE ── */
+      @media (max-width: 768px) {
 
-  html, body,
-  .page-transition-content,
-  main {
-    overflow-y: auto !important;
-    height: auto !important;
-    max-height: none !important;
-  }
+        html, body,
+        .page-transition-content,
+        main {
+          overflow-y: auto !important;
+          height: auto !important;
+          max-height: none !important;
+        }
 
-  .ilw-hero {
-    min-height: 100svh;
-    height: auto;
-    overflow: visible;
-  }
+        .ilw-hero {
+          min-height: 100svh;
+          height: auto;
+          overflow: visible;
+        }
 
-  .ilw-wrap {
-    padding: 40px 1rem;
-  }
+        .ilw-wrap {
+          padding: 72px 1rem 40px;
+        }
 
-  .media-row {
-    grid-template-columns: 1fr;
-  }
+        /* hide title on mobile — dropdown takes its place */
+        .ilw-title {
+          display: none;
+        }
 
-  .ilw-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
+        /* dropdown acts as the page title on mobile — bigger + more breathing room */
+        .ilw-page-switcher {
+          margin: 0 0 2.5rem 0;
+        }
 
-  .ilw-modal-img {
-    max-width: 92vw;
-  }
+        .ilw-page-switch-btn {
+          font-size: 1.25rem;
+          padding: 10px 18px;
+          gap: 10px;
+        }
 
-  .ilw-nav {
-    width: 36px;
-    height: 36px;
-    font-size: 18px;
-  }
-}
+        .ilw-page-switch-caret {
+          font-size: 11px;
+        }
 
-@media (max-width: 480px) {
+        .ilw-intro {
+          width: 100%;
+          margin-left: auto;
+          margin-right: auto;
+          padding: 24px 18px;
+          overflow: visible;
+          clip-path: inset(-20px -100vw -100vw -100vw);
+          box-shadow: 0 28px 80px rgba(0,0,0,0.35);
+        }
 
-  .ilw-wrap {
-    padding: 28px 0.75rem;
-  }
+        .ilw-intro-bg {
+          width: 80%;
+          height: 110%;
+          transform: translate(-50%, -50%) scale(1.7);
+          border-radius: 18px;
+        }
 
-  .ilw-title {
-     font-size: clamp(1.8rem, 8vw, 2.8rem);
-     transform: translateX(-19px);
-    
-  }
+        .media-row {
+          grid-template-columns: 1fr;
+        }
 
-  .ilw-intro {
-    padding: 20px 16px;
-  }
+        .ilw-grid {
+          grid-template-columns: repeat(2, 1fr) !important;
+          gap: 12px !important;
+        }
 
-}
+        .ilw-item {
+          border-radius: 16px;
+          overflow: hidden;
+        }
+
+        .ilw-modal-img {
+          max-width: 92vw;
+        }
+
+        .ilw-nav { display: none; }
+        .ilw-modal-img { max-width: 92vw; max-height: 75vh; }
+      }
+
+      @media (max-width: 480px) {
+        .ilw-wrap {
+          padding: 28px 0.75rem;
+        }
+
+        .ilw-intro {
+          padding: 20px 16px;
+        }
+      }
     </style>
   </head>
 
@@ -498,6 +694,20 @@ const ceramicsWorks = [
         </video>
 
         <div class="ilw-wrap">
+
+          <!-- PAGE SWITCHER DROPDOWN -->
+          <div class="ilw-page-switcher">
+            <button id="ilwPageSwitchBtn" class="ilw-page-switch-btn" aria-haspopup="listbox" aria-expanded="false">
+              <span id="ilwPageSwitchLabel">Non-Illustrative Works</span>
+              <span class="ilw-page-switch-caret">▼</span>
+            </button>
+            <ul id="ilwPageSwitchMenu" class="ilw-page-switch-menu" role="listbox">
+              <li role="option" data-href="/portfolio/illustrative">Illustrative</li>
+              <li role="option" data-href="/portfolio/non-illustrative" class="active">Non-Illustrative</li>
+              <li role="option" data-href="/tarot">Tarot</li>
+              <li role="option" data-href="/portfolio/upcoming">Upcoming</li>
+            </ul>
+          </div>
 
           <h1 class="ilw-title">NON-ILLUSTRATIVE<br />WORKS</h1>
 
@@ -534,11 +744,13 @@ const ceramicsWorks = [
             <p class="ilw-group-desc">Motion and animation experiments.</p>
             <div class="media-column">
               <div class="media-row">
-                <img
-                  class="media-gif"
-                  src="/wizardjuice.gif"
-                  alt="Wizard Juice animation"
-                />
+                <div class="media-gif-wrap" data-src="/wizardjuice.gif" data-alt="Wizard Juice animation">
+                  <img
+                    class="media-gif"
+                    src="/wizardjuice.gif"
+                    alt="Wizard Juice animation"
+                  />
+                </div>
                 <div class="media-embed">
                   <iframe
                     src="https://www.youtube.com/embed/jTkYjbenrzo?si=tuZyY7iSfbkIBztg"
@@ -560,7 +772,7 @@ const ceramicsWorks = [
           <!-- CERAMICS (includes dice) -->
           <div class="ilw-group" data-group="ceramics">
             <h2 class="ilw-group-title">Ceramics</h2>
-            <p class="ilw-group-desc">Ceramics works!</>
+            <p class="ilw-group-desc">Ceramics works!</p>
             <div class="ilw-grid">
               {ceramicsWorks.map((work, index) => (
                 <div
@@ -583,82 +795,282 @@ const ceramicsWorks = [
     </main>
 
     <div id="ilwModal" class="ilw-modal">
+      <button id="ilwClose" class="ilw-close" aria-label="Close">&#x2715;</button>
       <div class="ilw-modal-inner">
-        <button id="ilwPrev" class="ilw-nav" aria-label="Previous">&#8592;</button>
-        <div style="position:relative;">
-          <img id="ilwModalImg" class="ilw-modal-img" src="" alt="" />
-          <span id="ilwCounter" class="ilw-modal-counter"></span>
+        <div class="ilw-modal-stage">
+          <img id="ilwModalImgA" class="ilw-modal-img" src="" alt="" />
+          <img id="ilwModalImgB" class="ilw-modal-img" src="" alt="" />
         </div>
-        <button id="ilwNext" class="ilw-nav" aria-label="Next">&#8594;</button>
+        <div class="ilw-modal-controls">
+          <button id="ilwPrev" class="ilw-nav" aria-label="Previous">&#8592;</button>
+          <span id="ilwCounter" class="ilw-modal-counter"></span>
+          <button id="ilwNext" class="ilw-nav" aria-label="Next">&#8594;</button>
+        </div>
       </div>
     </div>
 
     <script>
-      const modal    = document.getElementById('ilwModal');
-      const modalImg = document.getElementById('ilwModalImg');
-      const counter  = document.getElementById('ilwCounter');
-      const prevBtn  = document.getElementById('ilwPrev');
-      const nextBtn  = document.getElementById('ilwNext');
+      const modal     = document.getElementById('ilwModal') as HTMLElement;
+      const imgA      = document.getElementById('ilwModalImgA') as HTMLImageElement;
+      const imgB      = document.getElementById('ilwModalImgB') as HTMLImageElement;
+      const counter   = document.getElementById('ilwCounter') as HTMLElement;
+      const prevBtn   = document.getElementById('ilwPrev') as HTMLButtonElement;
+      const nextBtn   = document.getElementById('ilwNext') as HTMLButtonElement;
+      const closeBtn  = document.getElementById('ilwClose') as HTMLButtonElement;
 
-      let currentGroup = [];
+      interface WorkItem {
+        src: string | undefined;
+        alt: string | undefined;
+      }
+
+      let currentGroup: WorkItem[] = [];
       let currentIndex = 0;
+      let isAnimating = false;
+      let didSwipe = false;
 
-      function showImage(index) {
+      let frontEl = imgA;
+      let backEl = imgB;
+
+      const imageCache = new Map<string, HTMLImageElement>();
+
+      function preload(src: string | undefined): Promise<void> {
+        if (!src) return Promise.resolve();
+        if (imageCache.has(src)) return Promise.resolve();
+        return new Promise((resolve) => {
+          const im = new Image();
+          im.onload = () => resolve();
+          im.onerror = () => resolve();
+          im.src = src;
+          imageCache.set(src, im);
+        });
+      }
+
+      function preloadAround(index: number): Promise<void[]> {
+        const targets = [
+          currentGroup[index - 1]?.src,
+          currentGroup[index]?.src,
+          currentGroup[index + 1]?.src,
+        ];
+        return Promise.all(targets.map(preload));
+      }
+
+      function showImage(index: number): void {
         currentIndex = index;
-        modalImg.src = currentGroup[currentIndex].src;
-        modalImg.alt = currentGroup[currentIndex].alt;
+        const item = currentGroup[currentIndex];
+
+        frontEl.style.transition = 'none';
+        frontEl.style.transform = 'translate(-50%, -50%)';
+        frontEl.src = item?.src ?? '';
+        frontEl.alt = item?.alt ?? '';
+        frontEl.classList.add('is-current');
+
+        backEl.classList.remove('is-current');
+        backEl.style.transition = 'none';
+
         counter.textContent = `${currentIndex + 1} / ${currentGroup.length}`;
         prevBtn.disabled = currentIndex === 0;
         nextBtn.disabled = currentIndex === currentGroup.length - 1;
+
+        preloadAround(currentIndex);
       }
 
-      function openModal(group, index) {
+      function navigateWithSlide(newIndex: number, direction: 'left' | 'right'): void {
+        if (isAnimating) return;
+        const item = currentGroup[newIndex];
+        if (!item) return;
+
+        isAnimating = true;
+
+        preload(item.src).then(() => {
+          const enterFrom = direction === 'left' ? '100%' : '-100%';
+          const exitTo = direction === 'left' ? '-100%' : '100%';
+
+          backEl.src = item.src ?? '';
+          backEl.alt = item.alt ?? '';
+          backEl.style.transition = 'none';
+          backEl.style.transform = `translate(calc(-50% + ${enterFrom}), -50%)`;
+          backEl.classList.add('is-current');
+
+          void backEl.offsetWidth;
+
+          requestAnimationFrame(() => {
+            frontEl.style.transition = 'transform 0.2s ease-out, opacity 0.2s ease-out';
+            backEl.style.transition = 'transform 0.2s ease-out';
+            frontEl.style.transform = `translate(calc(-50% + ${exitTo}), -50%)`;
+            backEl.style.transform = 'translate(-50%, -50%)';
+
+            setTimeout(() => {
+              frontEl.classList.remove('is-current');
+              currentIndex = newIndex;
+              counter.textContent = `${currentIndex + 1} / ${currentGroup.length}`;
+              prevBtn.disabled = currentIndex === 0;
+              nextBtn.disabled = currentIndex === currentGroup.length - 1;
+              preloadAround(currentIndex);
+
+              const tmp = frontEl;
+              frontEl = backEl;
+              backEl = tmp;
+
+              isAnimating = false;
+            }, 200);
+          });
+        });
+      }
+
+      function openModal(group: WorkItem[], index: number): void {
         currentGroup = group;
-        showImage(index);
-        modal.classList.add('active');
+        preloadAround(index).then(() => {
+          showImage(index);
+          modal.classList.add('active');
+          document.body.classList.add('ilw-modal-open');
+        });
       }
 
-      function closeModal() {
+      function closeModal(): void {
         modal.classList.remove('active');
-        setTimeout(() => { modalImg.src = ''; }, 300);
+        document.body.classList.remove('ilw-modal-open');
+        setTimeout(() => {
+          imgA.src = '';
+          imgB.src = '';
+          imgA.classList.remove('is-current');
+          imgB.classList.remove('is-current');
+          frontEl = imgA;
+          backEl = imgB;
+        }, 300);
       }
 
-      document.querySelectorAll('.ilw-catbtn').forEach(btn => {
+      document.querySelectorAll<HTMLElement>('.ilw-catbtn').forEach(btn => {
         btn.addEventListener('click', () => {
-          document.querySelectorAll('.ilw-catbtn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll<HTMLElement>('.ilw-catbtn').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
           const id = btn.dataset.id;
-          document.querySelectorAll('.ilw-group').forEach(g => {
+          document.querySelectorAll<HTMLElement>('.ilw-group').forEach(g => {
             g.classList.toggle('visible', g.dataset.group === id);
           });
         });
       });
 
-      document.querySelectorAll('.ilw-group').forEach(group => {
-        const items = Array.from(group.querySelectorAll('.ilw-item'));
-        const groupData = items.map(el => ({ src: el.dataset.src, alt: el.dataset.alt }));
+      document.querySelectorAll<HTMLElement>('.ilw-group').forEach(group => {
+        const items = Array.from(group.querySelectorAll<HTMLElement>('.ilw-item'));
+        const groupData: WorkItem[] = items.map(el => ({ src: el.dataset.src, alt: el.dataset.alt }));
         items.forEach((item, index) => {
-          item.addEventListener('click', () => openModal(groupData, index));
+          item.addEventListener('click', () => {
+            item.classList.add('clicking');
+            setTimeout(() => {
+              item.classList.remove('clicking');
+              openModal(groupData, index);
+            }, 120);
+          });
+        });
+      });
+
+      document.querySelectorAll<HTMLElement>('.media-gif-wrap').forEach(wrap => {
+        const gifData: WorkItem[] = [{ src: wrap.dataset.src, alt: wrap.dataset.alt }];
+        wrap.addEventListener('click', () => {
+          wrap.classList.add('clicking');
+          setTimeout(() => {
+            wrap.classList.remove('clicking');
+            openModal(gifData, 0);
+          }, 120);
         });
       });
 
       prevBtn.addEventListener('click', () => {
-        if (currentIndex > 0) showImage(currentIndex - 1);
+        if (currentIndex > 0) navigateWithSlide(currentIndex - 1, 'right');
       });
 
       nextBtn.addEventListener('click', () => {
-        if (currentIndex < currentGroup.length - 1) showImage(currentIndex + 1);
+        if (currentIndex < currentGroup.length - 1) navigateWithSlide(currentIndex + 1, 'left');
       });
 
-      modal.addEventListener('click', e => {
+      closeBtn.addEventListener('click', closeModal);
+
+      modal.addEventListener('click', (e: MouseEvent) => {
+        if (didSwipe) { didSwipe = false; return; }
         if (e.target === modal) closeModal();
       });
 
-      document.addEventListener('keydown', e => {
+      document.addEventListener('keydown', (e: KeyboardEvent) => {
         if (!modal.classList.contains('active')) return;
         if (e.key === 'Escape') closeModal();
-        if (e.key === 'ArrowLeft' && currentIndex > 0) showImage(currentIndex - 1);
-        if (e.key === 'ArrowRight' && currentIndex < currentGroup.length - 1) showImage(currentIndex + 1);
+        if (e.key === 'ArrowLeft' && currentIndex > 0) navigateWithSlide(currentIndex - 1, 'right');
+        if (e.key === 'ArrowRight' && currentIndex < currentGroup.length - 1) navigateWithSlide(currentIndex + 1, 'left');
+      });
+
+      let touchStartX = 0;
+      let touchCurrentX = 0;
+      let isSwiping = false;
+
+      modal.addEventListener('touchstart', (e: TouchEvent) => {
+        if (isAnimating) return;
+        touchStartX = e.touches[0].clientX;
+        touchCurrentX = touchStartX;
+        isSwiping = true;
+        frontEl.style.transition = 'none';
+      }, { passive: true });
+
+      modal.addEventListener('touchmove', (e: TouchEvent) => {
+        if (!isSwiping) return;
+        touchCurrentX = e.touches[0].clientX;
+        const diff = touchCurrentX - touchStartX;
+
+        const atStart = currentIndex === 0 && diff > 0;
+        const atEnd   = currentIndex === currentGroup.length - 1 && diff < 0;
+        const resistedDiff = (atStart || atEnd) ? diff * 0.15 : diff;
+
+        frontEl.style.transform = `translate(calc(-50% + ${resistedDiff}px), -50%)`;
+      }, { passive: true });
+
+      modal.addEventListener('touchend', () => {
+        if (!isSwiping) return;
+        isSwiping = false;
+
+        const diff = touchCurrentX - touchStartX;
+        const threshold = window.innerWidth * 0.25;
+
+        if (Math.abs(diff) > 15) didSwipe = true;
+
+        if (diff < -threshold && currentIndex < currentGroup.length - 1) {
+          navigateWithSlide(currentIndex + 1, 'left');
+        } else if (diff > threshold && currentIndex > 0) {
+          navigateWithSlide(currentIndex - 1, 'right');
+        } else {
+          frontEl.style.transition = 'transform 0.25s ease';
+          frontEl.style.transform = 'translate(-50%, -50%)';
+        }
+      });
+    </script>
+
+    <!-- PAGE SWITCHER SCRIPT -->
+    <script>
+      const pageSwitcher   = document.querySelector('.ilw-page-switcher') as HTMLElement;
+      const pageSwitchBtn  = document.getElementById('ilwPageSwitchBtn') as HTMLButtonElement;
+      const pageSwitchMenu = document.getElementById('ilwPageSwitchMenu') as HTMLElement;
+
+      function closePageSwitcher(): void {
+        pageSwitcher.classList.remove('open');
+        pageSwitchBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      pageSwitchBtn.addEventListener('click', (e: MouseEvent) => {
+        e.stopPropagation();
+        const isOpen = pageSwitcher.classList.toggle('open');
+        pageSwitchBtn.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      pageSwitchMenu.querySelectorAll<HTMLElement>('li').forEach(li => {
+        li.addEventListener('click', () => {
+          const href = li.dataset.href;
+          if (href) window.location.href = href;
+        });
+      });
+
+      document.addEventListener('click', (e: MouseEvent) => {
+        if (!pageSwitcher.contains(e.target as Node)) closePageSwitcher();
+      });
+
+      document.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Escape') closePageSwitcher();
       });
     </script>
 
